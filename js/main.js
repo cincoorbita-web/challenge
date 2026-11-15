@@ -189,7 +189,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // ========================================================================
   // 2b. Selector y Cambio de Voces de Síntesis
   // ========================================================================
-  const updateVoiceButtonLabel = (voiceDetails) => {
+  function updateVoiceButtonLabel(voiceDetails) {
     if (!voiceDetails) return;
     if (currentVoiceLabel) {
       currentVoiceLabel.textContent = voiceDetails.shortLabel || `${voiceDetails.flag} ${voiceDetails.cleanName}`;
@@ -197,30 +197,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (modalCurrentVoiceText) {
       modalCurrentVoiceText.textContent = `${voiceDetails.flag} ${voiceDetails.cleanName} (${voiceDetails.region})`;
     }
-  };
+  }
 
-  // Inicializar etiqueta con la voz actual
-  updateVoiceButtonLabel(window.speechNarrator.getCurrentVoiceDetails());
-
-  // Escuchar cambios de voz desde el servicio
-  window.speechNarrator.setOnVoiceChange((voiceDetails) => {
-    updateVoiceButtonLabel(voiceDetails);
-    renderVoiceList();
-  });
-
-  // Modal de selección de voz
-  const openVoiceModal = () => {
-    window.gameAudio.playClick();
-    renderVoiceList();
-    if (modalVoice) modalVoice.classList.remove('hidden');
-  };
-
-  const closeVoiceModal = () => {
-    window.gameAudio.playClick();
-    if (modalVoice) modalVoice.classList.add('hidden');
-  };
-
-  const renderVoiceList = () => {
+  function renderVoiceList() {
     if (!voiceOptionsList) return;
     const voices = window.speechNarrator.getSpanishVoices();
     const current = window.speechNarrator.getCurrentVoiceDetails();
@@ -285,7 +264,27 @@ document.addEventListener('DOMContentLoaded', () => {
         window.speechNarrator.setVoiceByName(vName);
       });
     });
-  };
+  }
+
+  function openVoiceModal() {
+    window.gameAudio.playClick();
+    renderVoiceList();
+    if (modalVoice) modalVoice.classList.remove('hidden');
+  }
+
+  function closeVoiceModal() {
+    window.gameAudio.playClick();
+    if (modalVoice) modalVoice.classList.add('hidden');
+  }
+
+  // Inicializar etiqueta con la voz actual
+  updateVoiceButtonLabel(window.speechNarrator.getCurrentVoiceDetails());
+
+  // Escuchar cambios de voz desde el servicio
+  window.speechNarrator.setOnVoiceChange((voiceDetails) => {
+    updateVoiceButtonLabel(voiceDetails);
+    renderVoiceList();
+  });
 
   if (btnChangeVoice) btnChangeVoice.addEventListener('click', openVoiceModal);
   if (btnSidebarVoice) btnSidebarVoice.addEventListener('click', openVoiceModal);

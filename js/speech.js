@@ -33,9 +33,17 @@ class SpeechNarratorService {
 
   setOnVoiceChange(callback) {
     this.onVoiceChangeCallback = callback;
-    // Si ya hay una voz preferida cargada, disparar el callback de inmediato
+    // Si ya hay una voz preferida cargada, notificar de manera asíncrona segura
     if (this.preferredVoice && typeof callback === 'function') {
-      callback(this.getVoiceDetails(this.preferredVoice));
+      setTimeout(() => {
+        try {
+          if (this.onVoiceChangeCallback === callback && this.preferredVoice) {
+            callback(this.getVoiceDetails(this.preferredVoice));
+          }
+        } catch (e) {
+          console.warn('Voice change notification error:', e);
+        }
+      }, 0);
     }
   }
 
