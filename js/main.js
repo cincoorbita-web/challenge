@@ -61,12 +61,27 @@ document.addEventListener('DOMContentLoaded', () => {
   const valIntegrity = document.getElementById('val-integrity');
   const hudScienceVal = document.getElementById('hud-science-val');
 
-  // Telemetría lateral (Laptop / PC)
+  // Telemetría lateral (Laptop / PC) — Valores, Filas y Barras con Semáforo
+  const sideRowO2 = document.getElementById('side-row-o2');
+  const sideRowEnergy = document.getElementById('side-row-energy');
+  const sideRowHealth = document.getElementById('side-row-health');
+  const sideRowIntegrity = document.getElementById('side-row-integrity');
+  const sideRowScience = document.getElementById('side-row-science');
+
   const sideValO2 = document.getElementById('side-val-o2');
   const sideValEnergy = document.getElementById('side-val-energy');
   const sideValHealth = document.getElementById('side-val-health');
   const sideValIntegrity = document.getElementById('side-val-integrity');
   const sideValScience = document.getElementById('side-val-science');
+
+  const sideBarO2 = document.getElementById('side-bar-o2');
+  const sideBarEnergy = document.getElementById('side-bar-energy');
+  const sideBarHealth = document.getElementById('side-bar-health');
+  const sideBarIntegrity = document.getElementById('side-bar-integrity');
+  const sideBarScience = document.getElementById('side-bar-science');
+
+  // Hub para partículas y deltas flotantes
+  const floatingDeltaHub = document.getElementById('floating-delta-hub');
 
   // Tarjeta de dilema
   const dilemmaCard = document.getElementById('dilemma-card');
@@ -877,19 +892,33 @@ document.addEventListener('DOMContentLoaded', () => {
     updateBar(barIntegrity, valIntegrity, state.resources.integrity);
     if (hudScienceVal) hudScienceVal.textContent = state.resources.science;
 
-    // Actualizar telemetría lateral (Laptop / PC) con Semáforo
-    const updateSideVal = (el, val) => {
-      if (!el) return;
-      el.textContent = `${Math.round(val)}%`;
-      el.classList.remove('text-status-good', 'text-status-warning', 'text-status-critical');
-      el.classList.add(getResourceStatusClass(val));
+    // Actualizar telemetría lateral (Laptop / PC) con Barras y Semáforo
+    const updateSideResource = (bar, label, val) => {
+      const clamped = Math.max(0, Math.min(100, val));
+      if (bar) {
+        bar.style.width = `${clamped}%`;
+        bar.classList.toggle('danger', val <= 25);
+        bar.classList.toggle('warning', val > 25 && val <= 50);
+      }
+      if (label) {
+        label.textContent = `${Math.round(val)}%`;
+        label.classList.remove('text-status-good', 'text-status-warning', 'text-status-critical');
+        label.classList.add(getResourceStatusClass(val));
+      }
     };
 
-    updateSideVal(sideValO2, state.resources.oxygen);
-    updateSideVal(sideValEnergy, state.resources.energy);
-    updateSideVal(sideValHealth, state.resources.health);
-    updateSideVal(sideValIntegrity, state.resources.integrity);
-    if (sideValScience) sideValScience.textContent = `${state.resources.science} ${isEn ? 'pts' : 'pts'}`;
+    updateSideResource(sideBarO2, sideValO2, state.resources.oxygen);
+    updateSideResource(sideBarEnergy, sideValEnergy, state.resources.energy);
+    updateSideResource(sideBarHealth, sideValHealth, state.resources.health);
+    updateSideResource(sideBarIntegrity, sideValIntegrity, state.resources.integrity);
+
+    if (sideBarScience) {
+      const sciPercent = Math.min(100, Math.round((state.resources.science / 60) * 100));
+      sideBarScience.style.width = `${sciPercent}%`;
+    }
+    if (sideValScience) {
+      sideValScience.textContent = `${state.resources.science} pts`;
+    }
 
     // Verificar fin de juego
     if (state.isGameOver && state.gameResult !== 'ABORTED') {
@@ -1116,6 +1145,152 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ========================================================================
+  // ANIMACIÓN DE IMPACTO EN RECURSOS (DELTAS FLOTANTES, SEMÁFOROS Y MASCOTA)
+  // ========================================================================
+  const RESOURCE_META = {
+    oxygen: {
+      icon: '💨',
+      nameEs: 'Oxígeno',
+      nameEn: 'Oxygen',
+      unit: '%',
+      sideRowId: 'side-row-o2',
+      mobileValId: 'val-o2',
+      sideBarId: 'side-bar-o2'
+    },
+    energy: {
+      icon: '⚡',
+      nameEs: 'Baterías',
+      nameEn: 'Energy',
+      unit: '%',
+      sideRowId: 'side-row-energy',
+      mobileValId: 'val-energy',
+      sideBarId: 'side-bar-energy'
+    },
+    health: {
+      icon: '❤️',
+      nameEs: 'Salud',
+      nameEn: 'Health',
+      unit: '%',
+      sideRowId: 'side-row-health',
+      mobileValId: 'val-health',
+      sideBarId: 'side-bar-health'
+    },
+    integrity: {
+      icon: '🛡️',
+      nameEs: 'Casco',
+      nameEn: 'Hull',
+      unit: '%',
+      sideRowId: 'side-row-integrity',
+      mobileValId: 'val-integrity',
+      sideBarId: 'side-bar-integrity'
+    },
+    science: {
+      icon: '🔬',
+      nameEs: 'Ciencia',
+      nameEn: 'Science',
+      unit: 'pts',
+      sideRowId: 'side-row-science',
+      mobileValId: 'hud-science-val',
+      sideBarId: 'side-bar-science'
+    }
+  };
+
+  function triggerResourceDeltaAnimation(actualChanges) {
+    if (!actualChanges) return;
+
+    const isEn = window.i18n && window.i18n.getLanguage() === 'en';
+    const activeChanges = [];
+
+    for (const [key, deltaVal] of Object.entries(actualChanges)) {
+      if (deltaVal !== 0 && RESOURCE_META[key]) {
+        activeChanges.push({ key, val: deltaVal, meta: RESOURCE_META[key] });
+      }
+    }
+
+    if (activeChanges.length === 0) return;
+
+    activeChanges.forEach((change, idx) => {
+      const { key, val, meta } = change;
+      const isGain = val > 0;
+      const sign = isGain ? '+' : '';
+      const displayVal = (key === 'science')
+        ? `${sign}${val} pts`
+        : `${sign}${Math.round(val)}%`;
+
+      // 1. Flash y animación de impacto en la fila de telemetría de escritorio
+      const sideRow = document.getElementById(meta.sideRowId);
+      if (sideRow) {
+        sideRow.classList.remove('row-impact-gain', 'row-impact-loss');
+        void sideRow.offsetWidth;
+        sideRow.classList.add(isGain ? 'row-impact-gain' : 'row-impact-loss');
+
+        // Animar el icono dentro de la fila
+        const iconSpan = sideRow.querySelector('.side-res-label');
+        if (iconSpan) {
+          iconSpan.classList.remove('icon-impact-pop', 'icon-impact-shake');
+          void iconSpan.offsetWidth;
+          iconSpan.classList.add(isGain ? 'icon-impact-pop' : 'icon-impact-shake');
+        }
+      }
+
+      // 2. Animar icono / valor en la vista móvil
+      const mobileVal = document.getElementById(meta.mobileValId);
+      if (mobileVal) {
+        mobileVal.classList.remove('icon-impact-pop', 'icon-impact-shake');
+        void mobileVal.offsetWidth;
+        mobileVal.classList.add(isGain ? 'icon-impact-pop' : 'icon-impact-shake');
+      }
+
+      // 3. Crear badge flotante animado (Particle floating delta badge)
+      if (floatingDeltaHub) {
+        setTimeout(() => {
+          const badge = document.createElement('div');
+          badge.className = `floating-delta-badge ${isGain ? 'delta-gain' : 'delta-loss'}`;
+          badge.innerHTML = `
+            <span class="delta-emoji">${meta.icon}</span>
+            <span class="delta-text">${displayVal}</span>
+          `;
+
+          // Calcular posición de origen óptima
+          let posX = window.innerWidth / 2;
+          let posY = window.innerHeight * 0.42;
+
+          // Si el panel lateral está visible y en pantalla, anclar badge cerca de la fila de telemetría
+          if (sideRow && sideRow.offsetParent !== null) {
+            const rect = sideRow.getBoundingClientRect();
+            if (rect.width > 0 && rect.height > 0) {
+              posX = rect.right - 25;
+              posY = rect.top + (rect.height / 2);
+            }
+          } else if (mobileVal && mobileVal.offsetParent !== null) {
+            const rect = mobileVal.getBoundingClientRect();
+            if (rect.width > 0 && rect.height > 0) {
+              posX = rect.left + (rect.width / 2);
+              posY = rect.bottom + 12;
+            }
+          }
+
+          // Desplazar ligeramente en cascada si hay múltiples recursos afectados
+          posX += (idx * 26) - (activeChanges.length > 1 ? 24 : 0);
+          posY += (idx * 18);
+
+          badge.style.left = `${posX}px`;
+          badge.style.top = `${posY}px`;
+
+          floatingDeltaHub.appendChild(badge);
+
+          // Remover del DOM tras concluir la animación
+          setTimeout(() => {
+            if (badge.parentNode) {
+              badge.parentNode.removeChild(badge);
+            }
+          }, 1800);
+        }, idx * 130);
+      }
+    });
+  }
+
+  // ========================================================================
   // 9. Manejar opción elegida
   // ========================================================================
   function handleOptionSelected(opt) {
@@ -1140,7 +1315,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const after = { ...window.gameState.resources };
 
-    // Reacción emocional de AstroCan
+    // Animación de impacto en recursos (deltas flotantes, iconos y filas de semáforo)
+    triggerResourceDeltaAnimation(record.actualChanges);
+
+    // Reacción emocional heroica de AstroCan
     window.astroMascot.reactToDelta(record.actualChanges, window.gameState.resources);
 
     if (opt.delta.oxygen < 0) window.gameAudio.playAirlock();
@@ -1174,6 +1352,7 @@ document.addEventListener('DOMContentLoaded', () => {
       );
       const after = { ...window.gameState.resources };
 
+      triggerResourceDeltaAnimation(record.actualChanges);
       window.astroMascot.reactToDelta(record.actualChanges, window.gameState.resources);
       showDecisionReceipt(debrief, before, after);
     });
@@ -1199,6 +1378,7 @@ document.addEventListener('DOMContentLoaded', () => {
       );
       const after = { ...window.gameState.resources };
 
+      triggerResourceDeltaAnimation(record.actualChanges);
       window.astroMascot.reactToDelta(record.actualChanges, window.gameState.resources);
       showDecisionReceipt(debrief, before, after);
     });
@@ -1254,6 +1434,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const beforeDecay = { ...state.resources };
     state.applyDailyDecay();
     const afterDecay = { ...state.resources };
+
+    // Animación de impacto en recursos por consumo de supervivencia diario
+    const decayChanges = {
+      oxygen: afterDecay.oxygen - beforeDecay.oxygen,
+      energy: afterDecay.energy - beforeDecay.energy,
+      health: afterDecay.health - beforeDecay.health,
+      integrity: afterDecay.integrity - beforeDecay.integrity,
+      science: 0
+    };
+    triggerResourceDeltaAnimation(decayChanges);
 
     // Reacción de AstroCan al consumo
     window.astroMascot.reactToDailyDecay(plan, state.resources);

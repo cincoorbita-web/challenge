@@ -152,29 +152,54 @@
             </div>
           </div>
 
-          <!-- Diagnóstico de recursos lateral en PC -->
+          <!-- Diagnóstico de recursos lateral en PC con Barras y Semáforo -->
           <div class="sidebar-telemetry">
             <h4 id="sidebar-telemetry-title" class="telemetry-title">📡 Telemetría de la Base</h4>
             <div class="sidebar-res-list">
-              <div class="side-res-row">
-                <span id="side-label-o2" class="side-res-label">💨 Oxígeno:</span>
-                <strong id="side-val-o2">100%</strong>
+              <div id="side-row-o2" class="side-res-row">
+                <div class="side-res-header">
+                  <span id="side-label-o2" class="side-res-label">💨 Oxígeno:</span>
+                  <strong id="side-val-o2" class="side-res-val">100%</strong>
+                </div>
+                <div class="side-bar-track">
+                  <div id="side-bar-o2" class="side-bar-fill fill-o2" style="width: 100%"></div>
+                </div>
               </div>
-              <div class="side-res-row">
-                <span id="side-label-energy" class="side-res-label">⚡ Baterías:</span>
-                <strong id="side-val-energy">100%</strong>
+              <div id="side-row-energy" class="side-res-row">
+                <div class="side-res-header">
+                  <span id="side-label-energy" class="side-res-label">⚡ Baterías:</span>
+                  <strong id="side-val-energy" class="side-res-val">100%</strong>
+                </div>
+                <div class="side-bar-track">
+                  <div id="side-bar-energy" class="side-bar-fill fill-energy" style="width: 100%"></div>
+                </div>
               </div>
-              <div class="side-res-row">
-                <span id="side-label-health" class="side-res-label">❤️ Salud:</span>
-                <strong id="side-val-health">100%</strong>
+              <div id="side-row-health" class="side-res-row">
+                <div class="side-res-header">
+                  <span id="side-label-health" class="side-res-label">❤️ Salud:</span>
+                  <strong id="side-val-health" class="side-res-val">100%</strong>
+                </div>
+                <div class="side-bar-track">
+                  <div id="side-bar-health" class="side-bar-fill fill-health" style="width: 100%"></div>
+                </div>
               </div>
-              <div class="side-res-row">
-                <span id="side-label-integrity" class="side-res-label">🛡️ Casco:</span>
-                <strong id="side-val-integrity">100%</strong>
+              <div id="side-row-integrity" class="side-res-row">
+                <div class="side-res-header">
+                  <span id="side-label-integrity" class="side-res-label">🛡️ Casco:</span>
+                  <strong id="side-val-integrity" class="side-res-val">100%</strong>
+                </div>
+                <div class="side-bar-track">
+                  <div id="side-bar-integrity" class="side-bar-fill fill-integrity" style="width: 100%"></div>
+                </div>
               </div>
-              <div class="side-res-row side-science-row">
-                <span id="side-label-science" class="side-res-label">🔬 Ciencia:</span>
-                <strong id="side-val-science">0 pts</strong>
+              <div id="side-row-science" class="side-res-row side-science-row">
+                <div class="side-res-header">
+                  <span id="side-label-science" class="side-res-label">🔬 Ciencia:</span>
+                  <strong id="side-val-science" class="side-res-val">0 pts</strong>
+                </div>
+                <div class="side-bar-track">
+                  <div id="side-bar-science" class="side-bar-fill fill-science" style="width: 0%"></div>
+                </div>
               </div>
             </div>
           </div>
@@ -409,6 +434,9 @@
     </div>
 
   </main>
+
+  <!-- Hub de partículas y deltas animados de recursos (Gains / Losses) -->
+  <div id="floating-delta-hub" class="floating-delta-hub" aria-hidden="true"></div>
 
   <script src="js/theme-manager.js"></script>
   <script src="js/i18n.js"></script>

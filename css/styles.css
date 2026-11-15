@@ -654,26 +654,84 @@ body {
 .sidebar-res-list {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 8px;
 }
 
 .side-res-row {
   display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.86rem;
+  padding: 6px 8px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  transition: all 0.35s ease;
+  position: relative;
+}
+
+.side-res-header {
+  display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 0.88rem;
-  padding: 4px 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .side-res-label {
   color: var(--txt2);
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.side-res-val {
+  font-family: monospace;
+  font-weight: 700;
+  font-size: 0.9rem;
+  transition: color 0.3s ease;
+}
+
+.side-bar-track {
+  width: 100%;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+.side-bar-fill {
+  height: 100%;
+  border-radius: 6px;
+  transition: width 0.45s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.side-bar-fill.fill-o2 { background: var(--o2); box-shadow: 0 0 8px rgba(0, 210, 211, 0.4); }
+.side-bar-fill.fill-energy { background: var(--energy); box-shadow: 0 0 8px rgba(254, 202, 87, 0.4); }
+.side-bar-fill.fill-health { background: var(--health); box-shadow: 0 0 8px rgba(255, 107, 107, 0.4); }
+.side-bar-fill.fill-integrity { background: var(--integrity); box-shadow: 0 0 8px rgba(95, 39, 205, 0.4); }
+.side-bar-fill.fill-science { background: linear-gradient(90deg, #9b59b6, #00d2d3); box-shadow: 0 0 10px rgba(155, 89, 182, 0.6); }
+
+/* Sistema de Semáforo en barras de telemetría */
+.side-bar-fill.warning {
+  background: #ffa502 !important;
+  box-shadow: 0 0 10px rgba(255, 165, 2, 0.8) !important;
+}
+
+.side-bar-fill.danger {
+  background: #ff4757 !important;
+  box-shadow: 0 0 14px rgba(255, 71, 87, 0.95) !important;
+  animation: pulseDangerBar 0.8s infinite alternate;
+}
+
+@keyframes pulseDangerBar {
+  from { opacity: 0.6; transform: scaleY(0.9); }
+  to { opacity: 1; transform: scaleY(1); }
 }
 
 .side-science-row {
-  border-bottom: none;
-  color: var(--science);
-  font-weight: 700;
+  border-color: rgba(155, 89, 182, 0.25);
+  background: rgba(155, 89, 182, 0.05);
 }
 
 .sidebar-actions {
@@ -1909,25 +1967,435 @@ body {
 }
 
 /* ==========================================================================
-   7. ANIMACIONES DE MASCOTA
+   7. ANIMACIONES HERO DE ASTROCAN Y RETROALIMENTACIÓN DE RECURSOS
    ========================================================================== */
-@keyframes mascotPop {
-  0% { transform: scale(0.85); opacity: 0.7; }
-  60% { transform: scale(1.08); }
-  100% { transform: scale(1); opacity: 1; }
+
+/* A. Flotación Idle de Vida para AstroCan */
+@keyframes mascotIdleBreath {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-3px) scale(1.02);
+  }
 }
 
-.mascot-pop {
-  animation: mascotPop 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+.mascot-sidebar-avatar,
+.mascot-mobile-avatar {
+  transform-origin: center center;
+  animation: mascotIdleBreath 4.5s ease-in-out infinite;
 }
 
-@keyframes bubblePop {
-  0% { transform: translateY(4px); opacity: 0; }
-  100% { transform: translateY(0); opacity: 1; }
+/* B. Animaciones Hero por Expresión y Reacción Emocional */
+@keyframes mascotHeroPop {
+  0% {
+    transform: scale(0.75) translateY(6px);
+    opacity: 0.6;
+  }
+  45% {
+    transform: scale(1.28) translateY(-8px);
+    opacity: 1;
+    box-shadow: 0 0 30px rgba(0, 210, 211, 0.9), 0 0 50px rgba(0, 210, 211, 0.5);
+  }
+  75% {
+    transform: scale(0.96) translateY(2px);
+  }
+  100% {
+    transform: scale(1) translateY(0);
+    box-shadow: 0 0 16px var(--glow);
+  }
 }
 
-.bubble-pop {
-  animation: bubblePop 0.25s ease-out;
+@keyframes mascotHeroCelebrating {
+  0% {
+    transform: scale(0.85);
+  }
+  25% {
+    transform: scale(1.34) translateY(-14px) rotate(-6deg);
+    box-shadow: 0 0 35px rgba(255, 215, 0, 1), 0 0 65px rgba(255, 180, 0, 0.85);
+  }
+  50% {
+    transform: scale(1.22) translateY(-4px) rotate(6deg);
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.9);
+  }
+  75% {
+    transform: scale(1.28) translateY(-10px) rotate(-3deg);
+    box-shadow: 0 0 32px rgba(255, 215, 0, 0.95);
+  }
+  100% {
+    transform: scale(1) translateY(0) rotate(0deg);
+    box-shadow: 0 0 18px rgba(255, 215, 0, 0.65);
+  }
+}
+
+@keyframes mascotHeroScared {
+  0% {
+    transform: scale(0.9);
+  }
+  15% {
+    transform: scale(1.28) translate(-4px, 3px);
+    box-shadow: 0 0 35px rgba(255, 71, 87, 1), 0 0 60px rgba(255, 0, 0, 0.8);
+  }
+  30% {
+    transform: scale(1.24) translate(4px, -3px);
+    box-shadow: 0 0 30px rgba(255, 71, 87, 0.9);
+  }
+  45% {
+    transform: scale(1.26) translate(-3px, -2px);
+  }
+  60% {
+    transform: scale(1.22) translate(3px, 2px);
+  }
+  80% {
+    transform: scale(1.1) translate(-2px, 0);
+  }
+  100% {
+    transform: scale(1) translate(0, 0);
+    box-shadow: 0 0 20px rgba(255, 71, 87, 0.75);
+  }
+}
+
+@keyframes mascotHeroCrying {
+  0% {
+    transform: scale(0.95);
+  }
+  20% {
+    transform: scale(1.22) translateY(6px);
+    box-shadow: 0 0 28px rgba(255, 71, 87, 0.9);
+  }
+  40% {
+    transform: scale(1.15) translateY(10px) rotate(-4deg);
+  }
+  65% {
+    transform: scale(1.1) translateY(6px) rotate(4deg);
+  }
+  100% {
+    transform: scale(1) translateY(0) rotate(0deg);
+    box-shadow: 0 0 16px rgba(255, 71, 87, 0.55);
+  }
+}
+
+@keyframes mascotHeroThinking {
+  0% {
+    transform: scale(0.9) rotate(0deg);
+  }
+  35% {
+    transform: scale(1.25) rotate(9deg) translateY(-6px);
+    box-shadow: 0 0 30px rgba(0, 210, 211, 0.9), 0 0 50px rgba(10, 189, 227, 0.6);
+  }
+  70% {
+    transform: scale(1.18) rotate(5deg) translateY(-3px);
+    box-shadow: 0 0 25px rgba(0, 210, 211, 0.75);
+  }
+  100% {
+    transform: scale(1) rotate(0deg) translateY(0);
+    box-shadow: 0 0 16px var(--glow);
+  }
+}
+
+@keyframes mascotHeroWorried {
+  0% {
+    transform: scale(0.92);
+  }
+  30% {
+    transform: scale(1.22) rotate(-8deg) translateY(-4px);
+    box-shadow: 0 0 30px rgba(255, 165, 2, 0.9);
+  }
+  60% {
+    transform: scale(1.15) rotate(4deg);
+    box-shadow: 0 0 22px rgba(255, 165, 2, 0.7);
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+    box-shadow: 0 0 16px rgba(255, 165, 2, 0.5);
+  }
+}
+
+@keyframes mascotHeroRelaxed {
+  0% {
+    transform: scale(0.92);
+  }
+  40% {
+    transform: scale(1.2) translateY(-6px);
+    box-shadow: 0 0 28px rgba(46, 213, 115, 0.9);
+  }
+  75% {
+    transform: scale(1.08) translateY(-2px);
+  }
+  100% {
+    transform: scale(1) translateY(0);
+    box-shadow: 0 0 16px rgba(46, 213, 115, 0.5);
+  }
+}
+
+@keyframes mascotHeroGreeting {
+  0% {
+    transform: scale(0.75) rotate(-10deg);
+  }
+  35% {
+    transform: scale(1.3) rotate(6deg) translateY(-8px);
+    box-shadow: 0 0 35px rgba(0, 210, 211, 1), 0 0 60px rgba(84, 160, 255, 0.7);
+  }
+  65% {
+    transform: scale(1.18) rotate(-4deg) translateY(-4px);
+  }
+  100% {
+    transform: scale(1) rotate(0deg) translateY(0);
+    box-shadow: 0 0 16px var(--glow);
+  }
+}
+
+.mascot-pop,
+.mascot-hero-pop {
+  animation: mascotHeroPop 0.75s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards !important;
+}
+
+.mascot-hero-celebrating {
+  animation: mascotHeroCelebrating 0.95s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards !important;
+}
+
+.mascot-hero-scared {
+  animation: mascotHeroScared 0.85s ease-in-out forwards !important;
+}
+
+.mascot-hero-crying {
+  animation: mascotHeroCrying 0.9s ease-in-out forwards !important;
+}
+
+.mascot-hero-thinking {
+  animation: mascotHeroThinking 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards !important;
+}
+
+.mascot-hero-worried {
+  animation: mascotHeroWorried 0.8s ease-in-out forwards !important;
+}
+
+.mascot-hero-relaxed {
+  animation: mascotHeroRelaxed 0.75s ease-out forwards !important;
+}
+
+.mascot-hero-greeting {
+  animation: mascotHeroGreeting 0.85s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards !important;
+}
+
+/* C. Globo de Diálogo Hero */
+@keyframes bubbleHeroPop {
+  0% {
+    opacity: 0;
+    transform: translateY(12px) scale(0.92);
+  }
+  60% {
+    opacity: 1;
+    transform: translateY(-3px) scale(1.03);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.bubble-pop,
+.bubble-hero-pop {
+  animation: bubbleHeroPop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+/* D. Contenedores con Acento Emocional */
+.sidebar-mascot-box[data-emotion="celebrating"] {
+  border-color: rgba(255, 215, 0, 0.6);
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.2);
+}
+
+.sidebar-mascot-box[data-emotion="scared"],
+.sidebar-mascot-box[data-emotion="crying"] {
+  border-color: rgba(255, 71, 87, 0.7);
+  box-shadow: 0 0 20px rgba(255, 71, 87, 0.25);
+}
+
+.sidebar-mascot-box[data-emotion="worried"] {
+  border-color: rgba(255, 165, 2, 0.6);
+}
+
+.sidebar-mascot-box[data-emotion="relaxed"] {
+  border-color: rgba(46, 213, 115, 0.6);
+}
+
+/* E. Animaciones de Impacto en Recursos (Filas e Iconos) */
+.row-impact-gain {
+  animation: rowPulseGain 1.2s ease-out forwards;
+}
+
+.row-impact-loss {
+  animation: rowPulseLoss 1.2s ease-out forwards;
+}
+
+@keyframes rowPulseGain {
+  0% {
+    background: rgba(46, 213, 115, 0.42);
+    border-color: #2ed573;
+    box-shadow: 0 0 18px rgba(46, 213, 115, 0.85);
+    transform: scale(1.03);
+  }
+  50% {
+    background: rgba(46, 213, 115, 0.18);
+    border-color: rgba(46, 213, 115, 0.5);
+    transform: scale(1.01);
+  }
+  100% {
+    background: rgba(255, 255, 255, 0.02);
+    border-color: rgba(255, 255, 255, 0.05);
+    box-shadow: none;
+    transform: scale(1);
+  }
+}
+
+@keyframes rowPulseLoss {
+  0% {
+    background: rgba(255, 71, 87, 0.45);
+    border-color: #ff4757;
+    box-shadow: 0 0 22px rgba(255, 71, 87, 0.9);
+    transform: scale(1.03) translateX(-4px);
+  }
+  25% {
+    transform: scale(1.02) translateX(4px);
+  }
+  50% {
+    background: rgba(255, 71, 87, 0.2);
+    border-color: rgba(255, 71, 87, 0.5);
+    transform: scale(1.01) translateX(-2px);
+  }
+  75% {
+    transform: scale(1) translateX(2px);
+  }
+  100% {
+    background: rgba(255, 255, 255, 0.02);
+    border-color: rgba(255, 255, 255, 0.05);
+    box-shadow: none;
+    transform: none;
+  }
+}
+
+.icon-impact-pop {
+  display: inline-block;
+  animation: iconImpactPop 0.85s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+.icon-impact-shake {
+  display: inline-block;
+  animation: iconImpactShake 0.85s ease-in-out forwards;
+}
+
+@keyframes iconImpactPop {
+  0% { transform: scale(1); }
+  35% { transform: scale(1.75) rotate(-14deg); filter: drop-shadow(0 0 10px #2ed573); }
+  70% { transform: scale(1.25) rotate(6deg); }
+  100% { transform: scale(1) rotate(0deg); }
+}
+
+@keyframes iconImpactShake {
+  0% { transform: scale(1); }
+  20% { transform: scale(1.6) rotate(16deg); filter: drop-shadow(0 0 12px #ff4757); }
+  40% { transform: scale(1.3) rotate(-16deg); }
+  60% { transform: scale(1.15) rotate(10deg); }
+  80% { transform: scale(1.05) rotate(-4deg); }
+  100% { transform: scale(1) rotate(0deg); }
+}
+
+/* F. Hub de Partículas y Badges Flotantes de Deltas de Recursos */
+.floating-delta-hub {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 99999;
+  overflow: hidden;
+}
+
+.floating-delta-badge {
+  position: absolute;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-family: var(--font-body, 'Fredoka', sans-serif);
+  font-weight: 700;
+  font-size: 1.05rem;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+  pointer-events: none;
+  white-space: nowrap;
+  animation-duration: 1.6s;
+  animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  animation-fill-mode: forwards;
+}
+
+.floating-delta-badge.delta-gain {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.95), rgba(5, 150, 105, 0.92));
+  border: 2px solid #34d399;
+  color: #ffffff;
+  box-shadow: 0 0 20px rgba(52, 211, 153, 0.75);
+  animation-name: floatDeltaGain;
+}
+
+.floating-delta-badge.delta-loss {
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.95), rgba(185, 28, 28, 0.92));
+  border: 2px solid #f87171;
+  color: #ffffff;
+  box-shadow: 0 0 20px rgba(248, 113, 113, 0.75);
+  animation-name: floatDeltaLoss;
+}
+
+.delta-emoji {
+  font-size: 1.25rem;
+  display: inline-block;
+}
+
+@keyframes floatDeltaGain {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, 0) scale(0.6);
+  }
+  20% {
+    opacity: 1;
+    transform: translate(-50%, -15px) scale(1.3);
+  }
+  40% {
+    transform: translate(-50%, -28px) scale(1.15);
+  }
+  75% {
+    opacity: 0.95;
+    transform: translate(-50%, -52px) scale(1.05);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -80px) scale(0.85);
+  }
+}
+
+@keyframes floatDeltaLoss {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, 0) scale(0.6);
+  }
+  15% {
+    opacity: 1;
+    transform: translate(calc(-50% - 6px), -12px) scale(1.28);
+  }
+  30% {
+    transform: translate(calc(-50% + 6px), -24px) scale(1.18);
+  }
+  50% {
+    transform: translate(calc(-50% - 4px), -36px) scale(1.1);
+  }
+  75% {
+    opacity: 0.9;
+    transform: translate(-50%, -52px) scale(1.0);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -75px) scale(0.8);
+  }
 }
 
 /* ==========================================================================
@@ -1982,7 +2450,7 @@ body {
   .btn-choose-option { font-size: 0.95rem; padding: 10px; }
 
   .sidebar-speech-bubble { font-size: 0.95rem; line-height: 1.45; }
-  .side-res-row { font-size: 1rem; padding: 6px 0; }
+  .side-res-row { font-size: 0.94rem; padding: 6px 8px; }
   .telemetry-title { font-size: 0.95rem; }
 
   .log-quote { font-size: 1.05rem; line-height: 1.55; }

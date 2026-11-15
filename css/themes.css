@@ -223,6 +223,25 @@
   box-shadow: 4px 4px 0px #ffe600 !important;
 }
 
+/* Barras y telemetría lateral Cómic Pop */
+[data-theme="comic-pop"] .side-res-row {
+  border: 2px solid #000000 !important;
+  background: #111424 !important;
+  box-shadow: 3px 3px 0px #000000 !important;
+}
+
+[data-theme="comic-pop"] .side-bar-track {
+  border: 1.5px solid #000000 !important;
+  background: #090a14 !important;
+}
+
+[data-theme="comic-pop"] .floating-delta-badge {
+  border: 2.5px solid #000000 !important;
+  box-shadow: 4px 4px 0px #000000 !important;
+  font-family: var(--font-display-comic) !important;
+  letter-spacing: 0.5px;
+}
+
 /* Botones con estilo POP de Cómic */
 [data-theme="comic-pop"] .btn-primary,
 [data-theme="comic-pop"] .btn-choose-option,
@@ -495,6 +514,24 @@
 [data-theme="comic-retro"] .sidebar-speech-bubble strong,
 [data-theme="comic-retro"] .mobile-speech-bubble strong {
   color: #b04118 !important;
+}
+
+/* Barras y telemetría lateral Pulp Retro */
+[data-theme="comic-retro"] .side-res-row {
+  border: 1px solid #8c5828 !important;
+  background: rgba(251, 245, 229, 0.06) !important;
+  box-shadow: 2px 2px 0px #1e1b2b !important;
+}
+
+[data-theme="comic-retro"] .side-bar-track {
+  border: 1px solid #8c5828 !important;
+  background: rgba(0, 0, 0, 0.3) !important;
+}
+
+[data-theme="comic-retro"] .floating-delta-badge {
+  border: 2px solid #8c5828 !important;
+  box-shadow: 3px 3px 0px #1e1b2b !important;
+  font-family: var(--font-body-comic) !important;
 }
 
 /* Botones en estilo Pulp Sci-Fi */

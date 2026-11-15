@@ -89,22 +89,58 @@ class AstroMascot {
     }
     this.lastMessage = msg;
 
-    // Actualizar avatares
+    // Mapa de clases de animación Hero según el estado emocional
+    const heroClassMap = {
+      greeting: 'mascot-hero-greeting',
+      celebrating: 'mascot-hero-celebrating',
+      scared: 'mascot-hero-scared',
+      crying: 'mascot-hero-crying',
+      thinking: 'mascot-hero-thinking',
+      worried: 'mascot-hero-worried',
+      relaxed: 'mascot-hero-relaxed'
+    };
+    const heroClass = heroClassMap[emotionKey] || 'mascot-hero-pop';
+
+    const allHeroClasses = [
+      'mascot-pop',
+      'mascot-hero-pop',
+      'mascot-hero-greeting',
+      'mascot-hero-celebrating',
+      'mascot-hero-scared',
+      'mascot-hero-crying',
+      'mascot-hero-thinking',
+      'mascot-hero-worried',
+      'mascot-hero-relaxed'
+    ];
+
+    // Actualizar avatares con Hero Animation
     this.avatarElements.forEach(img => {
       img.src = data.img;
       img.alt = `${this.name}: ${data.title}`;
-      img.classList.remove('mascot-pop');
+      img.classList.remove(...allHeroClasses);
       void img.offsetWidth; // Reflow para reiniciar animación
-      img.classList.add('mascot-pop');
+      img.classList.add(heroClass);
+
+      // Asignar atributo de emoción al contenedor para auras dinámicas
+      const container = img.closest('.mascot-avatar-container') || img.parentElement;
+      if (container) {
+        container.setAttribute('data-emotion', emotionKey);
+      }
     });
 
-    // Actualizar globos de diálogo
+    // Actualizar globos de diálogo con Hero Pop
     this.bubbleElements.forEach(bubble => {
       bubble.textContent = msg;
-      bubble.classList.remove('bubble-pop');
+      bubble.classList.remove('bubble-pop', 'bubble-hero-pop');
       void bubble.offsetWidth;
-      bubble.classList.add('bubble-pop');
+      bubble.classList.add('bubble-hero-pop');
     });
+
+    // Actualizar caja de la mascota en el sidebar si existe
+    const sidebarBox = document.querySelector('.sidebar-mascot-box');
+    if (sidebarBox) {
+      sidebarBox.setAttribute('data-emotion', emotionKey);
+    }
   }
 
   // Reacción inicial al presentar un nuevo evento
