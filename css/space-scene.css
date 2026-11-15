@@ -1,0 +1,39 @@
+/* ==========================================================================
+   ARTEMIS CHALLENGE: SPACE SCENE & COSMIC ANIMATIONS
+   Estilos específicos para el entorno lunar, satélites y eventos solares
+   ========================================================================== */
+
+.space-ambient-glow {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  background: radial-gradient(circle at 82% 20%, rgba(0, 180, 255, 0.08) 0%, transparent 40%),
+              radial-gradient(circle at 35% 85%, rgba(0, 210, 211, 0.05) 0%, transparent 35%);
+  z-index: 1;
+}
+
+/* Pulsación de alerta de emergencia solar */
+@keyframes solarPulseRed {
+  0% { box-shadow: 0 0 10px rgba(255, 71, 87, 0.3); }
+  50% { box-shadow: 0 0 35px rgba(255, 71, 87, 0.8), inset 0 0 15px rgba(255, 71, 87, 0.4); }
+  100% { box-shadow: 0 0 10px rgba(255, 71, 87, 0.3); }
+}
+
+.solar-alert-active {
+  animation: solarPulseRed 1.8s infinite ease-in-out;
+  border-color: #ff4757 !important;
+}
+
+/* Resplandor suave de botón de acción */
+@keyframes pulseButton {
+  0% { transform: scale(1); box-shadow: 0 4px 15px rgba(0, 210, 211, 0.4); }
+  50% { transform: scale(1.02); box-shadow: 0 6px 25px rgba(0, 210, 211, 0.7); }
+  100% { transform: scale(1); box-shadow: 0 4px 15px rgba(0, 210, 211, 0.4); }
+}
+
+.pulse-btn {
+  animation: pulseButton 2.4s infinite ease-in-out;
+}

@@ -1,0 +1,1785 @@
+/* ==========================================================================
+   ARTEMIS CHALLENGE — CSS PRINCIPAL
+   Tipografía: Fredoka (Google Fonts)
+   Layout adaptativo para 3 pantallas (Celular, Tablet, Laptop/PC)
+   Viewport 100dvh sin scroll en ventana principal, scroll interno en terminal.
+   Semáforo de recursos interactivo en tiempo real.
+   ========================================================================== */
+
+:root {
+  --bg-deep: #030612;
+  --panel-glass: rgba(20, 30, 55, 0.75);
+  --panel-glass-solid: rgba(14, 21, 40, 0.95);
+  --panel-border: rgba(84, 160, 255, 0.25);
+  --border-bright: rgba(0, 210, 211, 0.6);
+  --nasa-blue: #0984e3;
+  --cyan: #00d2d3;
+  --glow: rgba(0, 210, 211, 0.35);
+  --o2: #00cec9;
+  --energy: #feca57;
+  --health: #ff6b81;
+  --integrity: #54a0ff;
+  --science: #a29bfe;
+  --gain: #2ed573;
+  --gain-bg: rgba(46, 213, 115, 0.15);
+  --cost: #ff4757;
+  --cost-bg: rgba(255, 71, 87, 0.15);
+  --txt: #ffffff;
+  --txt2: #dfe6e9;
+  --txt3: #a4b0be;
+  --font: 'Fredoka', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font);
+  background: var(--bg-deep);
+  color: var(--txt);
+  overflow: hidden;
+  height: 100dvh;
+}
+
+#space-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100dvh;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.space-ambient-glow {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  background: radial-gradient(circle at 82% 20%, rgba(0, 180, 255, 0.08) 0%, transparent 40%);
+}
+
+/* ========== CONTENEDOR RAÍZ ========== */
+.app-wrapper {
+  position: relative;
+  z-index: 10;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+.screen {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* ==========================================================================
+   1. PANTALLA DE BIENVENIDA CON MASCOTA
+   ========================================================================== */
+.welcome-screen {
+  justify-content: center;
+  align-items: center;
+  padding: 12px;
+  overflow-y: auto;
+}
+
+.welcome-inner {
+  max-width: 780px;
+  width: 100%;
+  text-align: center;
+}
+
+.nasa-logo-badge {
+  display: inline-block;
+  background: rgba(9, 132, 227, 0.2);
+  border: 1px solid var(--cyan);
+  padding: 5px 16px;
+  border-radius: 20px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  color: var(--cyan);
+  margin-bottom: 8px;
+  box-shadow: 0 0 12px var(--glow);
+}
+
+.main-title {
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  font-weight: 800;
+  line-height: 1.1;
+  background: linear-gradient(135deg, #fff 40%, var(--cyan));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 4px;
+}
+
+.main-subtitle {
+  font-size: clamp(0.9rem, 2vw, 1.15rem);
+  color: var(--txt2);
+  margin-bottom: 12px;
+}
+
+/* Tarjeta de Mascota en Bienvenida */
+.welcome-mascot-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: rgba(14, 21, 40, 0.85);
+  border: 1.5px solid var(--border-bright);
+  backdrop-filter: blur(12px);
+  border-radius: 16px;
+  padding: 10px 16px;
+  margin-bottom: 12px;
+  text-align: left;
+}
+
+.welcome-mascot-img {
+  width: 74px;
+  height: 74px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2.5px solid var(--cyan);
+  box-shadow: 0 0 14px var(--glow);
+  flex-shrink: 0;
+  animation: mascotPop 0.4s ease-out;
+}
+
+.welcome-mascot-bubble {
+  font-size: 0.92rem;
+  line-height: 1.45;
+  color: #e0f8ff;
+}
+
+.welcome-briefing {
+  background: var(--panel-glass);
+  border: 1px solid var(--panel-border);
+  backdrop-filter: blur(10px);
+  border-radius: 14px;
+  padding: 12px 16px;
+  margin-bottom: 12px;
+  text-align: left;
+}
+
+.welcome-briefing h3 {
+  color: var(--cyan);
+  font-size: 1rem;
+  margin-bottom: 6px;
+}
+
+.welcome-briefing p {
+  color: var(--txt2);
+  font-size: 0.88rem;
+  line-height: 1.45;
+  margin-bottom: 6px;
+}
+
+.rule-highlight {
+  background: rgba(254, 202, 87, 0.1);
+  border-left: 3px solid var(--energy);
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 0.88rem;
+  color: #ffeaa7;
+  margin: 0;
+}
+
+.welcome-form {
+  background: var(--panel-glass);
+  border: 1px solid var(--border-bright);
+  backdrop-filter: blur(12px);
+  border-radius: 14px;
+  padding: 14px 16px;
+  text-align: left;
+}
+
+.form-row {
+  margin-bottom: 10px;
+}
+
+.form-row label, .form-label-sm {
+  display: block;
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--txt2);
+  margin-bottom: 5px;
+}
+
+.text-input {
+  font-family: var(--font);
+  width: 100%;
+  padding: 10px 14px;
+  background: rgba(10, 16, 32, 0.85);
+  border: 1.5px solid var(--panel-border);
+  border-radius: 8px;
+  color: #fff;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.text-input:focus {
+  border-color: var(--cyan);
+  box-shadow: 0 0 10px var(--glow);
+}
+
+.difficulty-selector {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin: 6px 0 12px;
+}
+
+.diff-btn {
+  font-family: var(--font);
+  background: rgba(15, 23, 42, 0.85);
+  border: 1.5px solid var(--panel-border);
+  border-radius: 10px;
+  padding: 8px 6px;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.2s;
+  color: var(--txt2);
+}
+
+.diff-btn:hover {
+  border-color: var(--cyan);
+  transform: translateY(-1px);
+}
+
+.diff-btn.active {
+  background: rgba(9, 132, 227, 0.25);
+  border-color: var(--cyan);
+  box-shadow: 0 0 10px var(--glow);
+}
+
+.diff-title {
+  display: block;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.diff-days {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: var(--cyan);
+  margin: 3px 0;
+}
+
+.diff-desc {
+  display: block;
+  font-size: 0.76rem;
+  color: var(--txt3);
+  line-height: 1.25;
+}
+
+.btn-primary {
+  font-family: var(--font);
+  width: 100%;
+  padding: 12px;
+  background: linear-gradient(135deg, var(--nasa-blue), var(--cyan));
+  border: none;
+  border-radius: 10px;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(0, 210, 211, 0.4);
+  transition: all 0.2s;
+}
+
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 22px rgba(0, 210, 211, 0.6);
+}
+
+.btn-secondary {
+  font-family: var(--font);
+  width: 100%;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1.5px solid var(--panel-border);
+  border-radius: 10px;
+  color: var(--txt2);
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: var(--cyan);
+}
+
+/* ==========================================================================
+   2. PANTALLA DE JUEGO & LAYOUT DE ESTACIÓN
+   ========================================================================== */
+.game-screen {
+  gap: 0;
+  height: 100dvh;
+}
+
+.station-layout {
+  display: flex;
+  flex: 1;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* PANEL LATERAL PARA LAPTOP / PC */
+.station-sidebar {
+  display: none; /* Activo en desktop min-width: 981px */
+  width: 340px;
+  flex-shrink: 0;
+  background: var(--panel-glass-solid);
+  border-right: 1.5px solid var(--border-bright);
+  padding: 14px;
+  flex-direction: column;
+  gap: 12px;
+  overflow-y: auto;
+}
+
+.sidebar-mascot-box {
+  background: rgba(10, 16, 32, 0.7);
+  border: 1.5px solid var(--panel-border);
+  border-radius: 14px;
+  padding: 12px;
+  text-align: center;
+}
+
+.mascot-avatar-container {
+  position: relative;
+  width: 94px;
+  height: 94px;
+  margin: 0 auto 8px;
+}
+
+.mascot-sidebar-avatar {
+  width: 94px;
+  height: 94px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2.5px solid var(--cyan);
+  box-shadow: 0 0 16px var(--glow);
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.mascot-online-dot {
+  position: absolute;
+  bottom: 4px;
+  right: 6px;
+  width: 14px;
+  height: 14px;
+  background: #2ed573;
+  border: 2px solid #030612;
+  border-radius: 50%;
+}
+
+.mascot-info {
+  margin-bottom: 8px;
+}
+
+.mascot-name {
+  display: block;
+  font-size: 1.15rem;
+  color: #fff;
+  font-weight: 700;
+}
+
+.mascot-role {
+  font-size: 0.8rem;
+  color: var(--cyan);
+  font-weight: 500;
+}
+
+.sidebar-speech-bubble {
+  background: rgba(0, 210, 211, 0.12);
+  border: 1px solid var(--border-bright);
+  border-radius: 12px;
+  padding: 8px 12px;
+  font-size: 0.88rem;
+  line-height: 1.4;
+  color: #e0f8ff;
+  text-align: left;
+  position: relative;
+}
+
+.sidebar-telemetry {
+  background: rgba(10, 16, 32, 0.6);
+  border: 1px solid var(--panel-border);
+  border-radius: 12px;
+  padding: 12px;
+}
+
+.telemetry-title {
+  color: var(--cyan);
+  font-size: 0.88rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.sidebar-res-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.side-res-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.88rem;
+  padding: 4px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.side-res-label {
+  color: var(--txt2);
+}
+
+.side-science-row {
+  border-bottom: none;
+  color: var(--science);
+  font-weight: 700;
+}
+
+.sidebar-actions {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sidebar-btn {
+  width: 100%;
+  padding: 8px 10px;
+  text-align: center;
+  font-size: 0.85rem;
+}
+
+/* TERMINAL PRINCIPAL */
+.station-main-terminal {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  height: 100%;
+}
+
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  background: var(--panel-glass);
+  border-bottom: 1px solid var(--panel-border);
+  backdrop-filter: blur(10px);
+  padding: 6px 12px;
+  flex-shrink: 0;
+  min-height: 40px;
+}
+
+.bar-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.bar-right {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.astronaut-name {
+  font-size: 0.92rem;
+  color: #fff;
+  font-weight: 600;
+}
+
+.day-badge {
+  background: rgba(0, 210, 211, 0.18);
+  border: 1px solid var(--cyan);
+  padding: 2px 10px;
+  border-radius: 14px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--cyan);
+}
+
+.pill-btn {
+  font-family: var(--font);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--panel-border);
+  color: var(--txt2);
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.pill-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: var(--cyan);
+}
+
+.pill-btn.btn-muted {
+  background: rgba(255, 71, 87, 0.2);
+  border-color: var(--cost);
+  color: #ff6b81;
+}
+
+.btn-danger-pill {
+  background: rgba(255, 71, 87, 0.15) !important;
+  border-color: rgba(255, 71, 87, 0.6) !important;
+  color: #ff6b81 !important;
+}
+
+.btn-danger-pill:hover {
+  background: rgba(255, 71, 87, 0.3) !important;
+  border-color: var(--cost) !important;
+  color: #fff !important;
+}
+
+/* Barra Ambiental */
+.env-bar {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  background: rgba(10, 15, 30, 0.7);
+  border-bottom: 1px solid rgba(84, 160, 255, 0.1);
+  padding: 4px 10px;
+  font-size: 0.82rem;
+  flex-shrink: 0;
+}
+
+.env-item {
+  color: var(--txt3);
+}
+
+.env-item strong {
+  color: #fff;
+  font-weight: 600;
+}
+
+/* Recursos Compactos (Strip horizontal) */
+.res-strip {
+  display: flex;
+  gap: 6px;
+  padding: 6px 10px;
+  flex-shrink: 0;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.res-mini {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: var(--panel-glass);
+  border: 1px solid var(--panel-border);
+  border-radius: 8px;
+  padding: 4px 8px;
+  min-width: 0;
+  flex: 1;
+  max-width: 180px;
+}
+
+.res-icon {
+  font-size: 0.9rem;
+  flex-shrink: 0;
+}
+
+.res-bar-track {
+  flex: 1;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 5px;
+  overflow: hidden;
+  min-width: 25px;
+}
+
+.res-bar-fill {
+  height: 100%;
+  border-radius: 5px;
+  transition: width 0.35s ease, background-color 0.3s;
+}
+
+.fill-o2 { background: var(--o2); }
+.fill-energy { background: var(--energy); }
+.fill-health { background: var(--health); }
+.fill-integrity { background: var(--integrity); }
+
+.res-bar-fill.warning { background: #ffa502 !important; }
+.res-bar-fill.danger { background: #ff4757 !important; animation: pulseG 1s infinite alternate; }
+
+@keyframes pulseG {
+  from { opacity: 0.6; }
+  to { opacity: 1; }
+}
+
+.res-num {
+  font-size: 0.82rem;
+  font-weight: 700;
+  white-space: nowrap;
+  min-width: 32px;
+  text-align: right;
+  transition: color 0.3s;
+}
+
+.res-science {
+  border-color: rgba(162, 155, 254, 0.4);
+}
+
+.science-val {
+  color: var(--science);
+  font-weight: 700;
+}
+
+/* ==========================================================================
+   SEMÁFORO DE RECURSOS EN TIEMPO REAL (TEXTOS)
+   ========================================================================== */
+.text-status-good {
+  color: #2ed573 !important;
+  text-shadow: 0 0 8px rgba(46, 213, 115, 0.45);
+}
+
+.text-status-warning {
+  color: #ffa502 !important;
+  text-shadow: 0 0 8px rgba(255, 165, 2, 0.45);
+}
+
+.text-status-critical {
+  color: #ff4757 !important;
+  text-shadow: 0 0 12px rgba(255, 71, 87, 0.7);
+  animation: pulseCrit 0.8s infinite alternate ease-in-out;
+}
+
+@keyframes pulseCrit {
+  from { transform: scale(1); }
+  to { transform: scale(1.08); }
+}
+
+/* Franja de Mascota para Móvil y Tablet */
+.mobile-mascot-strip {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 10px;
+  background: rgba(14, 21, 40, 0.65);
+  border-bottom: 1px solid rgba(84, 160, 255, 0.15);
+  flex-shrink: 0;
+}
+
+.mascot-mobile-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--cyan);
+  box-shadow: 0 0 8px var(--glow);
+  flex-shrink: 0;
+  transition: all 0.3s;
+}
+
+.mobile-speech-bubble {
+  font-size: 0.84rem;
+  line-height: 1.35;
+  color: #e0f8ff;
+}
+
+/* Scroll interno del contenido principal del terminal */
+.game-content-scroll {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 8px 10px 16px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 210, 211, 0.3) transparent;
+}
+
+.game-content-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+
+.game-content-scroll::-webkit-scrollbar-thumb {
+  background: rgba(0, 210, 211, 0.3);
+  border-radius: 4px;
+}
+
+/* ==========================================================================
+   3. TARJETA DE DILEMA Y OPCIONES
+   ========================================================================== */
+.dilemma-card {
+  background: var(--panel-glass);
+  border: 1.5px solid var(--border-bright);
+  backdrop-filter: blur(12px);
+  border-radius: 14px;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.dilemma-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.dilemma-top-tags {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.tag-badge {
+  background: rgba(9, 132, 227, 0.25);
+  border: 1px solid var(--cyan);
+  padding: 2px 8px;
+  border-radius: 5px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  color: var(--cyan);
+}
+
+.sender-text {
+  font-size: 0.78rem;
+  color: var(--txt3);
+}
+
+/* Controles de Audio y Selector de Voz */
+.dilemma-audio-controls {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.btn-voice {
+  background: linear-gradient(135deg, rgba(0, 184, 148, 0.25), rgba(9, 132, 227, 0.25));
+  border: 1px solid var(--cyan);
+  color: #e8f8f5;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-voice:hover {
+  background: linear-gradient(135deg, rgba(0, 184, 148, 0.45), rgba(9, 132, 227, 0.45));
+  border-color: #55efc4;
+  color: #ffffff;
+  transform: translateY(-1px);
+  box-shadow: 0 0 10px rgba(85, 239, 196, 0.3);
+}
+
+/* Botón Narrador por Voz (Misión) */
+.btn-narrate {
+  background: linear-gradient(135deg, rgba(9, 132, 227, 0.3), rgba(162, 155, 254, 0.25));
+  border: 1px solid #a29bfe;
+  color: #e0d9ff;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.78rem;
+}
+
+.btn-narrate:hover {
+  background: linear-gradient(135deg, rgba(9, 132, 227, 0.5), rgba(162, 155, 254, 0.4));
+  border-color: #fff;
+  color: #fff;
+}
+
+.btn-narrate.speaking {
+  background: linear-gradient(135deg, #6c5ce7, #0984e3) !important;
+  color: #fff !important;
+  border-color: var(--cyan) !important;
+  box-shadow: 0 0 12px var(--glow);
+  animation: pulseSpeech 1.2s infinite alternate;
+}
+
+@keyframes pulseSpeech {
+  from { transform: scale(1); }
+  to { transform: scale(1.04); }
+}
+
+.dilemma-title {
+  font-size: clamp(1.05rem, 2.5vw, 1.35rem);
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.dilemma-desc {
+  font-size: 0.92rem;
+  line-height: 1.45;
+  color: var(--txt2);
+}
+
+/* Fuente de Datos NASA */
+.source-box {
+  background: rgba(162, 155, 254, 0.12);
+  border: 1px solid rgba(162, 155, 254, 0.4);
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  color: #d0c8ff;
+  line-height: 1.4;
+}
+
+.source-box a {
+  color: #a29bfe;
+  text-decoration: underline;
+  font-weight: 700;
+}
+
+.source-box strong {
+  color: #d0c8ff;
+}
+
+/* Contexto Científico */
+.science-box {
+  background: rgba(9, 132, 227, 0.12);
+  border-left: 3px solid var(--nasa-blue);
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  color: #74b9ff;
+  line-height: 1.4;
+}
+
+/* Opciones de Decisión */
+.options-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 8px;
+}
+
+.tradeoff-option-card {
+  background: rgba(15, 23, 42, 0.9);
+  border: 1.5px solid var(--panel-border);
+  border-radius: 12px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  transition: all 0.2s;
+}
+
+.tradeoff-option-card:hover {
+  border-color: var(--cyan);
+  transform: translateY(-1px);
+}
+
+.option-header-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.option-badge {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 2px 7px;
+  border-radius: 4px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--txt3);
+}
+
+.option-title {
+  font-size: 0.94rem;
+  font-weight: 700;
+}
+
+/* Botón individual de audio para cada opción */
+.btn-listen-option {
+  font-family: var(--font);
+  background: rgba(162, 155, 254, 0.15);
+  border: 1px solid rgba(162, 155, 254, 0.45);
+  color: #d0c8ff;
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-size: 0.74rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.btn-listen-option:hover {
+  background: rgba(162, 155, 254, 0.35);
+  border-color: #fff;
+  color: #fff;
+}
+
+.btn-listen-option.speaking {
+  background: #6c5ce7 !important;
+  color: #fff !important;
+  box-shadow: 0 0 10px rgba(108, 92, 231, 0.6);
+  animation: pulseSpeech 1s infinite alternate;
+}
+
+.option-action {
+  font-size: 0.84rem;
+  color: var(--txt2);
+  line-height: 1.35;
+}
+
+.tradeoff-indicators {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.gain-badge {
+  background: var(--gain-bg);
+  border: 1px solid rgba(46, 213, 115, 0.4);
+  color: #55efc4;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  line-height: 1.3;
+}
+
+.gain-badge .icon {
+  font-weight: 700;
+  color: var(--gain);
+}
+
+.cost-badge {
+  background: var(--cost-bg);
+  border: 1px solid rgba(255, 71, 87, 0.4);
+  color: #ff7675;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  line-height: 1.3;
+}
+
+.cost-badge .icon {
+  font-weight: 700;
+  color: var(--cost);
+}
+
+.btn-choose-option {
+  font-family: var(--font);
+  width: 100%;
+  padding: 8px;
+  background: rgba(9, 132, 227, 0.3);
+  border: 1px solid var(--cyan);
+  border-radius: 8px;
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.btn-choose-option:hover {
+  background: var(--cyan);
+  color: #030612;
+}
+
+/* ==========================================================================
+   4. TRANSMISIÓN, RECIBO Y REPORTE DE CONSUMO
+   ========================================================================== */
+.transmission-box {
+  background: var(--panel-glass);
+  border: 1.5px solid var(--border-bright);
+  backdrop-filter: blur(12px);
+  border-radius: 14px;
+  padding: 14px;
+  text-align: center;
+}
+
+.transmission-title {
+  color: var(--cyan);
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.log-quote {
+  font-size: 0.92rem;
+  line-height: 1.5;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.35);
+  border-left: 3px solid var(--cyan);
+  padding: 10px 12px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  text-align: left;
+}
+
+.log-reminder {
+  font-size: 0.8rem;
+  color: var(--txt3);
+  margin-bottom: 10px;
+}
+
+.receipt-title {
+  color: var(--cyan);
+  font-size: 0.95rem;
+  font-weight: 700;
+  margin: 8px 0 4px;
+  text-align: left;
+}
+
+.resource-change-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  margin: 4px 0 8px;
+}
+
+.resource-change-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.82rem;
+  text-align: center;
+}
+
+.resource-change-table thead th {
+  padding: 6px 8px;
+  background: rgba(9, 132, 227, 0.2);
+  border-bottom: 2px solid var(--cyan);
+  color: var(--cyan);
+  font-weight: 700;
+  font-size: 0.74rem;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+}
+
+.resource-change-table thead th:first-child {
+  text-align: left;
+}
+
+.resource-change-table tbody td {
+  padding: 5px 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  color: var(--txt2);
+}
+
+.resource-change-table tbody td:first-child {
+  text-align: left;
+  font-weight: 600;
+  color: #fff;
+}
+
+.change-positive { color: var(--gain) !important; font-weight: 700; }
+.change-negative { color: var(--cost) !important; font-weight: 700; }
+.change-neutral { color: #636e72 !important; font-style: italic; }
+.change-row.neutral td { opacity: 0.5; }
+
+/* Consumo Diario */
+.decay-explanation-card {
+  background: rgba(10, 15, 30, 0.85);
+  border: 1.5px solid rgba(255, 165, 2, 0.3);
+  border-radius: 12px;
+  padding: 12px;
+  margin: 6px 0;
+  text-align: left;
+}
+
+.decay-intro {
+  font-size: 0.85rem;
+  line-height: 1.4;
+  color: var(--txt2);
+  margin-bottom: 8px;
+}
+
+.decay-intro strong {
+  color: #feca57;
+}
+
+.decay-item-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
+
+.decay-item {
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid var(--panel-border);
+  border-radius: 8px;
+  padding: 6px 8px;
+}
+
+.decay-item-header {
+  font-size: 0.84rem;
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+
+.decay-item-reason {
+  font-size: 0.74rem;
+  line-height: 1.35;
+  color: var(--txt3);
+}
+
+/* ==========================================================================
+   5. PANTALLA FIN DE MISIÓN (GAME OVER) CON MASCOTA
+   ========================================================================== */
+.gameover-screen {
+  justify-content: center;
+  align-items: center;
+  padding: 14px;
+  overflow-y: auto;
+}
+
+.gameover-inner {
+  max-width: 680px;
+  width: 100%;
+  background: var(--panel-glass);
+  border: 2px solid var(--border-bright);
+  backdrop-filter: blur(14px);
+  border-radius: 18px;
+  padding: 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  max-height: 100%;
+  overflow-y: auto;
+}
+
+.gameover-mascot-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(10, 16, 32, 0.7);
+  border: 1.5px solid var(--border-bright);
+  border-radius: 14px;
+  padding: 8px 16px;
+  width: 100%;
+  max-width: 480px;
+}
+
+.gameover-mascot-avatar {
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--cyan);
+  box-shadow: 0 0 12px var(--glow);
+  flex-shrink: 0;
+  animation: mascotPop 0.5s ease-out;
+}
+
+.gameover-mascot-bubble {
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: #e0f8ff;
+  text-align: left;
+}
+
+.gameover-title {
+  font-size: clamp(1.5rem, 4vw, 2.2rem);
+  font-weight: 800;
+  line-height: 1.15;
+}
+
+.gameover-subtitle {
+  font-size: 0.94rem;
+  color: var(--txt2);
+  line-height: 1.4;
+  max-width: 580px;
+}
+
+.rank-badge {
+  background: rgba(254, 202, 87, 0.15);
+  border: 1.5px solid var(--energy);
+  padding: 6px 18px;
+  border-radius: 24px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #ffeaa7;
+}
+
+.metrics-row {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+  max-width: 480px;
+}
+
+.metric-pill {
+  flex: 1;
+  background: rgba(10, 16, 32, 0.75);
+  border: 1px solid var(--panel-border);
+  padding: 8px;
+  border-radius: 10px;
+}
+
+.metric-pill span {
+  display: block;
+  font-size: 0.72rem;
+  color: var(--txt3);
+}
+
+.metric-pill strong {
+  font-size: 1.1rem;
+  color: #fff;
+}
+
+.lesson-card {
+  width: 100%;
+  text-align: left;
+  border-radius: 12px;
+  padding: 12px;
+  font-size: 0.85rem;
+  line-height: 1.45;
+}
+
+.lesson-success {
+  background: rgba(46, 213, 115, 0.1);
+  border: 1.5px solid rgba(46, 213, 115, 0.4);
+  color: #e6fffa;
+}
+
+.lesson-success h4 {
+  color: var(--gain);
+  margin-bottom: 5px;
+}
+
+.lesson-failure {
+  background: rgba(255, 71, 87, 0.1);
+  border: 1.5px solid rgba(255, 71, 87, 0.4);
+  color: #ffe8ea;
+}
+
+.lesson-failure h4 {
+  color: var(--cost);
+  margin-bottom: 5px;
+}
+
+.science-truth-pill {
+  background: rgba(0, 0, 0, 0.3);
+  border-left: 3px solid #ff6b81;
+  padding: 6px 10px;
+  border-radius: 6px;
+  margin: 6px 0;
+  font-size: 0.82rem;
+}
+
+.gameover-actions {
+  display: flex;
+  gap: 8px;
+  width: 100%;
+  max-width: 480px;
+}
+
+.gameover-actions .btn-primary, .gameover-actions .btn-secondary {
+  flex: 1;
+}
+
+/* ==========================================================================
+   6. MODALES (ARCHIVO CIENTÍFICO Y ABORTAR MISIÓN)
+   ========================================================================== */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.82);
+  backdrop-filter: blur(6px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px;
+}
+
+.modal-card {
+  background: #0f172a;
+  border: 2px solid var(--border-bright);
+  border-radius: 16px;
+  max-width: 850px;
+  width: 100%;
+  max-height: 88dvh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.modal-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 14px;
+  background: rgba(15, 23, 42, 0.95);
+  border-bottom: 1px solid var(--panel-border);
+}
+
+.modal-head h3 {
+  color: var(--cyan);
+  font-size: 1.1rem;
+}
+
+.modal-head-danger {
+  border-bottom-color: rgba(255, 71, 87, 0.5);
+}
+
+.modal-head-danger h3 {
+  color: #ff6b81;
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  color: var(--txt3);
+  font-size: 1.6rem;
+  cursor: pointer;
+}
+
+.modal-body {
+  padding: 14px;
+  overflow-y: auto;
+}
+
+/* Modal Abortar Misión */
+.modal-abort-card {
+  max-width: 480px;
+}
+
+.modal-abort-body {
+  text-align: center;
+  padding: 20px 16px;
+}
+
+.abort-icon {
+  font-size: 2.8rem;
+  margin-bottom: 8px;
+}
+
+.abort-prompt {
+  font-size: 1.1rem;
+  color: #fff;
+  margin-bottom: 8px;
+}
+
+.abort-desc {
+  font-size: 0.88rem;
+  color: var(--txt2);
+  line-height: 1.45;
+  margin-bottom: 16px;
+}
+
+.abort-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.abort-actions button {
+  flex: 1;
+}
+
+.btn-danger-action {
+  background: linear-gradient(135deg, #eb4d4b, #ff7675) !important;
+  box-shadow: 0 4px 14px rgba(235, 77, 75, 0.4) !important;
+}
+
+/* Modal Selector de Voces */
+.modal-voice-card {
+  max-width: 520px;
+}
+
+.modal-voice-body {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.voice-modal-intro {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.voice-modal-desc {
+  font-size: 0.88rem;
+  color: var(--txt2);
+  line-height: 1.4;
+}
+
+.voice-current-banner {
+  background: rgba(0, 184, 148, 0.15);
+  border: 1px solid rgba(85, 239, 196, 0.4);
+  border-radius: 8px;
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.voice-banner-label {
+  font-size: 0.8rem;
+  color: #a8e6cf;
+}
+
+.voice-banner-value {
+  font-size: 0.92rem;
+  color: #55efc4;
+}
+
+.voice-options-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 280px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.voice-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 8px 12px;
+  background: rgba(30, 41, 59, 0.65);
+  border: 1px solid var(--panel-border);
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.voice-card:hover {
+  background: rgba(30, 41, 59, 0.95);
+  border-color: var(--border-bright);
+}
+
+.voice-card.selected {
+  background: rgba(9, 132, 227, 0.25);
+  border-color: var(--cyan);
+  box-shadow: 0 0 10px rgba(0, 210, 211, 0.2);
+}
+
+.voice-card-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  flex: 1;
+}
+
+.voice-card-flag {
+  font-size: 1.4rem;
+  line-height: 1;
+}
+
+.voice-card-texts {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.voice-card-name {
+  font-size: 0.92rem;
+  color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.voice-card-region {
+  font-size: 0.76rem;
+  color: var(--txt3);
+}
+
+.voice-card-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.btn-voice-preview {
+  background: rgba(162, 155, 254, 0.2);
+  border: 1px solid #a29bfe;
+  color: #e0d9ff;
+  font-size: 0.74rem;
+  padding: 4px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btn-voice-preview:hover {
+  background: rgba(162, 155, 254, 0.4);
+  color: #fff;
+}
+
+.btn-voice-select {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: var(--txt1);
+  font-size: 0.74rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btn-voice-select:hover {
+  border-color: #fff;
+}
+
+.btn-voice-select.active {
+  background: #00b894;
+  border-color: #55efc4;
+  color: #000;
+  font-weight: 700;
+}
+
+.voice-modal-footer {
+  display: flex;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.voice-modal-footer button {
+  flex: 1;
+}
+
+/* Archivo Científico Items */
+.section-intro {
+  color: var(--txt3);
+  font-size: 0.85rem;
+  margin-bottom: 10px;
+}
+
+.science-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 10px;
+}
+
+.science-archive-item {
+  background: rgba(30, 41, 59, 0.7);
+  border: 1px solid var(--panel-border);
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.archive-badge {
+  display: inline-block;
+  background: rgba(0, 210, 211, 0.18);
+  border: 1px solid var(--cyan);
+  padding: 1px 7px;
+  border-radius: 10px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--cyan);
+  margin-bottom: 4px;
+}
+
+.science-archive-item h4 {
+  font-size: 0.94rem;
+  color: #fff;
+  margin-bottom: 4px;
+}
+
+.archive-kid-expl {
+  font-size: 0.82rem;
+  line-height: 1.4;
+  color: var(--txt2);
+  margin: 4px 0;
+}
+
+.archive-tradeoff {
+  background: rgba(0, 0, 0, 0.3);
+  padding: 6px;
+  border-radius: 6px;
+  font-size: 0.78rem;
+  color: #ffeaa7;
+}
+
+/* ==========================================================================
+   7. ANIMACIONES DE MASCOTA
+   ========================================================================== */
+@keyframes mascotPop {
+  0% { transform: scale(0.85); opacity: 0.7; }
+  60% { transform: scale(1.08); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.mascot-pop {
+  animation: mascotPop 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes bubblePop {
+  0% { transform: translateY(4px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+.bubble-pop {
+  animation: bubblePop 0.25s ease-out;
+}
+
+/* ==========================================================================
+   8. ADAPTACIÓN RESPONSIVA Y ESCALADO UX PARA 3 PANTALLAS
+   ========================================================================== */
+
+/* A. LAPTOP / PC (Desktop > 980px): Vista de 2 columnas con tipografía amplia y cómoda */
+@media (min-width: 981px) {
+  .station-sidebar {
+    display: flex;
+    width: 350px;
+  }
+  .mobile-mascot-strip {
+    display: none;
+  }
+  .res-strip {
+    display: none; /* En PC la telemetría está en el panel lateral */
+  }
+  .top-bar .bar-right #btn-open-science,
+  .top-bar .bar-right #btn-toggle-sound,
+  .top-bar .bar-right #btn-abort-mission {
+    display: none; /* Se manejan desde el panel lateral */
+  }
+
+  /* Escalado tipográfico para pantallas de PC / Monitor */
+  .main-title { font-size: 3.4rem; }
+  .main-subtitle { font-size: 1.25rem; }
+  .welcome-briefing h3 { font-size: 1.15rem; }
+  .welcome-briefing p { font-size: 1rem; line-height: 1.55; }
+  .welcome-mascot-bubble { font-size: 1.05rem; }
+  .rule-highlight { font-size: 1rem; }
+  .diff-title { font-size: 1.05rem; }
+  .diff-desc { font-size: 0.85rem; }
+  .btn-primary { font-size: 1.1rem; padding: 14px; }
+
+  .dilemma-title { font-size: 1.45rem; }
+  .dilemma-desc { font-size: 1.08rem; line-height: 1.55; }
+  .science-box { font-size: 0.96rem; line-height: 1.5; padding: 10px 14px; }
+  .source-box { font-size: 0.92rem; padding: 8px 12px; }
+
+  .options-grid {
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 12px;
+  }
+  .tradeoff-option-card {
+    padding: 12px;
+    gap: 8px;
+  }
+  .option-title { font-size: 1.08rem; }
+  .option-action { font-size: 0.94rem; line-height: 1.45; }
+  .gain-badge, .cost-badge { font-size: 0.88rem; padding: 6px 10px; }
+  .btn-choose-option { font-size: 0.95rem; padding: 10px; }
+
+  .sidebar-speech-bubble { font-size: 0.95rem; line-height: 1.45; }
+  .side-res-row { font-size: 1rem; padding: 6px 0; }
+  .telemetry-title { font-size: 0.95rem; }
+
+  .log-quote { font-size: 1.05rem; line-height: 1.55; }
+  .receipt-title { font-size: 1.1rem; }
+  .resource-change-table { font-size: 0.92rem; }
+  .decay-intro { font-size: 0.98rem; }
+  .decay-item-header { font-size: 0.94rem; }
+  .decay-item-reason { font-size: 0.85rem; }
+}
+
+/* B. TABLET (601px a 980px): Layout horizontal con banner de compañero */
+@media (min-width: 601px) and (max-width: 980px) {
+  .station-sidebar {
+    display: none;
+  }
+  .mobile-mascot-strip {
+    display: flex;
+    padding: 8px 14px;
+  }
+  .mascot-mobile-avatar {
+    width: 58px;
+    height: 58px;
+  }
+  .mobile-speech-bubble {
+    font-size: 0.9rem;
+  }
+  .options-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .difficulty-selector {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .dilemma-title { font-size: 1.25rem; }
+  .dilemma-desc { font-size: 0.96rem; }
+}
+
+/* C. CELULAR (<= 600px): Layout vertical compacto de máxima eficiencia */
+@media (max-width: 600px) {
+  .station-sidebar {
+    display: none;
+  }
+  .mobile-mascot-strip {
+    display: flex;
+    padding: 4px 8px;
+    gap: 8px;
+  }
+  .mascot-mobile-avatar {
+    width: 44px;
+    height: 44px;
+  }
+  .mobile-speech-bubble {
+    font-size: 0.78rem;
+  }
+  .difficulty-selector {
+    grid-template-columns: 1fr;
+  }
+  .options-grid {
+    grid-template-columns: 1fr;
+  }
+  .metrics-row {
+    flex-direction: column;
+  }
+  .gameover-actions {
+    flex-direction: column;
+  }
+  .decay-item-grid {
+    grid-template-columns: 1fr;
+  }
+  .res-strip {
+    gap: 3px;
+    padding: 3px 6px;
+  }
+  .res-mini {
+    padding: 2px 4px;
+  }
+  .env-bar {
+    gap: 8px;
+    font-size: 0.74rem;
+  }
+  .abort-actions {
+    flex-direction: column;
+  }
+}
