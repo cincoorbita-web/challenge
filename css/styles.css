@@ -3105,3 +3105,203 @@ body {
   display: flex;
   gap: 10px;
 }
+
+/* ==========================================================================
+   BANNER DE TRANSMISIÓN RADIAL EN VIVO (MODO JUNIOR ARCADE)
+   Reproducción fluida con voz que no bloquea con modales obligatorios
+   ========================================================================== */
+#junior-btn-voice {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(0, 210, 211, 0.4);
+  color: var(--cyan);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+#junior-btn-voice:hover {
+  background: rgba(0, 210, 211, 0.2);
+  border-color: var(--cyan);
+  box-shadow: 0 0 12px rgba(0, 210, 211, 0.35);
+  transform: translateY(-1px);
+}
+
+.junior-broadcast-card {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  right: 14px;
+  z-index: 35;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 16px;
+  background: rgba(8, 14, 30, 0.94);
+  backdrop-filter: blur(12px);
+  border: 1.5px solid var(--cyan);
+  border-radius: 14px;
+  box-shadow: 0 10px 32px rgba(0, 0, 0, 0.75), 0 0 24px rgba(0, 210, 211, 0.3);
+  animation: slideDownBroadcast 0.35s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+}
+
+@keyframes slideDownBroadcast {
+  from {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.junior-broadcast-card.hidden {
+  display: none !important;
+}
+
+.broadcast-left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.broadcast-icon {
+  font-size: 1.3rem;
+  animation: radioPulse 1.5s infinite;
+}
+
+@keyframes radioPulse {
+  0%, 100% { transform: scale(1); filter: drop-shadow(0 0 4px var(--cyan)); }
+  50% { transform: scale(1.15); filter: drop-shadow(0 0 10px var(--cyan)); }
+}
+
+.broadcast-mascot-avatar {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid var(--cyan);
+  box-shadow: 0 0 10px var(--glow);
+}
+
+.broadcast-mascot-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.broadcast-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.broadcast-tag-line {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.broadcast-badge {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--cyan);
+  letter-spacing: 0.5px;
+}
+
+.broadcast-live-dot {
+  font-size: 0.65rem;
+  font-weight: 800;
+  color: #ff4757;
+  animation: blinkLive 1s infinite alternate;
+}
+
+@keyframes blinkLive {
+  from { opacity: 0.4; }
+  to { opacity: 1; text-shadow: 0 0 6px #ff4757; }
+}
+
+.broadcast-headline {
+  font-size: 1.05rem;
+  color: #fff;
+  margin: 0 0 4px 0;
+  line-height: 1.25;
+}
+
+.broadcast-desc {
+  font-size: 0.88rem;
+  line-height: 1.35;
+  color: #e0f8ff;
+  margin: 0 0 8px 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.broadcast-progress-track {
+  width: 100%;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.broadcast-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--cyan), #48dbfb);
+  box-shadow: 0 0 8px var(--cyan);
+  transition: width 0.1s linear;
+}
+
+.broadcast-actions {
+  flex-shrink: 0;
+}
+
+.btn-skip-broadcast {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  font-size: 0.82rem;
+  padding: 6px 12px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.btn-skip-broadcast:hover {
+  background: rgba(0, 210, 211, 0.25);
+  border-color: var(--cyan);
+  color: #fff;
+  box-shadow: 0 0 10px rgba(0, 210, 211, 0.4);
+}
+
+@media (max-width: 600px) {
+  .junior-broadcast-card {
+    top: 8px;
+    left: 8px;
+    right: 8px;
+    padding: 8px 10px;
+    gap: 8px;
+  }
+  .broadcast-mascot-avatar {
+    width: 42px;
+    height: 42px;
+  }
+  .broadcast-headline {
+    font-size: 0.95rem;
+  }
+  .broadcast-desc {
+    font-size: 0.82rem;
+    -webkit-line-clamp: 2;
+  }
+  .btn-skip-broadcast {
+    padding: 4px 8px;
+    font-size: 0.75rem;
+  }
+}

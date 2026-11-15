@@ -28,6 +28,7 @@ class JuniorArcadeGame {
     this.isPaused = false;
     this.isPlaying = false;
     this.audioEnabled = true; // Por defecto: narración en voz alta activada
+    this.autoAdvanceTimer = null; // Timer para avanzar de día automáticamente con audio
     this.playerName = 'Junior';
 
     // Recursos vitales de supervivencia del Rover
@@ -147,8 +148,16 @@ class JuniorArcadeGame {
       barHull: document.getElementById('junior-bar-hull'),
       valScience: document.getElementById('junior-val-science'),
       btnAudioToggle: document.getElementById('junior-btn-audio-toggle'),
+      btnVoice: document.getElementById('junior-btn-voice'),
       btnExit: document.getElementById('junior-btn-exit'),
-      // Modal educativo
+      // Banner de transmisión en vivo (reproducción fluida con audio)
+      broadcastCard: document.getElementById('junior-broadcast-card'),
+      broadcastTitle: document.getElementById('junior-broadcast-title'),
+      broadcastText: document.getElementById('junior-broadcast-text'),
+      broadcastTag: document.getElementById('junior-broadcast-tag'),
+      broadcastFill: document.getElementById('junior-broadcast-fill'),
+      btnBroadcastSkip: document.getElementById('junior-btn-broadcast-skip'),
+      // Modal educativo (lectura pausada cuando el audio está silenciado)
       modalFact: document.getElementById('junior-modal-fact'),
       factDayTag: document.getElementById('junior-fact-day-tag'),
       factTitle: document.getElementById('junior-fact-title'),
@@ -311,7 +320,21 @@ class JuniorArcadeGame {
       });
     }
 
-    // Botones del Modal de Dato Científico
+    // Botón de salto de transmisión radial en vivo (Continuar ya)
+    if (this.dom.btnBroadcastSkip) {
+      this.dom.btnBroadcastSkip.addEventListener('click', () => {
+        if (this.autoAdvanceTimer) {
+          clearTimeout(this.autoAdvanceTimer);
+          this.autoAdvanceTimer = null;
+        }
+        if (window.speechNarrator) {
+          window.speechNarrator.stop();
+        }
+        this.advanceToNextDay();
+      });
+    }
+
+    // Botones del Modal de Dato Científico (cuando audio está apagado)
     if (this.dom.btnListenAgain) {
       this.dom.btnListenAgain.addEventListener('click', () => {
         this.narrateCurrentFact(true);
@@ -324,10 +347,14 @@ class JuniorArcadeGame {
       });
     }
 
-    // Botones de Fin de Misión
+    // Botones de Fin de Misión / Reintento
     if (this.dom.btnEndRestart) {
       this.dom.btnEndRestart.addEventListener('click', () => {
-        this.start(this.playerName);
+        if (this.resources.oxygen <= 0 || this.resources.energy <= 0 || this.resources.hull <= 0) {
+          this.retryDay();
+        } else {
+          this.start(this.playerName);
+        }
       });
     }
 
@@ -371,6 +398,10 @@ class JuniorArcadeGame {
    * Inicia la experiencia completa de 5 días
    */
   start(playerName = 'Junior Astronaut') {
+    if (this.autoAdvanceTimer) {
+      clearTimeout(this.autoAdvanceTimer);
+      this.autoAdvanceTimer = null;
+    }
     this.playerName = playerName || 'Junior';
     this.currentDay = 1;
     this.dayProgress = 0;
@@ -379,7 +410,7 @@ class JuniorArcadeGame {
     this.entities = [];
     this.particles = [];
     this.floatingDeltas = [];
-    this.nextSpawnTimer = 0.8;
+    this.nextSpawnTimer = 0.5;
 
     // Recursos iniciales al 100%
     this.resources = {
@@ -396,9 +427,10 @@ class JuniorArcadeGame {
     this.rover.jumpOffset = 0;
     this.rover.isJumping = false;
 
-    // Ocultar modales
+    // Ocultar modales y banner de transmisión
     if (this.dom.modalFact) this.dom.modalFact.classList.add('hidden');
     if (this.dom.modalEnd) this.dom.modalEnd.classList.add('hidden');
+    if (this.dom.broadcastCard) this.dom.broadcastCard.classList.add('hidden');
 
     this.updateHUD();
     this.updateAudioButtonUI();
@@ -433,9 +465,16 @@ class JuniorArcadeGame {
   }
 
   stop() {
+    if (this.autoAdvanceTimer) {
+      clearTimeout(this.autoAdvanceTimer);
+      this.autoAdvanceTimer = null;
+    }
     this.isPlaying = false;
     this.isPaused = false;
     cancelAnimationFrame(this.animId);
+    if (this.dom.broadcastCard) {
+      this.dom.broadcastCard.classList.add('hidden');
+    }
     if (window.speechNarrator) {
       window.speechNarrator.stop();
     }
@@ -466,9 +505,9 @@ class JuniorArcadeGame {
       return;
     }
 
-    // 2. Consumo basal suave de supervivencia (1% cada 2.5 seg)
-    this.resources.oxygen = Math.max(0, this.resources.oxygen - dt * 0.38);
-    this.resources.energy = Math.max(0, this.resources.energy - dt * 0.42);
+    // 2. Consumo basal dinámico de supervivencia según el día (exige esquivar y recolectar)
+    this.resources.oxygen = Math.max(0, this.resources.oxygen - dt * (1.1 + this.currentDay * 0.15));
+    this.resources.energy = Math.max(0, this.resources.energy - dt * (1.2 + this.currentDay * 0.15));
 
     // Si algún recurso vital llega a 0, pausar y ofrecer recarga
     if (this.resources.oxygen <= 0 || this.resources.energy <= 0 || this.resources.hull <= 0) {
@@ -518,16 +557,16 @@ class JuniorArcadeGame {
     // Rotación de ruedas con la marcha
     this.rover.wheelRot += 0.12;
 
-    // 5. Spawn de Obstáculos y Coleccionables
+    // 5. Spawn de Obstáculos y Coleccionables con cadencia rápida y desafiante
     this.nextSpawnTimer -= dt;
     if (this.nextSpawnTimer <= 0) {
       this.spawnEntity();
-      // Cadencia dinámica de spawn: entre 0.9 y 1.6 segundos
-      this.nextSpawnTimer = Math.random() * 0.7 + 0.9;
+      // Cadencia dinámica de spawn: entre 0.35 y 0.70 segundos
+      this.nextSpawnTimer = Math.random() * 0.35 + Math.max(0.35, 0.65 - this.currentDay * 0.06);
     }
 
-    // Velocidad de avance del terreno según el día
-    const worldSpeed = 190 + (this.currentDay * 12);
+    // Velocidad de avance del terreno acelerada según el día (220 a 320 px/s)
+    const worldSpeed = 220 + (this.currentDay * 20);
 
     // 6. Actualización de Entidades y Detección de Colisiones
     const roverBox = {
@@ -602,16 +641,17 @@ class JuniorArcadeGame {
    * Genera un nuevo obstáculo o coleccionable en la parte superior del camino
    */
   spawnEntity() {
-    // 60% coleccionables / 40% obstáculos para mantener una experiencia positiva y educativa
-    const isObstacle = Math.random() < 0.42;
+    // Proporción desafiante: más obstáculos a medida que avanzan los días (50% a 70%)
+    const obstacleChance = Math.min(0.70, 0.50 + (this.currentDay * 0.045));
+    const isObstacle = Math.random() < obstacleChance;
     const margin = 50;
     const spawnX = Math.random() * (this.canvas.width - margin * 2) + margin;
 
     if (isObstacle) {
       const obsTypes = [
-        { type: 'boulder', icon: '🪨', label: 'Roca', radius: 18, cost: { hull: -12 }, canJumpOver: true, color: '#7f8c8d' },
-        { type: 'crater', icon: '🕳️', label: 'Cráter', radius: 22, cost: { energy: -10 }, canJumpOver: true, color: '#34495e' },
-        { type: 'meteor', icon: '☄️', label: 'Meteorito', radius: 17, cost: { hull: -14, oxygen: -6 }, canJumpOver: false, color: '#e74c3c' }
+        { type: 'boulder', icon: '🪨', label: 'Roca', radius: 19, cost: { hull: -18, energy: -5 }, canJumpOver: true, color: '#7f8c8d' },
+        { type: 'crater', icon: '🕳️', label: 'Cráter', radius: 23, cost: { energy: -20, hull: -8 }, canJumpOver: true, color: '#34495e' },
+        { type: 'meteor', icon: '☄️', label: 'Meteorito', radius: 18, cost: { hull: -22, oxygen: -12 }, canJumpOver: false, color: '#e74c3c' }
       ];
       const selected = obsTypes[Math.floor(Math.random() * obsTypes.length)];
       this.entities.push({
@@ -624,8 +664,8 @@ class JuniorArcadeGame {
       const colTypes = [
         { type: 'oxygen', icon: '💨', label: '+O2', radius: 18, gain: { oxygen: 18 }, color: '#00d2d3' },
         { type: 'battery', icon: '⚡', label: '+Energy', radius: 18, gain: { energy: 18 }, color: '#feca57' },
-        { type: 'repair', icon: '🛡️', label: '+Hull', radius: 18, gain: { hull: 15 }, color: '#48dbfb' },
-        { type: 'crystal', icon: '🌟', label: '+Ciencia', radius: 20, gain: { science: 25, oxygen: 5, energy: 5 }, color: '#9b59b6' }
+        { type: 'repair', icon: '🛡️', label: '+Hull', radius: 18, gain: { hull: 18 }, color: '#48dbfb' },
+        { type: 'crystal', icon: '🌟', label: '+Ciencia', radius: 20, gain: { science: 30, oxygen: 8, energy: 8 }, color: '#9b59b6' }
       ];
       const selected = colTypes[Math.floor(Math.random() * colTypes.length)];
       this.entities.push({
@@ -647,7 +687,12 @@ class JuniorArcadeGame {
       if (ent.cost.energy) this.resources.energy = Math.max(0, this.resources.energy + ent.cost.energy);
       if (ent.cost.oxygen) this.resources.oxygen = Math.max(0, this.resources.oxygen + ent.cost.oxygen);
 
-      const penaltyText = ent.cost.hull ? `${ent.cost.hull}% 🛡️` : `${ent.cost.energy}% ⚡`;
+      const penaltyParts = [];
+      if (ent.cost.hull) penaltyParts.push(`${ent.cost.hull}% 🛡️`);
+      if (ent.cost.energy) penaltyParts.push(`${ent.cost.energy}% ⚡`);
+      if (ent.cost.oxygen) penaltyParts.push(`${ent.cost.oxygen}% 💨`);
+      const penaltyText = penaltyParts.join(' ');
+
       this.spawnFloatingDelta(ent.x, ent.y, penaltyText, '#ff4757');
       this.spawnDustPuff(ent.x, ent.y);
 
@@ -655,7 +700,7 @@ class JuniorArcadeGame {
 
       // AstroCan se asusta brevemente
       if (window.astroMascot) {
-        window.astroMascot.setEmotion('scared', this.isEn() ? 'Ouch! Careful with that lunar rock!' : '¡Ouch! ¡Cuidado con esa roca lunar!');
+        window.astroMascot.setEmotion('scared', this.isEn() ? 'Ouch! Careful with that lunar obstacle!' : '¡Ouch! ¡Cuidado con ese obstáculo lunar!');
       }
     } else {
       // Ganancia por coleccionable
@@ -725,48 +770,101 @@ class JuniorArcadeGame {
   }
 
   /**
-   * Finaliza el día actual y presenta el Dato Curioso con audio automático
+   * Finaliza el día actual y presenta el Dato Curioso.
+   * Si la narración con voz está activa, se reproduce fluidamente mediante un
+   * banner radial interactivo y avanza automáticamente al terminar, sin bloquear con modales obligatorios.
    */
   completeDay() {
     this.isPaused = true;
     if (window.gameAudio) window.gameAudio.playVictory();
 
-    // Bonificación de suministros de la base (+15% a todos)
-    this.resources.oxygen = Math.min(100, this.resources.oxygen + 15);
-    this.resources.energy = Math.min(100, this.resources.energy + 15);
-    this.resources.hull = Math.min(100, this.resources.hull + 15);
+    // Bonificación moderada de suministros de la base (+10% a todos)
+    this.resources.oxygen = Math.min(100, this.resources.oxygen + 10);
+    this.resources.energy = Math.min(100, this.resources.energy + 10);
+    this.resources.hull = Math.min(100, this.resources.hull + 10);
 
     const factData = this.scienceFacts[this.currentDay - 1];
+    const isEn = this.isEn();
+    const title = this.t(factData.titleKey);
+    const body = this.t(factData.bodyKey);
+    const tag = this.t(factData.tagKey);
+    const speechScript = `${title}. ${body}`;
 
-    if (this.dom.modalFact) {
-      const isEn = this.isEn();
-      const dayText = isEn ? `NASA SCIENCE TRANSMISSION — DAY ${this.currentDay} / 5` : `TRANSMISIÓN EDUCATIVA NASA — DÍA ${this.currentDay} DE 5`;
-      const title = this.t(factData.titleKey);
-      const body = this.t(factData.bodyKey);
-      const tag = this.t(factData.tagKey);
+    // Reacción de AstroCan al dato científico
+    if (window.astroMascot) {
+      window.astroMascot.setEmotion('thinking', title);
+    }
 
-      if (this.dom.factDayTag) this.dom.factDayTag.textContent = dayText;
-      if (this.dom.factTitle) this.dom.factTitle.textContent = `${factData.icon} ${title}`;
-      if (this.dom.factBody) this.dom.factBody.textContent = body;
-      if (this.dom.factNasaBadge) this.dom.factNasaBadge.textContent = tag;
+    // FLUJO CON NARRACIÓN DE VOZ ACTIVA:
+    // Transmisión radial en vivo no bloqueante que avanza sola al culminar el audio
+    if (this.audioEnabled) {
+      if (this.dom.modalFact) this.dom.modalFact.classList.add('hidden');
 
-      if (this.dom.btnNextDay) {
-        this.dom.btnNextDay.textContent = (this.currentDay === this.totalDays)
-          ? this.t('junior_btn_finish')
-          : this.t('junior_btn_next_day');
+      if (this.dom.broadcastCard) {
+        if (this.dom.broadcastTitle) this.dom.broadcastTitle.textContent = `${factData.icon} ${title}`;
+        if (this.dom.broadcastText) this.dom.broadcastText.textContent = body;
+        if (this.dom.broadcastTag) this.dom.broadcastTag.textContent = tag;
+
+        // Reiniciar barra de progreso visual de la transmisión radial
+        if (this.dom.broadcastFill) {
+          this.dom.broadcastFill.style.transition = 'none';
+          this.dom.broadcastFill.style.width = '0%';
+          setTimeout(() => {
+            if (this.dom.broadcastFill) {
+              const estDuration = Math.max(5.5, speechScript.length * 0.08);
+              this.dom.broadcastFill.style.transition = `width ${estDuration}s linear`;
+              this.dom.broadcastFill.style.width = '100%';
+            }
+          }, 60);
+        }
+
+        this.dom.broadcastCard.classList.remove('hidden');
       }
 
-      this.dom.modalFact.classList.remove('hidden');
-
-      // Reacción de AstroCan al dato científico
-      if (window.astroMascot) {
-        window.astroMascot.setEmotion('thinking', title);
+      if (this.autoAdvanceTimer) {
+        clearTimeout(this.autoAdvanceTimer);
+        this.autoAdvanceTimer = null;
       }
 
-      // NARRACIÓN EN AUDIO AUTOMÁTICA POR DEFECTO
-      // (Requisito clave: que los niños de 7 a 9 años no necesiten leer)
-      if (this.audioEnabled) {
-        this.narrateCurrentFact(false);
+      // Reproducir audio con Web Speech API y pasar callback de finalización
+      if (window.speechNarrator) {
+        window.speechNarrator.speakText(speechScript, 'junior-fact', () => {
+          if (this.autoAdvanceTimer) {
+            clearTimeout(this.autoAdvanceTimer);
+            this.autoAdvanceTimer = null;
+          }
+          this.advanceToNextDay();
+        });
+      }
+
+      // Fallback de seguridad en caso de que onend no dispare
+      const fallbackMs = Math.max(6500, speechScript.length * 90);
+      this.autoAdvanceTimer = setTimeout(() => {
+        this.advanceToNextDay();
+      }, fallbackMs);
+
+    } else {
+      // FLUJO CON AUDIO SILENCIADO/DESACTIVADO:
+      // Se muestra el modal tradicional para lectura manual a su propio ritmo
+      if (this.dom.broadcastCard) this.dom.broadcastCard.classList.add('hidden');
+
+      if (this.dom.modalFact) {
+        const dayText = isEn
+          ? `NASA SCIENCE TRANSMISSION — DAY ${this.currentDay} / 5`
+          : `TRANSMISIÓN EDUCATIVA NASA — DÍA ${this.currentDay} DE 5`;
+
+        if (this.dom.factDayTag) this.dom.factDayTag.textContent = dayText;
+        if (this.dom.factTitle) this.dom.factTitle.textContent = `${factData.icon} ${title}`;
+        if (this.dom.factBody) this.dom.factBody.textContent = body;
+        if (this.dom.factNasaBadge) this.dom.factNasaBadge.textContent = tag;
+
+        if (this.dom.btnNextDay) {
+          this.dom.btnNextDay.textContent = (this.currentDay === this.totalDays)
+            ? this.t('junior_btn_finish')
+            : this.t('junior_btn_next_day');
+        }
+
+        this.dom.modalFact.classList.remove('hidden');
       }
     }
   }
@@ -784,8 +882,15 @@ class JuniorArcadeGame {
   }
 
   advanceToNextDay() {
+    if (this.autoAdvanceTimer) {
+      clearTimeout(this.autoAdvanceTimer);
+      this.autoAdvanceTimer = null;
+    }
     if (window.speechNarrator) {
       window.speechNarrator.stop();
+    }
+    if (this.dom.broadcastCard) {
+      this.dom.broadcastCard.classList.add('hidden');
     }
     if (this.dom.modalFact) {
       this.dom.modalFact.classList.add('hidden');
@@ -810,6 +915,48 @@ class JuniorArcadeGame {
       );
     }
 
+    if (window.gameAudio) window.gameAudio.playClick();
+  }
+
+  retryDay() {
+    if (this.autoAdvanceTimer) {
+      clearTimeout(this.autoAdvanceTimer);
+      this.autoAdvanceTimer = null;
+    }
+    if (window.speechNarrator) {
+      window.speechNarrator.stop();
+    }
+    this.dayProgress = 0;
+    this.isPaused = false;
+    this.isPlaying = true;
+    this.entities = [];
+    this.particles = [];
+    this.floatingDeltas = [];
+    this.nextSpawnTimer = 0.5;
+
+    // Recargar suministros al 100% para la nueva tentativa del día
+    this.resources.oxygen = 100;
+    this.resources.energy = 100;
+    this.resources.hull = 100;
+
+    this.rover.x = this.canvas.width / 2;
+    this.rover.speedX = 0;
+    this.rover.jumpOffset = 0;
+    this.rover.isJumping = false;
+
+    if (this.dom.modalEnd) this.dom.modalEnd.classList.add('hidden');
+    if (this.dom.modalFact) this.dom.modalFact.classList.add('hidden');
+    if (this.dom.broadcastCard) this.dom.broadcastCard.classList.add('hidden');
+
+    this.updateHUD();
+    if (window.astroMascot) {
+      window.astroMascot.setEmotion(
+        'relaxed',
+        this.isEn()
+          ? `Supplies restocked! Let's conquer Day ${this.currentDay} together!`
+          : `¡Suministros recargados! ¡A conquistar el Día ${this.currentDay} juntos!`
+      );
+    }
     if (window.gameAudio) window.gameAudio.playClick();
   }
 

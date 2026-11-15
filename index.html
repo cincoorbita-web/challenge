@@ -394,6 +394,9 @@
           </div>
 
           <div class="junior-bar-right">
+            <button id="junior-btn-voice" class="pill-btn btn-voice" title="Cambiar tipo de voz de narración" data-ai-generated="true">
+              🎙️ <span id="junior-voice-label">Voz: Auto</span>
+            </button>
             <button id="junior-btn-audio-toggle" class="pill-btn audio-active" title="Activar/Silenciar narración en voz alta">
               🔊 Voz NASA: Activada
             </button>
@@ -442,6 +445,32 @@
         <!-- Contenedor del Canvas Interactivo -->
         <div class="junior-canvas-container">
           <canvas id="junior-arcade-canvas" width="800" height="420"></canvas>
+
+          <!-- Banner de Transmisión Radial Educativa en vivo (reproducción fluida con audio) -->
+          <div id="junior-broadcast-card" class="junior-broadcast-card hidden" role="status" aria-live="polite">
+            <div class="broadcast-left">
+              <span class="broadcast-icon">📻</span>
+              <div class="broadcast-mascot-avatar">
+                <img src="assets/mascot/thinking.jpg" alt="AstroCan" class="broadcast-mascot-img">
+              </div>
+            </div>
+            <div class="broadcast-body">
+              <div class="broadcast-tag-line">
+                <span class="broadcast-badge" id="junior-broadcast-tag">📡 TRANSMISIÓN EDUCATIVA NASA</span>
+                <span class="broadcast-live-dot">● EN VIVO</span>
+              </div>
+              <h4 id="junior-broadcast-title" class="broadcast-headline">¡Dato Curioso!</h4>
+              <p id="junior-broadcast-text" class="broadcast-desc">Narrando dato científico...</p>
+              <div class="broadcast-progress-track">
+                <div id="junior-broadcast-fill" class="broadcast-progress-fill" style="width: 0%"></div>
+              </div>
+            </div>
+            <div class="broadcast-actions">
+              <button id="junior-btn-broadcast-skip" class="pill-btn btn-skip-broadcast" title="Continuar de inmediato">
+                ⏭️ <span id="junior-btn-skip-label">Continuar ya</span>
+              </button>
+            </div>
+          </div>
 
           <!-- Controles Táctiles en Pantalla (para Celular y Tablet) -->
           <div class="junior-touch-bar">

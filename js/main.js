@@ -149,6 +149,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const btnSidebarVoice = document.getElementById('btn-sidebar-voice');
   const btnTopVoice = document.getElementById('btn-top-voice');
   const currentVoiceLabel = document.getElementById('current-voice-label');
+  const juniorBtnVoice = document.getElementById('junior-btn-voice');
+  const juniorVoiceLabel = document.getElementById('junior-voice-label');
 
   // Selector y Gestión de Estilos Visuales (UI Themes)
   const modalTheme = document.getElementById('modal-theme');
@@ -337,6 +339,11 @@ document.addEventListener('DOMContentLoaded', () => {
       window.juniorArcadeGame.updateAudioButtonUI();
     }
 
+    const juniorBroadcastTag = document.getElementById('junior-broadcast-tag');
+    const juniorBtnSkipLabel = document.getElementById('junior-btn-skip-label');
+    if (juniorBroadcastTag) juniorBroadcastTag.textContent = window.i18n.t('junior_broadcast_badge');
+    if (juniorBtnSkipLabel) juniorBtnSkipLabel.textContent = window.i18n.t('junior_broadcast_skip');
+
     // 4. Panel lateral y cabecera
     if (mascotSidebarRole) mascotSidebarRole.textContent = window.i18n.t('mascot_role');
     if (sidebarTelemetryTitle) sidebarTelemetryTitle.textContent = window.i18n.t('telemetry_title');
@@ -515,11 +522,16 @@ document.addEventListener('DOMContentLoaded', () => {
   // ========================================================================
   function updateVoiceButtonLabel(voiceDetails) {
     if (!voiceDetails) return;
+    const labelText = voiceDetails.shortLabel || `${voiceDetails.flag} ${voiceDetails.cleanName}`;
     if (currentVoiceLabel) {
-      currentVoiceLabel.textContent = voiceDetails.shortLabel || `${voiceDetails.flag} ${voiceDetails.cleanName}`;
+      currentVoiceLabel.textContent = labelText;
     }
     if (modalCurrentVoiceText) {
       modalCurrentVoiceText.textContent = `${voiceDetails.flag} ${voiceDetails.cleanName} (${voiceDetails.region})`;
+    }
+    if (juniorVoiceLabel) {
+      const isEn = window.i18n && window.i18n.getLanguage() === 'en';
+      juniorVoiceLabel.textContent = `${isEn ? 'Voice' : 'Voz'}: ${voiceDetails.cleanName || 'Auto'}`;
     }
   }
 
@@ -620,6 +632,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (btnChangeVoice) btnChangeVoice.addEventListener('click', openVoiceModal);
   if (btnSidebarVoice) btnSidebarVoice.addEventListener('click', openVoiceModal);
   if (btnTopVoice) btnTopVoice.addEventListener('click', openVoiceModal);
+  if (juniorBtnVoice) juniorBtnVoice.addEventListener('click', openVoiceModal);
   if (btnCloseVoiceX) btnCloseVoiceX.addEventListener('click', closeVoiceModal);
   if (btnCloseVoice) btnCloseVoice.addEventListener('click', closeVoiceModal);
 
@@ -784,6 +797,12 @@ document.addEventListener('DOMContentLoaded', () => {
     if (inputPlayerName) inputPlayerName.classList.remove('input-error');
     if (nameValidationMsg) nameValidationMsg.classList.add('hidden');
 
+    // Asegurar lectura fidedigna del botón de dificultad seleccionado
+    const activeDiffBtn = document.querySelector('.difficulty-selector .diff-btn.active');
+    if (activeDiffBtn && activeDiffBtn.dataset.diff) {
+      selectedDifficulty = parseInt(activeDiffBtn.dataset.diff, 10) || selectedDifficulty;
+    }
+
     const name = rawName;
     window.gameAudio.playQuindar(true);
     window.gameAudio.startAmbient();
@@ -810,8 +829,9 @@ document.addEventListener('DOMContentLoaded', () => {
       : `¡Comandante ${name}, base transferida a tu mando! Gestionemos con sabiduría los recursos.`;
     window.astroMascot.setEmotion('greeting', initialGreeting);
 
-    // Conectar observador de estado reactivo
+    // Conectar observador de estado reactivo y forzar actualización inmediata del HUD
     window.gameState.subscribe(updateHUD);
+    updateHUD(window.gameState);
 
     // Cargar primer dilema
     loadNextDilemma();

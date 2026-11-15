@@ -488,9 +488,12 @@ class SpeechNarratorService {
     this.speakText(text, targetKey);
   }
 
-  speakText(text, targetKey = 'generic') {
+  speakText(text, targetKey = 'generic', onEndCallback = null) {
     this.stop();
-    if (!this.synth) return;
+    if (!this.synth) {
+      if (typeof onEndCallback === 'function') onEndCallback();
+      return;
+    }
 
     try {
       const utterance = new SpeechSynthesisUtterance(text);
@@ -526,6 +529,9 @@ class SpeechNarratorService {
         if (this.onStateChangeCallback) {
           this.onStateChangeCallback(false, null);
         }
+        if (typeof onEndCallback === 'function') {
+          try { onEndCallback(); } catch (e) { console.warn('Error in onEndCallback:', e); }
+        }
       };
 
       utterance.onerror = (e) => {
@@ -536,6 +542,9 @@ class SpeechNarratorService {
         if (this.onStateChangeCallback) {
           this.onStateChangeCallback(false, null);
         }
+        if (typeof onEndCallback === 'function') {
+          try { onEndCallback(); } catch (err) { console.warn('Error in onEndCallback:', err); }
+        }
       };
 
       this.currentUtterance = utterance;
@@ -543,6 +552,7 @@ class SpeechNarratorService {
     } catch (err) {
       console.error('Error al iniciar narración:', err);
       this.stop();
+      if (typeof onEndCallback === 'function') onEndCallback();
     }
   }
 }
