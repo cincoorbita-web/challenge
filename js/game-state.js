@@ -28,10 +28,10 @@ class GameState {
       this.resources = { oxygen: 100, energy: 100, health: 100, integrity: 100, science: 20 };
     } else if (this.difficulty === 2) {
       this.totalDays = 14;
-      this.resources = { oxygen: 95, energy: 90, health: 95, integrity: 95, science: 10 };
+      this.resources = { oxygen: 100, energy: 100, health: 100, integrity: 100, science: 10 };
     } else {
       this.totalDays = 28;
-      this.resources = { oxygen: 95, energy: 95, health: 95, integrity: 95, science: 0 };
+      this.resources = { oxygen: 100, energy: 100, health: 100, integrity: 100, science: 0 };
     }
 
     this.currentDay = 1;

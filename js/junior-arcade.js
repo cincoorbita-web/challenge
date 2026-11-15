@@ -709,9 +709,18 @@ class JuniorArcadeGame {
       if (ent.gain.hull) this.resources.hull = Math.min(100, this.resources.hull + ent.gain.hull);
       if (ent.gain.science) this.resources.science += ent.gain.science;
 
-      const gainText = ent.gain.science
-        ? `+${ent.gain.science} 🔬`
-        : ent.gain.oxygen ? `+${ent.gain.oxygen}% 💨` : `+${ent.gain.energy}% ⚡`;
+      let gainText = '';
+      if (ent.gain.science) {
+        gainText = `+${ent.gain.science} 🔬`;
+      } else if (ent.gain.oxygen) {
+        gainText = `+${ent.gain.oxygen}% 💨`;
+      } else if (ent.gain.energy) {
+        gainText = `+${ent.gain.energy}% ⚡`;
+      } else if (ent.gain.hull) {
+        gainText = `+${ent.gain.hull}% 🛡️`;
+      } else {
+        gainText = '+15 ⭐';
+      }
 
       this.spawnFloatingDelta(ent.x, ent.y, gainText, '#2ed573');
       this.spawnSparkles(ent.x, ent.y, ent.color, 12);
@@ -760,10 +769,11 @@ class JuniorArcadeGame {
   }
 
   spawnFloatingDelta(x, y, text, color) {
+    if (!text || String(text).includes('undefined')) return;
     this.floatingDeltas.push({
       x,
       y,
-      text,
+      text: String(text),
       color: color || '#ffffff',
       alpha: 1.0
     });
@@ -850,8 +860,8 @@ class JuniorArcadeGame {
 
       if (this.dom.modalFact) {
         const dayText = isEn
-          ? `NASA SCIENCE TRANSMISSION — DAY ${this.currentDay} / 5`
-          : `TRANSMISIÓN EDUCATIVA NASA — DÍA ${this.currentDay} DE 5`;
+          ? `SCIENCE TRANSMISSION — DAY ${this.currentDay} / 5`
+          : `TRANSMISIÓN EDUCATIVA — DÍA ${this.currentDay} DE 5`;
 
         if (this.dom.factDayTag) this.dom.factDayTag.textContent = dayText;
         if (this.dom.factTitle) this.dom.factTitle.textContent = `${factData.icon} ${title}`;

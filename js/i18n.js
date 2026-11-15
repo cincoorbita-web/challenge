@@ -17,7 +17,7 @@ class I18nManager {
         // Metadatos y Encabezados
         app_title: 'ORBITA5',
         app_subtitle: 'Simulador de supervivencia lunar para jóvenes astronautas (7–12 años)',
-        nasa_badge: '🚀 NASA SPACE APPS CHALLENGE 2026',
+        nasa_badge: '🚀 DESAFÍO ESPACIAL 2026',
 
         // Pantalla de Bienvenida
         welcome_mascot_intro: '¡Hola, Comandante! Soy AstroCan, tu fiel copiloto en el Polo Sur Lunar. ¿Cuál es tu nombre de astronauta y qué nivel de misión asumiremos hoy?',
@@ -67,7 +67,7 @@ class I18nManager {
         res_science_pts: 'pts',
         btn_sidebar_theme: '🎨 Estilo UI:',
         btn_sidebar_voice: '🎙️ Cambiar Voz',
-        btn_sidebar_science: '🔬 Archivo Científico NASA',
+        btn_sidebar_science: '🔬 Archivo Científico',
         btn_sidebar_sound_on: '🔊 Sonido',
         btn_sidebar_sound_off: '🔇 Silencio',
         btn_sidebar_abort: '🛑 Abortar Misión',
@@ -131,7 +131,7 @@ class I18nManager {
 
         // Modales
         modal_close: 'Cerrar',
-        modal_science_title: '🔬 Archivo Científico NASA',
+        modal_science_title: '🔬 Archivo Científico Espacial',
         modal_abort_title: '🛑 Abortar Misión ORBITA5',
         modal_abort_prompt: '¿Seguro que deseas abortar la misión lunar?',
         modal_abort_desc: 'Se cancelará la simulación actual y regresarás a la sala de mando inicial para cambiar tu nombre de astronauta o elegir otro nivel de dificultad.',
@@ -230,10 +230,10 @@ class I18nManager {
         junior_res_energy: 'Baterías',
         junior_res_hull: 'Casco',
         junior_res_science: 'Muestras',
-        junior_audio_active: '🔊 Voz NASA: Activada',
-        junior_audio_muted: '🔇 Voz NASA: Silenciada',
+        junior_audio_active: '🔊 Voz de Misión: Activada',
+        junior_audio_muted: '🔇 Voz de Misión: Silenciada',
         junior_voice_btn: 'Voz: {name}',
-        junior_broadcast_badge: '📡 TRANSMISIÓN EDUCATIVA NASA',
+        junior_broadcast_badge: '📡 TRANSMISIÓN EDUCATIVA ESPACIAL',
         junior_broadcast_live: '● EN VIVO',
         junior_broadcast_skip: 'Continuar ya',
         junior_btn_listen_again: '📢 Escuchar de nuevo',
@@ -249,23 +249,23 @@ class I18nManager {
         // Hechos Científicos de los 5 Días (Educativo / Niños 7-9 años)
         junior_fact_1_title: '¡El Salto de la Jirafa en la Luna!',
         junior_fact_1_body: '¿Sabías que en la Luna pesas 6 veces menos que en la Tierra? Si aquí saltas un metro, ¡en la Luna saltarías tan alto como una jirafa! Por eso los astronautas del programa Apolo parecían flotar dando pequeños saltitos de canguro.',
-        junior_fact_1_tag: 'Ciencia Real NASA: Gravedad Lunar (1/6 g)',
+        junior_fact_1_tag: 'Ciencia Espacial: Gravedad Lunar (1/6 g)',
 
         junior_fact_2_title: '¡Polvo Espacial como Pequeños Cristales!',
         junior_fact_2_body: 'El suelo lunar está cubierto de un polvo llamado regolito. En la Tierra el viento y la lluvia suavizan la arena, pero en la Luna no hay clima. Sus partículas son tan diminutas y filosas como cristales rotos que se pegan a los trajes de los astronautas.',
-        junior_fact_2_tag: 'Ciencia Real NASA: Regolito Lunar (Misión Artemis)',
+        junior_fact_2_tag: 'Ciencia Espacial: Regolito Lunar (Misión Artemis)',
 
         junior_fact_3_title: '¡Hielo Secreto en el Cráter Shackleton!',
-        junior_fact_3_body: 'En el Polo Sur de la Luna hay cráteres profundos donde jamás entra la luz del Sol y hace un frío helado de -230°C. La misión LCROSS de la NASA descubrió que en esa sombra permanente se esconden millones de toneladas de hielo de agua pura.',
-        junior_fact_3_tag: 'Ciencia Real NASA: Sondas LCROSS y LRO',
+        junior_fact_3_body: 'En el Polo Sur de la Luna hay cráteres profundos donde jamás entra la luz del Sol y hace un frío helado de -230°C. Las sondas espaciales descubrieron que en esa sombra permanente se esconden millones de toneladas de hielo de agua pura.',
+        junior_fact_3_tag: 'Ciencia Espacial: Sondas LCROSS y LRO',
 
         junior_fact_4_title: '¡Un Horno de Día y un Congelador de Noche!',
         junior_fact_4_body: 'Como la Luna no tiene una atmósfera que la cubra como una cobija, cuando le da el Sol se calienta hasta +120°C (¡más caliente que el agua hirviendo!). Y cuando se hace de noche, baja de golpe a -130°C. ¡Por eso necesitamos energía para mantener el hábitat calientito!',
-        junior_fact_4_tag: 'Ciencia Real NASA: Termofísica Lunar (Diviner LRO)',
+        junior_fact_4_tag: 'Ciencia Espacial: Termofísica Lunar (Diviner LRO)',
 
         junior_fact_5_title: '¡Misión Cumplida, Joven Astronauta!',
-        junior_fact_5_body: '¡Excelente trabajo explorando la Luna! Has superado los 5 días de misión. Gracias a las muestras de hielo y minerales que recogiste conduciendo el rover con AstroCan, la base espacial de la NASA tiene agua, aire y combustible para seguir explorando.',
-        junior_fact_5_tag: 'Ciencia Real NASA: Programa Artemis Human Landing System',
+        junior_fact_5_body: '¡Excelente trabajo explorando la Luna! Has superado los 5 días de misión. Gracias a las muestras de hielo y minerales que recogiste conduciendo el rover con AstroCan, la base espacial tiene agua, aire y energía para seguir explorando.',
+        junior_fact_5_tag: 'Ciencia Espacial: Exploración Humana Lunar',
 
         junior_victory_title: '🎉 ¡EXPEDICIÓN JUNIOR COMPLETADA!',
         junior_victory_sub: '¡Completaste con valentía los 5 días lunares explorando con AstroCan!',
@@ -279,7 +279,7 @@ class I18nManager {
         // Metadata & Headers
         app_title: 'ORBITA5',
         app_subtitle: 'Lunar survival simulator for junior astronauts (ages 7–12)',
-        nasa_badge: '🚀 NASA SPACE APPS CHALLENGE 2026',
+        nasa_badge: '🚀 GLOBAL SPACE CHALLENGE 2026',
 
         // Welcome Screen
         welcome_mascot_intro: 'Hello, Commander! I am AstroCan, your faithful co-pilot at the Lunar South Pole. What is your astronaut name and which mission level will we undertake today?',
@@ -329,7 +329,7 @@ class I18nManager {
         res_science_pts: 'pts',
         btn_sidebar_theme: '🎨 UI Style:',
         btn_sidebar_voice: '🎙️ Change Voice',
-        btn_sidebar_science: '🔬 NASA Science Archive',
+        btn_sidebar_science: '🔬 Science Archive',
         btn_sidebar_sound_on: '🔊 Sound',
         btn_sidebar_sound_off: '🔇 Mute',
         btn_sidebar_abort: '🛑 Abort Mission',
@@ -339,7 +339,7 @@ class I18nManager {
         day_prefix: 'Day',
         btn_top_abort: '🛑 Abort',
         btn_top_abort_title: 'Return to mission briefing',
-        btn_top_science: '🔬 NASA Archive',
+        btn_top_science: '🔬 Science Archive',
         btn_top_voice_title: 'Change narration voice',
         btn_top_theme_title: 'Change UI visual style',
         btn_top_lang_title: 'Cambiar idioma / Switch language',
@@ -393,7 +393,7 @@ class I18nManager {
 
         // Modals
         modal_close: 'Close',
-        modal_science_title: '🔬 NASA Science Archive',
+        modal_science_title: '🔬 Space Science Archive',
         modal_abort_title: '🛑 Abort ORBITA5 Mission',
         modal_abort_prompt: 'Are you sure you want to abort the lunar mission?',
         modal_abort_desc: 'The current simulation will be cancelled and you will return to the briefing screen to change your name or select another difficulty.',
@@ -492,10 +492,10 @@ class I18nManager {
         junior_res_energy: 'Batteries',
         junior_res_hull: 'Hull',
         junior_res_science: 'Samples',
-        junior_audio_active: '🔊 NASA Voice: Active',
-        junior_audio_muted: '🔇 NASA Voice: Muted',
+        junior_audio_active: '🔊 Mission Voice: Active',
+        junior_audio_muted: '🔇 Mission Voice: Muted',
         junior_voice_btn: 'Voice: {name}',
-        junior_broadcast_badge: '📡 NASA SCIENCE BROADCAST',
+        junior_broadcast_badge: '📡 SPACE SCIENCE BROADCAST',
         junior_broadcast_live: '● LIVE',
         junior_broadcast_skip: 'Continue now',
         junior_btn_listen_again: '📢 Listen Again',
@@ -511,23 +511,23 @@ class I18nManager {
         // 5-Day Science Facts (Educational / Ages 7-9)
         junior_fact_1_title: 'The Giraffe Leap on the Moon!',
         junior_fact_1_body: 'Did you know you weigh 6 times less on the Moon than on Earth? If you can jump 1 meter on Earth, on the Moon you would soar as high as a giraffe! That is why Apollo astronauts bounced around doing kangaroo hops.',
-        junior_fact_1_tag: 'Real NASA Science: Lunar Gravity (1/6 g)',
+        junior_fact_1_tag: 'Space Science: Lunar Gravity (1/6 g)',
 
         junior_fact_2_title: 'Space Dust Like Tiny Crystals!',
         junior_fact_2_body: 'The Moon is blanketed in a dust called regolith. On Earth, rain and wind smooth sand over time, but on the airless Moon the grains stay sharp like microscopic shards of glass that cling to spacesuits!',
-        junior_fact_2_tag: 'Real NASA Science: Lunar Regolith (Artemis Mission)',
+        junior_fact_2_tag: 'Space Science: Lunar Regolith (Artemis Mission)',
 
         junior_fact_3_title: 'Secret Ice Inside Shackleton Crater!',
-        junior_fact_3_body: 'At the Lunar South Pole, deep crater floors never see sunlight and stay freezing at -230°C. NASA\'s LCROSS mission proved that millions of tons of pure water ice are hidden right in those shadows!',
-        junior_fact_3_tag: 'Real NASA Science: LCROSS & LRO Probes',
+        junior_fact_3_body: 'At the Lunar South Pole, deep crater floors never see sunlight and stay freezing at -230°C. Space missions proved that millions of tons of pure water ice are hidden right in those shadows!',
+        junior_fact_3_tag: 'Space Science: LCROSS & LRO Probes',
 
         junior_fact_4_title: 'A Giant Oven by Day, A Freezer by Night!',
         junior_fact_4_body: 'Because the Moon lacks an atmosphere like Earth to insulate it, direct sunlight heats the rocks to +120°C (hotter than boiling water!). Once the sun sets, temperatures plunge to -130°C. That is why our habitat needs energy to stay warm!',
-        junior_fact_4_tag: 'Real NASA Science: Lunar Thermophysics (LRO Diviner)',
+        junior_fact_4_tag: 'Space Science: Lunar Thermophysics (LRO Diviner)',
 
         junior_fact_5_title: 'Mission Accomplished, Junior Astronaut!',
-        junior_fact_5_body: 'Outstanding work! You survived all 5 lunar days exploring the South Pole. Thanks to the water ice crystals and minerals you collected driving with AstroCan, our NASA outpost has drinking water, oxygen, and rocket fuel!',
-        junior_fact_5_tag: 'Real NASA Science: Artemis Human Landing System',
+        junior_fact_5_body: 'Outstanding work! You survived all 5 lunar days exploring the South Pole. Thanks to the water ice crystals and minerals you collected driving with AstroCan, our lunar outpost has drinking water, oxygen, and rocket fuel!',
+        junior_fact_5_tag: 'Space Science: Human Lunar Exploration',
 
         junior_victory_title: '🎉 JUNIOR EXPEDITION COMPLETE!',
         junior_victory_sub: 'You bravely completed all 5 lunar days exploring with AstroCan!',
