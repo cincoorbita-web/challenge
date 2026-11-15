@@ -1,5 +1,5 @@
 /**
- * Artemis Outpost: Minigame - "Rover Ice Miner en Cráter Shackleton"
+ * ORBITA5: Minigame - "Rover Ice Miner en Cráter Shackleton"
  * Navegación 2D en penumbra lunar para recolectar hielo de agua en zonas de sombra permanente (PSR).
  * Enseña la compensación de riesgo: ¿Arriesgas agotar la batería del rover por un cristal más,
  * o aseguras el regreso a salvo a la esclusa del hábitat?

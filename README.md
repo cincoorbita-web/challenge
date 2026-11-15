@@ -1,7 +1,7 @@
-# 🚀 ARTEMIS CHALLENGE: Comandante Lunar
+# 🚀 ORBITA5: Comandante Lunar
 ### Junior Astronaut Mission Trainer | NASA International Space Apps Challenge
 
-**ARTEMIS CHALLENGE: Comandante Lunar** es una aplicación interactiva y videojuego web educativo diseñado para niños de entre 7 y 12 años. Su objetivo es transmitir de forma clara, visual y emocionante las verdaderas restricciones de la supervivencia en el espacio profundo y la toma de decisiones basada en **compensaciones reales (trade-offs)**.
+**ORBITA5: Comandante Lunar** es una aplicación interactiva y videojuego web educativo diseñado para niños de entre 7 y 12 años. Su objetivo es transmitir de forma clara, visual y emocionante las verdaderas restricciones de la supervivencia en el espacio profundo y la toma de decisiones basada en **compensaciones reales (trade-offs)**.
 
 El juego está desarrollado con tecnologías web modernas estándar (HTML5, CSS3, JavaScript modular, Canvas 2D, Web Audio API y Web Speech API), funcionando al 100% en el cliente y de manera autónoma (incluso sin conexión a internet ni dependencias externas).
 
@@ -74,7 +74,7 @@ La interfaz se adapta a 3 formatos distintos garantizando legibilidad y confort 
 
 ## 🌌 Puesto Avanzado Lunar de Gran Escala en el Fondo Canvas
 
-El lienzo procedural a 60 FPS representa el **Puesto Avanzado Artemis** con gran escala y riqueza de detalles en la superficie lunar:
+El lienzo procedural a 60 FPS representa el **Puesto Avanzado ORBITA5** con gran escala y riqueza de detalles en la superficie lunar:
 - **Domo Principal Presurizado (Radio 75px):** Con cúpula de blindaje de regolito, ventanas de observación con iluminación cálida interior y esclusa hermética con sello cian iluminado.
 - **Bio-Laboratorio OSDR (Radio 45px):** Con cúpula geodésica y luminiscencia botánica verde de cultivo hidropónico.
 - **Túnel de Conexión:** Pasadizo presurizado con ojos de buey iluminados.
@@ -136,7 +136,7 @@ challenge/
 │       ├── celebrating.jpg # Celebrando victoria o ciencia
 │       └── crying.jpg      # Triste en evacuación de emergencia
 ├── css/
-│   ├── styles.css          # Estilos Artemis, tipografía Fredoka, semáforo, 3 layouts
+│   ├── styles.css          # Estilos ORBITA5, tipografía Fredoka, semáforo, 3 layouts
 │   ├── space-scene.css     # Animaciones del fondo estelar y alertas de radiación
 │   └── minigames.css       # Estilos para escudo solar y arcade del rover
 ├── js/
@@ -169,4 +169,4 @@ El proyecto no requiere Node.js, compilación ni bases de datos. Puede ejecutars
    Abre tu navegador en `http://localhost:8000`.
 
 ---
-*Desarrollado con pasión por la exploración espacial, la astronomía y la educación científica interactiva para la próxima generación de astronautas del Programa Artemis.*
+*Desarrollado con pasión por la exploración espacial, la astronomía y la educación científica interactiva para la próxima generación de astronautas y exploradores del espacio profundo.*

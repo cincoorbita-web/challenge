@@ -1,5 +1,5 @@
 /**
- * Artemis Outpost: Space Canvas Renderer
+ * ORBITA5: Space Canvas Renderer
  * Genera el fondo interactivo en 60 FPS:
  * - Campo de estrellas con centelleo y paralaje
  * - Vista de la Tierra emergiendo ("Earthrise") desde el Polo Sur Lunar
@@ -254,7 +254,7 @@ class SpaceCanvas {
       this.ctx.fill();
     });
 
-    // Puesto Avanzado Lunar Artemis (Domo inflable y paneles solares verticales)
+    // Puesto Avanzado Lunar ORBITA5 (Domo inflable y paneles solares verticales)
     this.drawOutpost(w * 0.36, groundY - 2);
   }
 
@@ -593,7 +593,7 @@ class SpaceCanvas {
     // Dibujar partículas si hay tormenta solar activa
     this.drawSolarStormParticles();
 
-    // Dibujar el relieve lunar y la base Artemis
+    // Dibujar el relieve lunar y la base ORBITA5
     this.drawMoonLandscape();
 
     requestAnimationFrame(this.animate);

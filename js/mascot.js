@@ -1,5 +1,5 @@
 /**
- * Artemis Outpost: Mascot Companion Controller ("AstroCan")
+ * ORBITA5: Mascot Companion Controller ("AstroCan")
  * Gestiona los 7 estados emocionales del cachorro astronauta según
  * las decisiones del usuario, eventos solares, estado de recursos y fin de misión.
  */
@@ -120,7 +120,7 @@ class AstroMascot {
 
     // Gran avance en ciencia o recolección
     if (actualChanges.science >= 20 || (actualChanges.oxygen > 10 && actualChanges.energy >= 0)) {
-      this.setEmotion('celebrating', '¡Gran acierto, Comandante! ¡Sumamos valiosos descubrimientos para la misión Artemis!');
+      this.setEmotion('celebrating', '¡Gran acierto, Comandante! ¡Sumamos valiosos descubrimientos para la misión ORBITA5!');
       return;
     }
 

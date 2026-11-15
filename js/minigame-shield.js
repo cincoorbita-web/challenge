@@ -1,5 +1,5 @@
 /**
- * Artemis Outpost: Minigame - "Desvío de Energía y Escudo Solar DONKI"
+ * ORBITA5: Minigame - "Desvío de Energía y Escudo Solar DONKI"
  * Desafío interactivo táctil / teclado contra reloj para niños de 7 a 12 años.
  * Enseña la compensación en tiempo real: ¿Cuánta energía estás dispuesto a sacrificar
  * de la base para proteger a los astronautas de la tormenta de radiación solar?

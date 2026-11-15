@@ -1,5 +1,5 @@
 /**
- * Artemis Outpost: Certificate Generator & Share
+ * ORBITA5: Certificate Generator & Share
  * Genera un certificado visual en Canvas y lo comparte vía Web Share API
  * (WhatsApp, Telegram, etc.) o lo descarga como imagen PNG.
  */
@@ -58,7 +58,7 @@ class CertificateGenerator {
     ctx.stroke();
     ctx.fillStyle = '#00d2d3';
     ctx.font = 'bold 18px system-ui, sans-serif';
-    ctx.fillText('🚀  NASA SPACE APPS CHALLENGE  •  PROGRAMA ARTEMIS', W / 2, badgeY + 6);
+    ctx.fillText('🚀  NASA SPACE APPS CHALLENGE 2026  •  JUNIOR ASTRONAUT TRAINER', W / 2, badgeY + 6);
 
     // Título principal
     ctx.fillStyle = '#ffffff';
@@ -68,13 +68,15 @@ class CertificateGenerator {
     // Subtítulo
     ctx.font = 'bold 28px Fredoka, system-ui, sans-serif';
     ctx.fillStyle = '#00d2d3';
-    ctx.fillText('ARTEMIS CHALLENGE: COMANDANTE LUNAR', W / 2, 260);
+    ctx.fillText('ORBITA5: COMANDANTE LUNAR', W / 2, 260);
 
-    // ——— MEDALLA GRANDE ———
+    // ——— TROFEO (victoria) O ICONO DE ALERTA (derrota) ———
     const medalY = 360;
     const medalSize = 80;
     ctx.font = `${medalSize}px system-ui, sans-serif`;
-    ctx.fillText(scoreData.medal, W / 2, medalY);
+    // En victoria mostramos un trofeo dorado en lugar de una medalla
+    const trophyIcon = isVictory ? '🏆' : scoreData.medal;
+    ctx.fillText(trophyIcon, W / 2, medalY);
 
     // Nombre del jugador con resplandor
     ctx.shadowColor = 'rgba(0, 210, 211, 0.6)';
@@ -240,12 +242,12 @@ class CertificateGenerator {
 
     try {
       const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
-      const file = new File([blob], `artemis-challenge-${state.playerName.replace(/\s/g, '-')}.png`, { type: 'image/png' });
+      const file = new File([blob], `orbita5-${state.playerName.replace(/\s/g, '-')}.png`, { type: 'image/png' });
 
       if (navigator.canShare && navigator.canShare({ files: [file] })) {
         await navigator.share({
-          title: `${state.gameResult === 'VICTORY' ? '🎉 ¡Misión Cumplida!' : '⚠️ Misión Evacuada'} — Artemis Challenge`,
-          text: `${state.playerName} ${state.gameResult === 'VICTORY' ? 'completó' : 'intentó'} una misión lunar de ${state.totalDays} días con ${state.resources.science} puntos de ciencia en Artemis Challenge. ¿Podrás superarlo? 🚀`,
+          title: `${state.gameResult === 'VICTORY' ? '🏆 ¡Misión Cumplida!' : '⚠️ Misión Evacuada'} — ORBITA5`,
+          text: `${state.playerName} ${state.gameResult === 'VICTORY' ? 'completó' : 'intentó'} una misión lunar de ${state.totalDays} días con ${state.resources.science} puntos de ciencia en ORBITA5. ¿Podrás superarlo? 🚀`,
           files: [file]
         });
         return 'shared';
@@ -256,7 +258,7 @@ class CertificateGenerator {
 
     // Fallback: descarga directa
     const link = document.createElement('a');
-    link.download = `artemis-challenge-${state.playerName.replace(/\s/g, '-')}.png`;
+    link.download = `orbita5-${state.playerName.replace(/\s/g, '-')}.png`;
     link.href = canvas.toDataURL('image/png');
     link.click();
     return 'downloaded';

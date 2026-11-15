@@ -1,5 +1,5 @@
 /**
- * Artemis Challenge: Speech Narrator Service (Web Speech API)
+ * ORBITA5: Speech Narrator Service (Web Speech API)
  * Proporciona narración en voz alta con soporte multivoz (Español Latinoamericano / Regional),
  * selector de voces interactivo, persistencia de preferencias y preescucha para niños.
  */
@@ -48,7 +48,7 @@ class SpeechNarratorService {
       let savedVoiceName = null;
       try {
         if (typeof localStorage !== 'undefined') {
-          savedVoiceName = localStorage.getItem('artemis_voice_name');
+          savedVoiceName = localStorage.getItem('orbita5_voice_name') || localStorage.getItem('artemis_voice_name');
         }
       } catch (e) {
         // Ignorar restricciones de almacenamiento local
@@ -199,7 +199,7 @@ class SpeechNarratorService {
       this.preferredVoice = found;
       try {
         if (typeof localStorage !== 'undefined') {
-          localStorage.setItem('artemis_voice_name', found.name);
+          localStorage.setItem('orbita5_voice_name', found.name);
         }
       } catch (e) {}
 

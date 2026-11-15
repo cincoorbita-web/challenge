@@ -1,5 +1,5 @@
 /**
- * Artemis Outpost: Game State Manager
+ * ORBITA5: Game State Manager
  * Controla recursos vitales, escalado dinámico de puntos según dificultad,
  * ciclo de días lunares con condiciones ambientales dinámicas día a día,
  * y soporte para abortar misión o finalizar con éxito.
@@ -385,7 +385,7 @@ class GameState {
     let rank, medal;
     if (this.gameResult === 'VICTORY') {
       if (finalScore > 1200) { rank = 'Comandante Supremo Lunar'; medal = '🥇'; }
-      else if (finalScore > 750) { rank = 'Oficial Científico Artemis'; medal = '🥈'; }
+      else if (finalScore > 750) { rank = 'Oficial Científico ORBITA5'; medal = '🥈'; }
       else { rank = 'Pionero de la Frontera Espacial'; medal = '🥉'; }
     } else {
       rank = 'Aspirante en Entrenamiento'; medal = '⚠️';

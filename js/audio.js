@@ -1,5 +1,5 @@
 /**
- * Artemis Outpost: Sound Engine
+ * ORBITA5: Sound Engine
  * Utiliza Web Audio API para síntesis procedural de sonido espacial en tiempo real.
  * No requiere archivos de audio externos (100% autónomo y offline).
  */
@@ -14,7 +14,7 @@ class SoundEngine {
 
     // Cargar preferencia guardada
     try {
-      const savedMute = localStorage.getItem('artemis_sound_muted');
+      const savedMute = localStorage.getItem('orbita5_sound_muted') || localStorage.getItem('artemis_sound_muted');
       if (savedMute !== null) {
         this.muted = savedMute === 'true';
       }
@@ -39,7 +39,7 @@ class SoundEngine {
   toggleMute() {
     this.muted = !this.muted;
     try {
-      localStorage.setItem('artemis_sound_muted', this.muted);
+      localStorage.setItem('orbita5_sound_muted', this.muted);
     } catch (e) {}
 
     if (this.muted && this.ambientGain) {
@@ -73,7 +73,7 @@ class SoundEngine {
     osc.stop(this.ctx.currentTime + 0.05);
   }
 
-  // Tono de radio Quindar de la NASA (beeps clásicos de comunicación Apollo/Artemis)
+  // Tono de radio Quindar de la NASA (beeps clásicos de comunicación espacial Apollo/Lunar)
   playQuindar(intro = true) {
     if (this.muted) return;
     this.init();

@@ -1,5 +1,5 @@
 /* ==========================================================================
-   ARTEMIS CHALLENGE: MINIGAMES STYLES
+   ORBITA5: MINIGAMES STYLES
    Estilos para los microjuegos interactivos de toma de decisiones
    ========================================================================== */
 
@@ -56,7 +56,7 @@
 
 .countdown-clock {
   background: rgba(0, 0, 0, 0.6);
-  border: 1px solid var(--artemis-cyan);
+  border: 1px solid var(--cyan);
   padding: 6px 16px;
   border-radius: 20px;
   font-size: 1.15rem;
@@ -121,7 +121,7 @@
 }
 
 .shield-meter-label strong {
-  color: var(--artemis-cyan);
+  color: var(--cyan);
 }
 
 .meter-bar-track {
@@ -160,7 +160,7 @@
 }
 
 .slider-num {
-  color: var(--artemis-cyan);
+  color: var(--cyan);
 }
 
 .range-slider {
@@ -169,7 +169,7 @@
   border-radius: 5px;
   outline: none;
   background: rgba(255, 255, 255, 0.2);
-  accent-color: var(--artemis-cyan);
+  accent-color: var(--cyan);
   cursor: pointer;
 }
 
@@ -284,6 +284,6 @@
 }
 
 .dpad-btn:active {
-  background: var(--artemis-cyan);
+  background: var(--cyan);
   color: #030612;
 }

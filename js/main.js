@@ -1,5 +1,5 @@
 /**
- * Artemis Outpost: Main Application Controller
+ * ORBITA5: Main Application Controller
  * Orquesta la navegación de pantallas, la inicialización de módulos,
  * la actualización reactiva del HUD, fuentes de datos NASA,
  * el narrador por voz en español y las reacciones emocionales de AstroCan.
@@ -330,6 +330,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     window.gameState.startMission(name, selectedDifficulty);
 
+    // Preparar mazo con rotación aleatoria de eventos nuevos no vistos en partidas anteriores
+    if (window.missionEventManager) {
+      window.missionEventManager.prepareSessionDeck(window.gameState);
+    }
+
+    // Intentar refrescar datos en vivo de las APIs públicas de la NASA en cada nueva partida
+    if (window.donkiService) {
+      window.donkiService.fetchLiveAlerts().catch(() => {});
+    }
+
     screenWelcome.classList.add('hidden');
     screenGameOver.classList.add('hidden');
     screenGame.classList.remove('hidden');
@@ -507,12 +517,20 @@ document.addEventListener('DOMContentLoaded', () => {
     dilemmaSender.textContent = `📡 Transmisión de: ${currentEvent.sender}`;
     dilemmaDesc.textContent = currentEvent.description;
 
-    // Mostrar Fuente Oficial de la NASA
+    // Mostrar Fuente Oficial de la NASA con certificación de ciencia real
     if (dilemmaSourceBox && currentEvent.dataSource) {
       dilemmaSourceBox.innerHTML = `
-        <strong>🛰️ Fuente Oficial NASA:</strong> 
-        <a href="${currentEvent.dataSource.url}" target="_blank" rel="noopener noreferrer">${currentEvent.dataSource.name}</a>
-        <br><span>${currentEvent.dataSource.detail}</span>
+        <div class="source-header">
+          <span class="source-verified-badge">🔬 CIENCIA REAL DE LA NASA</span>
+          <span class="source-live-tag">DATOS ABIERTOS</span>
+        </div>
+        <div class="source-content">
+          <strong>🛰️ Conjunto de Datos / Estudio Oficial:</strong> 
+          <a href="${currentEvent.dataSource.url}" target="_blank" rel="noopener noreferrer" title="Consultar repositorio científico oficial de la NASA">
+            ${currentEvent.dataSource.name} ↗
+          </a>
+          <div class="source-detail-text">${currentEvent.dataSource.detail}</div>
+        </div>
       `;
       dilemmaSourceBox.classList.remove('hidden');
     } else if (dilemmaSourceBox) {
@@ -844,9 +862,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (isVictory) {
       window.gameAudio.playVictory();
-      gameoverTitle.innerHTML = `🎉 ¡MISIÓN ARTEMIS CUMPLIDA!`;
+      gameoverTitle.innerHTML = `🏆 ¡MISIÓN ORBITA5 CUMPLIDA!`;
       gameoverSubtitle.innerHTML = `Felicitaciones, <strong>Comandante ${state.playerName}</strong>. Has logrado mantener con vida al puesto avanzado lunar y completar con éxito la misión de ${state.totalDays} días.`;
-      gameoverRank.innerHTML = `${scoreData.medal} ${scoreData.rank}`;
+      gameoverRank.innerHTML = `🏆 ${scoreData.rank}`;
       gameoverScore.textContent = scoreData.score;
       gameoverDays.textContent = `${scoreData.daysSurvived} / ${scoreData.totalDays} Días`;
       gameoverScience.textContent = `${scoreData.scienceCollected} Pts`;
@@ -958,16 +976,20 @@ document.addEventListener('DOMContentLoaded', () => {
     scienceContent.innerHTML = `
       <div class="science-tabs">
         <h3>🧬 Repositorio de Biología Espacial OSDR (NASA Open Science Data Repository)</h3>
-        <p class="section-intro">Datos auténticos de experimentos realizados con astronautas y muestras lunares traídas a la Tierra:</p>
+        <p class="section-intro">Estudios auténticos de biología espacial y medicina de astronautas consultables en <a href="https://osdr.nasa.gov" target="_blank" rel="noopener noreferrer">osdr.nasa.gov</a>:</p>
         <div class="science-cards-grid">
           ${studies.map(s => `
             <div class="science-archive-item">
-              <div class="archive-badge">${s.id} • ${s.badge}</div>
+              <div class="archive-header-row">
+                <span class="archive-badge">${s.id} • ${s.badge}</span>
+                <a href="${s.studyUrl}" target="_blank" rel="noopener noreferrer" class="archive-source-link">Ver en NASA OSDR ↗</a>
+              </div>
               <h4>${s.title}</h4>
               <p><strong>Organismo / Muestra:</strong> ${s.organism}</p>
+              <p><strong>Instalación NASA:</strong> ${s.nasaFacility}</p>
               <p class="archive-kid-expl">${s.kidExplanation}</p>
               <div class="archive-tradeoff">
-                <strong>Compensación en el juego:</strong><br>
+                <strong>Compensación en ORBITA5:</strong><br>
                 ${s.tradeoffImpact.choiceYes}
               </div>
             </div>
@@ -975,15 +997,19 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
 
         <h3 style="margin-top: 24px;">☀️ Base de Clima Espacial DONKI (Space Weather Database)</h3>
-        <p class="section-intro">Eventos solares reales monitoreados por la flota de heliofísica de la NASA:</p>
+        <p class="section-intro">Eventos solares auténticos monitoreados por la flota de heliofísica de la NASA consultables en <a href="https://api.nasa.gov/DONKI" target="_blank" rel="noopener noreferrer">api.nasa.gov/DONKI</a>:</p>
         <div class="science-cards-grid">
           ${donkiEvents.map(e => `
             <div class="science-archive-item">
-              <div class="archive-badge" style="background: rgba(255, 71, 87, 0.2); border-color: #ff4757;">
-                ${e.id} • Severidad ${e.severity}
+              <div class="archive-header-row">
+                <span class="archive-badge" style="background: rgba(255, 71, 87, 0.2); border-color: #ff4757;">
+                  ${e.id} • ${e.severity}
+                </span>
+                <span class="archive-craft-tag">${e.spacecraft || 'Flota NASA'}</span>
               </div>
               <h4>${e.title}</h4>
-              <p><strong>Velocidad:</strong> ${e.speed} km/s | <strong>Dosis estimada:</strong> ${e.radiationDoseMsv} mSv</p>
+              <p><strong>Fecha en Catálogo:</strong> ${e.catalogDate} | <strong>Velocidad:</strong> ${e.speed} km/s</p>
+              <p><strong>Dosis Estimada:</strong> ${e.radiationDoseMsv} mSv</p>
               <p class="archive-kid-expl">${e.scienceFact}</p>
             </div>
           `).join('')}
