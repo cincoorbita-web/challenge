@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Registrar elementos de la mascota espacial AstroCan
   window.astroMascot.registerElements(
-    ['#mascot-sidebar-img', '#mascot-mobile-img', '#gameover-mascot-img'],
+    ['#mascot-sidebar-img', '#mascot-mobile-img', '#gameover-mascot-img', '.junior-fact-mascot-img', '.junior-end-img', '.junior-mini-img'],
     ['#mascot-sidebar-bubble', '#mascot-mobile-bubble', '#gameover-mascot-bubble']
   );
 
@@ -26,17 +26,31 @@ document.addEventListener('DOMContentLoaded', () => {
   const screenWelcome = document.getElementById('screen-welcome');
   const screenGame = document.getElementById('screen-game');
   const screenGameOver = document.getElementById('screen-gameover');
+  const screenJuniorArcade = document.getElementById('screen-junior-arcade');
   const modalScience = document.getElementById('modal-science');
   const modalAbort = document.getElementById('modal-abort');
   const minigameContainer = document.getElementById('minigame-container');
   const gameContentScroll = document.querySelector('.game-content-scroll');
 
-  // Elementos de la pantalla de bienvenida
+  // Elementos de la pantalla de bienvenida y modos de juego
   const inputPlayerName = document.getElementById('input-player-name');
   const nameValidationMsg = document.getElementById('name-validation-msg');
   const btnStartMission = document.getElementById('btn-start-mission');
+  const btnJuniorMode = document.getElementById('btn-junior-mode');
+  const btnJuniorTitle = document.getElementById('btn-junior-title');
+  const btnJuniorSub = document.getElementById('btn-junior-sub');
+  const btnStartTitle = document.getElementById('btn-start-title');
+  const btnStartSub = document.getElementById('btn-start-sub');
   const difficultyButtons = document.querySelectorAll('.diff-btn');
   let selectedDifficulty = 1;
+
+  // Textos localizables en pantalla Junior Arcade
+  const juniorScreenTitle = document.getElementById('junior-screen-title');
+  const juniorLblProgress = document.getElementById('junior-lbl-progress');
+  const juniorLblO2 = document.getElementById('junior-lbl-o2');
+  const juniorLblEnergy = document.getElementById('junior-lbl-energy');
+  const juniorLblHull = document.getElementById('junior-lbl-hull');
+  const juniorLblScience = document.getElementById('junior-lbl-science');
 
   // Botones de audio / silencio (barra superior y panel lateral)
   const btnToggleSound = document.getElementById('btn-toggle-sound');
@@ -307,7 +321,21 @@ document.addEventListener('DOMContentLoaded', () => {
     if (themeBtnTitle3) themeBtnTitle3.textContent = window.i18n.t('theme_retro_title');
     if (themeBtnSub3) themeBtnSub3.textContent = window.i18n.t('theme_retro_sub');
 
-    if (btnStartMission) btnStartMission.textContent = window.i18n.t('btn_start_mission');
+    if (btnJuniorTitle) btnJuniorTitle.textContent = window.i18n.t('btn_junior_mode');
+    if (btnJuniorSub) btnJuniorSub.textContent = window.i18n.t('btn_junior_mode_sub');
+    if (btnStartTitle) btnStartTitle.textContent = window.i18n.t('btn_tactical_mode');
+    if (btnStartSub) btnStartSub.textContent = window.i18n.t('btn_tactical_mode_sub');
+
+    if (juniorScreenTitle) juniorScreenTitle.textContent = window.i18n.t('junior_arcade_title');
+    if (juniorLblProgress) juniorLblProgress.textContent = window.i18n.t('junior_day_progress') + ':';
+    if (juniorLblO2) juniorLblO2.textContent = window.i18n.t('junior_res_o2') + ':';
+    if (juniorLblEnergy) juniorLblEnergy.textContent = window.i18n.t('junior_res_energy') + ':';
+    if (juniorLblHull) juniorLblHull.textContent = window.i18n.t('junior_res_hull') + ':';
+    if (juniorLblScience) juniorLblScience.textContent = window.i18n.t('junior_res_science') + ':';
+
+    if (window.juniorArcadeGame && typeof window.juniorArcadeGame.updateAudioButtonUI === 'function') {
+      window.juniorArcadeGame.updateAudioButtonUI();
+    }
 
     // 4. Panel lateral y cabecera
     if (mascotSidebarRole) mascotSidebarRole.textContent = window.i18n.t('mascot_role');
@@ -790,6 +818,32 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   btnStartMission.addEventListener('click', handleStartMission);
+
+  // ========================================================================
+  // 4B. Inicio del Modo Aventura Junior (7 a 9 años)
+  // ========================================================================
+  function handleStartJuniorMode() {
+    window.speechNarrator.stop();
+    window.gameAudio.playClick();
+
+    const rawName = inputPlayerName ? inputPlayerName.value.trim() : '';
+    const isEn = window.i18n && window.i18n.getLanguage() === 'en';
+    const finalName = rawName || (isEn ? 'Junior Explorer' : 'Pequeño Astronauta');
+
+    screenWelcome.classList.add('hidden');
+    screenGame.classList.add('hidden');
+    screenGameOver.classList.add('hidden');
+    if (screenJuniorArcade) screenJuniorArcade.classList.remove('hidden');
+
+    if (window.juniorArcadeGame) {
+      window.juniorArcadeGame.init();
+      window.juniorArcadeGame.start(finalName);
+    }
+  }
+
+  if (btnJuniorMode) {
+    btnJuniorMode.addEventListener('click', handleStartJuniorMode);
+  }
 
   if (inputPlayerName) {
     // Permitir iniciar también con la tecla Enter

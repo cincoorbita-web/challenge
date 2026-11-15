@@ -117,7 +117,30 @@
             </div>
           </div>
 
-          <button id="btn-start-mission" class="btn-primary pulse-btn">🚀 TAKE COMMAND</button>
+          <!-- Botones de Selección de Modo (7-9 años y 10-12 años) -->
+          <div class="welcome-action-buttons">
+            <button id="btn-junior-mode" type="button" class="btn-junior pulse-btn-junior" title="Modo Aventura para jóvenes astronautas de 7 a 9 años">
+              <span class="btn-mode-badge junior-badge-label">👶 7–9 AÑOS / YEARS</span>
+              <div class="btn-mode-content">
+                <span class="btn-mode-icon">🎮</span>
+                <div class="btn-mode-texts">
+                  <strong id="btn-junior-title">MODO AVENTURA JUNIOR</strong>
+                  <small id="btn-junior-sub">¡Conduce con AstroCan, esquiva obstáculos y aprende con voz!</small>
+                </div>
+              </div>
+            </button>
+
+            <button id="btn-start-mission" type="button" class="btn-primary btn-tactical-mode" title="Simulador táctico para astronautas de 10 a 12 años">
+              <span class="btn-mode-badge tactical-badge-label">🧑‍🚀 10–12 AÑOS / YEARS</span>
+              <div class="btn-mode-content">
+                <span class="btn-mode-icon">🚀</span>
+                <div class="btn-mode-texts">
+                  <strong id="btn-start-title">SIMULADOR DE MANDO</strong>
+                  <small id="btn-start-sub">Toma decisiones estratégicas y gestiona recursos de supervivencia</small>
+                </div>
+              </div>
+            </button>
+          </div>
 
           <!-- Declaración de Uso de Inteligencia Artificial (NASA AI Disclosure) -->
           <div class="welcome-ai-disclosure">
@@ -346,6 +369,154 @@
       </div>
     </section>
 
+    <!-- ====== 3B. PANTALLA DE JUEGO ARCADE JUNIOR (7 A 9 AÑOS) ====== -->
+    <section id="screen-junior-arcade" class="screen junior-screen hidden">
+      <div class="junior-layout">
+
+        <!-- Barra Superior Junior -->
+        <header class="junior-top-bar">
+          <div class="junior-bar-left">
+            <span class="junior-avatar-mini contenedor-ia">
+              <img src="assets/mascot/greeting.jpg" alt="AstroCan" class="junior-mini-img">
+              <span class="marca-ia marca-ia-sm" data-ai-label="true">AI</span>
+            </span>
+            <div class="junior-title-group">
+              <h2 id="junior-screen-title" class="junior-main-title">Expedición Lunar Junior</h2>
+              <span class="junior-day-badge">📅 <strong id="junior-hud-day">Día 1 / 5</strong></span>
+            </div>
+          </div>
+
+          <div class="junior-day-progress-wrapper">
+            <span class="junior-progress-label" id="junior-lbl-progress">Progreso del Día:</span>
+            <div class="junior-progress-track">
+              <div id="junior-bar-progress" class="junior-progress-fill" style="width: 0%"></div>
+            </div>
+          </div>
+
+          <div class="junior-bar-right">
+            <button id="junior-btn-audio-toggle" class="pill-btn audio-active" title="Activar/Silenciar narración en voz alta">
+              🔊 Voz NASA: Activada
+            </button>
+            <button id="junior-btn-exit" class="pill-btn btn-danger-pill" title="Volver al menú principal">
+              🏠 Salir
+            </button>
+          </div>
+        </header>
+
+        <!-- Franja de Recursos de Supervivencia con Semáforo -->
+        <div class="junior-res-strip">
+          <div class="junior-res-item">
+            <span class="junior-res-icon">💨</span>
+            <span class="junior-res-name" id="junior-lbl-o2">Oxígeno:</span>
+            <div class="junior-res-track">
+              <div id="junior-bar-o2" class="junior-res-fill fill-o2" style="width: 100%"></div>
+            </div>
+            <strong id="junior-val-o2" class="junior-res-num">100%</strong>
+          </div>
+
+          <div class="junior-res-item">
+            <span class="junior-res-icon">⚡</span>
+            <span class="junior-res-name" id="junior-lbl-energy">Baterías:</span>
+            <div class="junior-res-track">
+              <div id="junior-bar-energy" class="junior-res-fill fill-energy" style="width: 100%"></div>
+            </div>
+            <strong id="junior-val-energy" class="junior-res-num">100%</strong>
+          </div>
+
+          <div class="junior-res-item">
+            <span class="junior-res-icon">🛡️</span>
+            <span class="junior-res-name" id="junior-lbl-hull">Casco:</span>
+            <div class="junior-res-track">
+              <div id="junior-bar-hull" class="junior-res-fill fill-hull" style="width: 100%"></div>
+            </div>
+            <strong id="junior-val-hull" class="junior-res-num">100%</strong>
+          </div>
+
+          <div class="junior-res-item junior-res-science">
+            <span class="junior-res-icon">🔬</span>
+            <span class="junior-res-name" id="junior-lbl-science">Muestras:</span>
+            <strong id="junior-val-science" class="junior-res-num science-val">0 pts</strong>
+          </div>
+        </div>
+
+        <!-- Contenedor del Canvas Interactivo -->
+        <div class="junior-canvas-container">
+          <canvas id="junior-arcade-canvas" width="800" height="420"></canvas>
+
+          <!-- Controles Táctiles en Pantalla (para Celular y Tablet) -->
+          <div class="junior-touch-bar">
+            <button id="junior-touch-left" class="junior-touch-btn btn-touch-dir" aria-label="Mover a la izquierda">
+              ◀
+            </button>
+            <button id="junior-touch-jump" class="junior-touch-btn btn-touch-jump" aria-label="Saltar con baja gravedad lunar">
+              🚀 SALTAR
+            </button>
+            <button id="junior-touch-right" class="junior-touch-btn btn-touch-dir" aria-label="Mover a la derecha">
+              ▶
+            </button>
+          </div>
+        </div>
+
+        <!-- Modal Educativo: Dato Científico de la NASA al completar el día -->
+        <div id="junior-modal-fact" class="modal-overlay hidden" role="dialog" aria-modal="true">
+          <div class="modal-card junior-fact-card">
+            <header class="modal-head junior-fact-head">
+              <span id="junior-fact-day-tag" class="tag-badge">TRANSMISIÓN EDUCATIVA NASA — DÍA 1 DE 5</span>
+              <span class="junior-audio-badge">📢 Auto-Voz Activada</span>
+            </header>
+            <div class="modal-body junior-fact-body">
+              <div class="junior-fact-mascot-box">
+                <div class="contenedor-ia">
+                  <img src="assets/mascot/thinking.jpg" alt="AstroCan" class="junior-fact-mascot-img">
+                  <span class="marca-ia" data-ai-label="true">AI</span>
+                </div>
+                <strong class="junior-mascot-label">AstroCan explica:</strong>
+              </div>
+
+              <div class="junior-fact-content">
+                <h3 id="junior-fact-title" class="junior-fact-headline">¡El Salto de la Jirafa en la Luna!</h3>
+                <p id="junior-fact-body" class="junior-fact-text">
+                  En la Luna la gravedad es 6 veces menor que en la Tierra...
+                </p>
+                <div class="junior-nasa-badge-box">
+                  <span id="junior-fact-nasa-badge" class="badge-nasa-fact">🔬 Ciencia Real NASA</span>
+                </div>
+              </div>
+            </div>
+            <div class="junior-fact-actions">
+              <button id="junior-btn-listen-again" class="btn-secondary">
+                📢 Escuchar de nuevo
+              </button>
+              <button id="junior-btn-next-day" class="btn-primary pulse-btn">
+                👉 CONTINUAR AL SIGUIENTE DÍA
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Modal de Fin de Expedición / Victoria / Reintento -->
+        <div id="junior-modal-end" class="modal-overlay hidden" role="dialog" aria-modal="true">
+          <div class="modal-card junior-end-card">
+            <div class="junior-end-mascot">
+              <div class="contenedor-ia">
+                <img src="assets/mascot/celebrating.jpg" alt="AstroCan" class="junior-end-img">
+                <span class="marca-ia" data-ai-label="true">AI</span>
+              </div>
+            </div>
+            <h2 id="junior-end-title" class="junior-end-title">🎉 ¡EXPEDICIÓN JUNIOR COMPLETADA!</h2>
+            <p id="junior-end-subtitle" class="junior-end-sub">¡Completaste con valentía los 5 días lunares explorando con AstroCan!</p>
+            <div id="junior-end-stars" class="junior-stars">⭐⭐⭐</div>
+            <div id="junior-end-stats" class="junior-end-stats-box"></div>
+            <div class="junior-end-actions">
+              <button id="junior-btn-end-restart" class="btn-primary">🔄 Jugar de Nuevo</button>
+              <button id="junior-btn-end-home" class="btn-secondary">🏠 Volver a la Base</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
     <!-- ====== 4. MODAL ARCHIVO CIENTÍFICO ====== -->
     <div id="modal-science" class="modal-overlay hidden" role="dialog" aria-modal="true">
       <div class="modal-card">
@@ -451,6 +622,7 @@
   <script src="js/minigame-shield.js"></script>
   <script src="js/minigame-rover.js"></script>
   <script src="js/certificate.js"></script>
+  <script src="js/junior-arcade.js"></script>
   <script src="js/main.js"></script>
 </body>
 </html>

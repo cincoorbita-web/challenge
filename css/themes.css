@@ -242,6 +242,27 @@
   letter-spacing: 0.5px;
 }
 
+/* Modo Aventura Junior Cómic Pop */
+[data-theme="comic-pop"] .btn-junior {
+  border: 3px solid #000000 !important;
+  box-shadow: 4px 4px 0px #000000 !important;
+  background: linear-gradient(135deg, #ffe600, #ff2a5f) !important;
+}
+
+[data-theme="comic-pop"] .junior-top-bar,
+[data-theme="comic-pop"] .junior-res-strip,
+[data-theme="comic-pop"] .junior-canvas-container,
+[data-theme="comic-pop"] .junior-fact-card,
+[data-theme="comic-pop"] .junior-end-card {
+  border: 2.5px solid #000000 !important;
+  box-shadow: 5px 5px 0px #000000 !important;
+}
+
+[data-theme="comic-pop"] .junior-touch-btn {
+  border: 2px solid #000000 !important;
+  box-shadow: 3px 3px 0px #000000 !important;
+}
+
 /* Botones con estilo POP de Cómic */
 [data-theme="comic-pop"] .btn-primary,
 [data-theme="comic-pop"] .btn-choose-option,
@@ -532,6 +553,22 @@
   border: 2px solid #8c5828 !important;
   box-shadow: 3px 3px 0px #1e1b2b !important;
   font-family: var(--font-body-comic) !important;
+}
+
+/* Modo Aventura Junior Pulp Retro */
+[data-theme="comic-retro"] .btn-junior {
+  border: 2px solid #8c5828 !important;
+  box-shadow: 3px 3px 0px #1e1b2b !important;
+  background: linear-gradient(135deg, #f4a261, #e76f51) !important;
+}
+
+[data-theme="comic-retro"] .junior-top-bar,
+[data-theme="comic-retro"] .junior-res-strip,
+[data-theme="comic-retro"] .junior-canvas-container,
+[data-theme="comic-retro"] .junior-fact-card,
+[data-theme="comic-retro"] .junior-end-card {
+  border: 1.5px solid #8c5828 !important;
+  box-shadow: 3px 3px 0px #1e1b2b !important;
 }
 
 /* Botones en estilo Pulp Sci-Fi */

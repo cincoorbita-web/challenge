@@ -211,7 +211,64 @@ class I18nManager {
         phase_polar_twilight: 'Atardecer Polar',
         phase_lunar_night: 'Noche Lunar Extrema (-173°C)',
         phase_trans_night: 'Transición a Noche Polar',
-        phase_polar_sunrise: 'Salida del Sol Polar'
+        phase_polar_sunrise: 'Salida del Sol Polar',
+
+        // ====================================================================
+        // MODO AVENTURA JUNIOR (7–9 AÑOS)
+        // ====================================================================
+        btn_junior_mode: '🎮 MODO AVENTURA JUNIOR (7–9 AÑOS)',
+        btn_junior_mode_sub: '¡Conduce con AstroCan, esquiva obstáculos y aprende con voz!',
+        btn_tactical_mode: '🚀 SIMULADOR DE MANDO (10–12 AÑOS)',
+        btn_tactical_mode_sub: 'Toma decisiones estratégicas y gestiona recursos de supervivencia',
+
+        junior_arcade_title: 'Expedición Lunar Junior con AstroCan',
+        junior_arcade_subtitle: 'Esquiva rocas espaciales, recoge oxígeno y energía, y completa los 5 días de misión.',
+        junior_day_label: 'Día',
+        junior_day_of_total: 'Día {day} de {total}',
+        junior_day_progress: 'Progreso del Día',
+        junior_res_o2: 'Oxígeno',
+        junior_res_energy: 'Baterías',
+        junior_res_hull: 'Casco',
+        junior_res_science: 'Muestras',
+        junior_audio_active: '🔊 Voz NASA: Activada',
+        junior_audio_muted: '🔇 Voz NASA: Silenciada',
+        junior_btn_listen_again: '📢 Escuchar de nuevo',
+        junior_btn_next_day: '👉 CONTINUAR AL SIGUIENTE DÍA',
+        junior_btn_finish: '🎉 ¡VER DIPLOMA DE EXPLORADOR!',
+        junior_btn_restart: '🔄 Reintentar Expedición',
+        junior_btn_home: '🏠 Volver a la Sala de Mando',
+        junior_controls_hint: 'Usa las flechas ◀ ▶ o toca los botones para conducir, y 🚀 para saltar',
+        junior_touch_left: '◀ IZQ',
+        junior_touch_right: 'DER ▶',
+        junior_touch_jump: '🚀 SALTO',
+
+        // Hechos Científicos de los 5 Días (Educativo / Niños 7-9 años)
+        junior_fact_1_title: '¡El Salto de la Jirafa en la Luna!',
+        junior_fact_1_body: '¿Sabías que en la Luna pesas 6 veces menos que en la Tierra? Si aquí saltas un metro, ¡en la Luna saltarías tan alto como una jirafa! Por eso los astronautas del programa Apolo parecían flotar dando pequeños saltitos de canguro.',
+        junior_fact_1_tag: 'Ciencia Real NASA: Gravedad Lunar (1/6 g)',
+
+        junior_fact_2_title: '¡Polvo Espacial como Pequeños Cristales!',
+        junior_fact_2_body: 'El suelo lunar está cubierto de un polvo llamado regolito. En la Tierra el viento y la lluvia suavizan la arena, pero en la Luna no hay clima. Sus partículas son tan diminutas y filosas como cristales rotos que se pegan a los trajes de los astronautas.',
+        junior_fact_2_tag: 'Ciencia Real NASA: Regolito Lunar (Misión Artemis)',
+
+        junior_fact_3_title: '¡Hielo Secreto en el Cráter Shackleton!',
+        junior_fact_3_body: 'En el Polo Sur de la Luna hay cráteres profundos donde jamás entra la luz del Sol y hace un frío helado de -230°C. La misión LCROSS de la NASA descubrió que en esa sombra permanente se esconden millones de toneladas de hielo de agua pura.',
+        junior_fact_3_tag: 'Ciencia Real NASA: Sondas LCROSS y LRO',
+
+        junior_fact_4_title: '¡Un Horno de Día y un Congelador de Noche!',
+        junior_fact_4_body: 'Como la Luna no tiene una atmósfera que la cubra como una cobija, cuando le da el Sol se calienta hasta +120°C (¡más caliente que el agua hirviendo!). Y cuando se hace de noche, baja de golpe a -130°C. ¡Por eso necesitamos energía para mantener el hábitat calientito!',
+        junior_fact_4_tag: 'Ciencia Real NASA: Termofísica Lunar (Diviner LRO)',
+
+        junior_fact_5_title: '¡Misión Cumplida, Joven Astronauta!',
+        junior_fact_5_body: '¡Excelente trabajo explorando la Luna! Has superado los 5 días de misión. Gracias a las muestras de hielo y minerales que recogiste conduciendo el rover con AstroCan, la base espacial de la NASA tiene agua, aire y combustible para seguir explorando.',
+        junior_fact_5_tag: 'Ciencia Real NASA: Programa Artemis Human Landing System',
+
+        junior_victory_title: '🎉 ¡EXPEDICIÓN JUNIOR COMPLETADA!',
+        junior_victory_sub: '¡Completaste con valentía los 5 días lunares explorando con AstroCan!',
+        junior_depleted_title: '⚠️ ¡Suministros Agotados!',
+        junior_depleted_sub: '¡Casi lo logras! En el espacio cada intento nos enseña algo nuevo. ¡Recarguemos el rover y volvamos a intentarlo juntos!',
+        junior_btn_retry_day: '🔄 Reintentar este Día',
+        junior_badge_explorer: '🏅 Medalla de Explorador Lunar Junior'
       },
 
       en: {
@@ -412,7 +469,64 @@ class I18nManager {
         phase_polar_twilight: 'Polar Twilight',
         phase_lunar_night: 'Extreme Lunar Night (-173°C)',
         phase_trans_night: 'Transition to Polar Night',
-        phase_polar_sunrise: 'Polar Sunrise'
+        phase_polar_sunrise: 'Polar Sunrise',
+
+        // ====================================================================
+        // JUNIOR ADVENTURE MODE (AGES 7–9)
+        // ====================================================================
+        btn_junior_mode: '🎮 JUNIOR ADVENTURE MODE (AGES 7–9)',
+        btn_junior_mode_sub: 'Drive with AstroCan, dodge obstacles, and learn with voice!',
+        btn_tactical_mode: '🚀 MISSION COMMAND SIMULATOR (AGES 10–12)',
+        btn_tactical_mode_sub: 'Make strategic decisions and manage survival trade-offs',
+
+        junior_arcade_title: 'Junior Moon Expedition with AstroCan',
+        junior_arcade_subtitle: 'Dodge space boulders, gather oxygen & energy, and complete all 5 days!',
+        junior_day_label: 'Day',
+        junior_day_of_total: 'Day {day} of {total}',
+        junior_day_progress: 'Day Progress',
+        junior_res_o2: 'Oxygen',
+        junior_res_energy: 'Batteries',
+        junior_res_hull: 'Hull',
+        junior_res_science: 'Samples',
+        junior_audio_active: '🔊 NASA Voice: Active',
+        junior_audio_muted: '🔇 NASA Voice: Muted',
+        junior_btn_listen_again: '📢 Listen Again',
+        junior_btn_next_day: '👉 PROCEED TO NEXT DAY',
+        junior_btn_finish: '🎉 VIEW EXPLORER DIPLOMA!',
+        junior_btn_restart: '🔄 Retry Expedition',
+        junior_btn_home: '🏠 Return to Mission Hub',
+        junior_controls_hint: 'Use arrow keys ◀ ▶ or on-screen buttons to drive, and 🚀 to jump',
+        junior_touch_left: '◀ LEFT',
+        junior_touch_right: 'RIGHT ▶',
+        junior_touch_jump: '🚀 JUMP',
+
+        // 5-Day Science Facts (Educational / Ages 7-9)
+        junior_fact_1_title: 'The Giraffe Leap on the Moon!',
+        junior_fact_1_body: 'Did you know you weigh 6 times less on the Moon than on Earth? If you can jump 1 meter on Earth, on the Moon you would soar as high as a giraffe! That is why Apollo astronauts bounced around doing kangaroo hops.',
+        junior_fact_1_tag: 'Real NASA Science: Lunar Gravity (1/6 g)',
+
+        junior_fact_2_title: 'Space Dust Like Tiny Crystals!',
+        junior_fact_2_body: 'The Moon is blanketed in a dust called regolith. On Earth, rain and wind smooth sand over time, but on the airless Moon the grains stay sharp like microscopic shards of glass that cling to spacesuits!',
+        junior_fact_2_tag: 'Real NASA Science: Lunar Regolith (Artemis Mission)',
+
+        junior_fact_3_title: 'Secret Ice Inside Shackleton Crater!',
+        junior_fact_3_body: 'At the Lunar South Pole, deep crater floors never see sunlight and stay freezing at -230°C. NASA\'s LCROSS mission proved that millions of tons of pure water ice are hidden right in those shadows!',
+        junior_fact_3_tag: 'Real NASA Science: LCROSS & LRO Probes',
+
+        junior_fact_4_title: 'A Giant Oven by Day, A Freezer by Night!',
+        junior_fact_4_body: 'Because the Moon lacks an atmosphere like Earth to insulate it, direct sunlight heats the rocks to +120°C (hotter than boiling water!). Once the sun sets, temperatures plunge to -130°C. That is why our habitat needs energy to stay warm!',
+        junior_fact_4_tag: 'Real NASA Science: Lunar Thermophysics (LRO Diviner)',
+
+        junior_fact_5_title: 'Mission Accomplished, Junior Astronaut!',
+        junior_fact_5_body: 'Outstanding work! You survived all 5 lunar days exploring the South Pole. Thanks to the water ice crystals and minerals you collected driving with AstroCan, our NASA outpost has drinking water, oxygen, and rocket fuel!',
+        junior_fact_5_tag: 'Real NASA Science: Artemis Human Landing System',
+
+        junior_victory_title: '🎉 JUNIOR EXPEDITION COMPLETE!',
+        junior_victory_sub: 'You bravely completed all 5 lunar days exploring with AstroCan!',
+        junior_depleted_title: '⚠️ Supplies Depleted!',
+        junior_depleted_sub: 'You were so close! In space exploration every attempt teaches us something new. Let\'s recharge the rover and try again together!',
+        junior_btn_retry_day: '🔄 Retry this Day',
+        junior_badge_explorer: '🏅 Junior Lunar Explorer Medal'
       }
     };
 
