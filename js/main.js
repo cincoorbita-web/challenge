@@ -121,6 +121,18 @@ document.addEventListener('DOMContentLoaded', () => {
   const btnTopVoice = document.getElementById('btn-top-voice');
   const currentVoiceLabel = document.getElementById('current-voice-label');
 
+  // Selector y Gestión de Estilos Visuales (UI Themes)
+  const modalTheme = document.getElementById('modal-theme');
+  const btnCloseThemeX = document.getElementById('btn-close-theme-x');
+  const btnCloseTheme = document.getElementById('btn-close-theme');
+  const btnCycleThemeFast = document.getElementById('btn-cycle-theme-fast');
+  const themeCardsGrid = document.getElementById('theme-cards-grid');
+  const btnSidebarTheme = document.getElementById('btn-sidebar-theme');
+  const sidebarThemeName = document.getElementById('sidebar-theme-name');
+  const btnTopTheme = document.getElementById('btn-top-theme');
+  const topThemeName = document.getElementById('top-theme-name');
+  const welcomeThemeBtns = document.querySelectorAll('.theme-btn');
+
   // Helper para sanitizar strings insertados en HTML
   const escapeHtml = (str) => {
     if (!str) return '';
@@ -304,6 +316,111 @@ document.addEventListener('DOMContentLoaded', () => {
             activeCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
           }
         }, 100);
+      }
+    });
+  }
+
+  // ========================================================================
+  // 2c. Selector y Cambio de Estilo de Interfaz (UI Themes)
+  // ========================================================================
+  function updateThemeButtonsUI(themeObj) {
+    if (!themeObj && window.themeManager) {
+      themeObj = window.themeManager.getCurrentTheme();
+    }
+    if (!themeObj) return;
+
+    if (sidebarThemeName) {
+      sidebarThemeName.textContent = themeObj.shortName;
+    }
+    if (topThemeName) {
+      topThemeName.textContent = themeObj.shortName;
+    }
+
+    if (welcomeThemeBtns && welcomeThemeBtns.length > 0) {
+      welcomeThemeBtns.forEach(btn => {
+        const val = btn.dataset.themeVal;
+        btn.classList.toggle('active', val === themeObj.id);
+      });
+    }
+
+    renderThemeList();
+  }
+
+  function renderThemeList() {
+    if (!themeCardsGrid || !window.themeManager) return;
+    const themes = window.themeManager.getThemes();
+    const currentTheme = window.themeManager.getCurrentTheme();
+
+    themeCardsGrid.innerHTML = themes.map(th => {
+      const isSelected = th.id === currentTheme.id;
+      const swatchesHtml = th.swatches ? th.swatches.map(c => `<span class="theme-swatch" style="background:${c}"></span>`).join('') : '';
+      return `
+        <div class="theme-preview-card ${isSelected ? 'selected' : ''}" data-theme-id="${th.id}">
+          <div class="theme-preview-header">
+            <span class="theme-preview-icon">${th.icon}</span>
+            <div>
+              <strong class="theme-preview-name">${escapeHtml(th.name)}</strong>
+              <div class="theme-preview-swatches">${swatchesHtml}</div>
+            </div>
+          </div>
+          <p class="theme-preview-desc">${escapeHtml(th.desc)}</p>
+          <button type="button" class="theme-preview-btn">
+            ${isSelected ? '✓ Activo' : 'Activar Estilo'}
+          </button>
+        </div>
+      `;
+    }).join('');
+
+    themeCardsGrid.querySelectorAll('.theme-preview-card').forEach(card => {
+      card.addEventListener('click', () => {
+        const tId = card.dataset.themeId;
+        if (window.themeManager) {
+          window.themeManager.setTheme(tId, true);
+        }
+      });
+    });
+  }
+
+  function openThemeModal() {
+    if (window.gameAudio) window.gameAudio.playClick();
+    renderThemeList();
+    if (modalTheme) modalTheme.classList.remove('hidden');
+  }
+
+  function closeThemeModal() {
+    if (window.gameAudio) window.gameAudio.playClick();
+    if (modalTheme) modalTheme.classList.add('hidden');
+  }
+
+  // Inicializar UI de temas y registrar observador
+  if (window.themeManager) {
+    window.themeManager.onThemeChange((themeId, themeObj) => {
+      updateThemeButtonsUI(themeObj);
+    });
+    updateThemeButtonsUI(window.themeManager.getCurrentTheme());
+  }
+
+  // Eventos de botones de tema en pantalla de bienvenida
+  if (welcomeThemeBtns) {
+    welcomeThemeBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const val = btn.dataset.themeVal;
+        if (window.themeManager) {
+          window.themeManager.setTheme(val, true);
+        }
+      });
+    });
+  }
+
+  if (btnSidebarTheme) btnSidebarTheme.addEventListener('click', openThemeModal);
+  if (btnTopTheme) btnTopTheme.addEventListener('click', openThemeModal);
+  if (btnCloseThemeX) btnCloseThemeX.addEventListener('click', closeThemeModal);
+  if (btnCloseTheme) btnCloseTheme.addEventListener('click', closeThemeModal);
+
+  if (btnCycleThemeFast) {
+    btnCycleThemeFast.addEventListener('click', () => {
+      if (window.themeManager) {
+        window.themeManager.cycleTheme();
       }
     });
   }

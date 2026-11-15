@@ -6,10 +6,11 @@
   <title>ORBITA5 | Junior Astronaut Mission Trainer</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Comic+Neue:ital,wght@0,400;0,700;1,400;1,700&family=Fredoka:wght@300..700&family=Permanent+Marker&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css">
   <link rel="stylesheet" href="css/space-scene.css">
   <link rel="stylesheet" href="css/minigames.css">
+  <link rel="stylesheet" href="css/themes.css">
 </head>
 <body>
   <canvas id="space-canvas"></canvas>
@@ -62,6 +63,31 @@
               <span class="diff-days">28 Días</span>
               <span class="diff-desc">14 días de noche a -173°C, maratón.</span>
             </button>
+          </div>
+
+          <!-- Selector de Estilo de Interfaz (UI) en Pantalla de Bienvenida -->
+          <div class="theme-selector-welcome">
+            <label class="theme-selector-label">🎨 Estilo Visual de la Interfaz (UI):</label>
+            <div class="theme-buttons-row">
+              <button type="button" class="theme-btn active" data-theme-val="default">
+                <span class="theme-btn-badge">Base</span>
+                <span class="theme-btn-icon">🚀</span>
+                <span class="theme-btn-title">Sci-Fi Clásico</span>
+                <span class="theme-btn-subtitle">Futurista y Limpio</span>
+              </button>
+              <button type="button" class="theme-btn" data-theme-val="comic-pop">
+                <span class="theme-btn-badge badge-pop">¡Acción!</span>
+                <span class="theme-btn-icon">💥</span>
+                <span class="theme-btn-title">Cómic Pop-Art</span>
+                <span class="theme-btn-subtitle">Tinta y Halftone</span>
+              </button>
+              <button type="button" class="theme-btn" data-theme-val="comic-retro">
+                <span class="theme-btn-badge badge-retro">Vintage</span>
+                <span class="theme-btn-icon">📜</span>
+                <span class="theme-btn-title">Novela Gráfica</span>
+                <span class="theme-btn-subtitle">Pulp Clásico 70s</span>
+              </button>
+            </div>
           </div>
 
           <button id="btn-start-mission" class="btn-primary pulse-btn">🚀 ASUMIR EL MANDO</button>
@@ -119,6 +145,7 @@
           </div>
 
           <div class="sidebar-actions">
+            <button id="btn-sidebar-theme" class="pill-btn sidebar-btn">🎨 Estilo UI: <span id="sidebar-theme-name">Sci-Fi</span></button>
             <button id="btn-sidebar-voice" class="pill-btn sidebar-btn">🎙️ Cambiar Voz</button>
             <button id="btn-sidebar-science" class="pill-btn sidebar-btn">🔬 Archivo Científico NASA</button>
             <button id="btn-sidebar-sound" class="pill-btn sidebar-btn">🔊 Sonido</button>
@@ -136,6 +163,7 @@
               <span class="day-badge" id="hud-day-text">Día 1/7</span>
             </div>
             <div class="bar-right">
+              <button id="btn-top-theme" class="pill-btn" title="Cambiar estilo visual de interfaz (UI)">🎨 <span id="top-theme-name">UI</span></button>
               <button id="btn-top-voice" class="pill-btn" title="Cambiar tipo de voz de narración">🎙️</button>
               <button id="btn-open-science" class="pill-btn">🔬 Archivo NASA</button>
               <button id="btn-toggle-sound" class="pill-btn">🔊</button>
@@ -306,8 +334,35 @@
       </div>
     </div>
 
+    <!-- ====== 7. MODAL SELECTOR DE ESTILO VISUAL / TEMAS ====== -->
+    <div id="modal-theme" class="modal-overlay hidden" role="dialog" aria-modal="true">
+      <div class="modal-card modal-theme-card">
+        <header class="modal-head">
+          <h3>🎨 Estilo Visual de la Interfaz (UI)</h3>
+          <button id="btn-close-theme-x" class="modal-close" aria-label="Cerrar">&times;</button>
+        </header>
+        <div class="modal-body">
+          <div class="theme-modal-intro">
+            <p class="theme-modal-desc">
+              Selecciona cómo deseas experimentar <strong>ORBITA5</strong>. Puedes alternar libremente entre la interfaz base de ciencia ficción y las propuestas con estilo cómic:
+            </p>
+          </div>
+
+          <div id="theme-cards-grid" class="theme-cards-grid">
+            <!-- Rellenado dinámicamente con los temas -->
+          </div>
+
+          <div class="voice-modal-footer">
+            <button id="btn-cycle-theme-fast" class="btn-secondary">🔄 Alternar Estilo Rápido</button>
+            <button id="btn-close-theme" class="btn-primary">Listo</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </main>
 
+  <script src="js/theme-manager.js"></script>
   <script src="js/audio.js"></script>
   <script src="js/speech.js"></script>
   <script src="js/mascot.js"></script>

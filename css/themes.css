@@ -1,0 +1,837 @@
+/* ==========================================================================
+   ORBITA5 — SISTEMA DE TEMAS VISUALES DE UI (THEMES)
+   Temas disponibles:
+   1. [data-theme="default"]     -> Base Sci-Fi Clásico (Tecnología limpia, neón, Fredoka)
+   2. [data-theme="comic-pop"]   -> Cómic Pop-Art / Superhéroe (Líneas de tinta gruesa, halftone, sombras duras, Bangers)
+   3. [data-theme="comic-retro"] -> Novela Gráfica / Pulp Vintage (Papel de historieta clásica, tramas de imprenta, tonos cálidos)
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   FUENTES Y VARIABLES BASE DE TEMAS
+   -------------------------------------------------------------------------- */
+:root {
+  --font-display-comic: 'Bangers', 'Impact', 'Arial Black', cursive, sans-serif;
+  --font-body-comic: 'Comic Neue', 'Comic Sans MS', 'Fredoka', cursive, sans-serif;
+  --font-marker-comic: 'Permanent Marker', cursive, sans-serif;
+  --theme-transition-speed: 0.25s;
+}
+
+/* ==========================================================================
+   TEMA 1: CÓMIC POP-ART / SUPERHÉROE ESPACIAL ([data-theme="comic-pop"])
+   Inspirado en cómics modernos de superhéroes, viñetas de acción y Spider-Verse:
+   - Trazos gruesos de tinta negra (3px-4px)
+   - Sombras duras de 45° sin blur (box-shadow: 5px 5px 0 #000)
+   - Tramas de semitono (Ben-Day / Halftone dots)
+   - Paleta de color hiper-vibrante (Amarillo Cómic, Cian Eléctrico, Magenta Acción)
+   - Globos de diálogo de historieta con pico apuntando a la mascota
+   - Botones que "saltan" al hacer hover y se hunden al presionar
+   ========================================================================== */
+
+[data-theme="comic-pop"] {
+  --bg-deep: #090a14;
+  --panel-glass: rgba(18, 20, 36, 0.94);
+  --panel-glass-solid: #151829;
+  --panel-border: #000000;
+  --border-bright: #ffe600;
+  --nasa-blue: #0066ff;
+  --cyan: #00f0ff;
+  --glow: rgba(255, 230, 0, 0.4);
+  --o2: #00e5ff;
+  --energy: #ffe600;
+  --health: #ff2a5f;
+  --integrity: #3d84ff;
+  --science: #b33939;
+  --gain: #00e676;
+  --gain-bg: rgba(0, 230, 118, 0.25);
+  --cost: #ff1744;
+  --cost-bg: rgba(255, 23, 68, 0.25);
+  --txt: #ffffff;
+  --txt2: #f1f2f6;
+  --txt3: #ced6e0;
+}
+
+/* Halftone sutil en el fondo de la pantalla */
+[data-theme="comic-pop"] .space-ambient-glow {
+  background: 
+    radial-gradient(circle at 80% 20%, rgba(255, 230, 0, 0.12) 0%, transparent 45%),
+    radial-gradient(circle at 20% 80%, rgba(0, 240, 255, 0.12) 0%, transparent 45%),
+    radial-gradient(#ffe600 12%, transparent 13%) 0 0 / 24px 24px;
+  opacity: 0.25;
+}
+
+/* Tipografía de Cómic para Títulos y Rótulos */
+[data-theme="comic-pop"] .main-title,
+[data-theme="comic-pop"] .dilemma-title,
+[data-theme="comic-pop"] .gameover-title,
+[data-theme="comic-pop"] .modal-head h3,
+[data-theme="comic-pop"] .transmission-title,
+[data-theme="comic-pop"] .telemetry-title,
+[data-theme="comic-pop"] .rank-badge,
+[data-theme="comic-pop"] .theme-btn-title {
+  font-family: var(--font-display-comic);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+[data-theme="comic-pop"] .main-title {
+  color: #ffe600;
+  text-shadow: 
+    4px 4px 0 #000,
+    -2px -2px 0 #000,
+    2px -2px 0 #000,
+    -2px 2px 0 #000,
+    0 0 16px rgba(255, 230, 0, 0.7);
+  letter-spacing: 3px;
+  transform: rotate(-1deg);
+}
+
+[data-theme="comic-pop"] .nasa-logo-badge {
+  background: #ff2a5f !important;
+  color: #fff !important;
+  border: 3px solid #000 !important;
+  box-shadow: 4px 4px 0 #000 !important;
+  font-weight: 900;
+  transform: rotate(1deg);
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+}
+
+/* Tarjetas con estilo de viñeta de historieta: Bordes negros de tinta y sombras duras */
+[data-theme="comic-pop"] .welcome-briefing,
+[data-theme="comic-pop"] .welcome-form,
+[data-theme="comic-pop"] .welcome-mascot-card,
+[data-theme="comic-pop"] .station-sidebar,
+[data-theme="comic-pop"] .top-bar,
+[data-theme="comic-pop"] .dilemma-card,
+[data-theme="comic-pop"] .tradeoff-option-card,
+[data-theme="comic-pop"] .transmission-box,
+[data-theme="comic-pop"] .modal-card,
+[data-theme="comic-pop"] .gameover-inner,
+[data-theme="comic-pop"] .metric-pill,
+[data-theme="comic-pop"] .lesson-card,
+[data-theme="comic-pop"] .sidebar-telemetry {
+  border: 3px solid #000000 !important;
+  box-shadow: 5px 5px 0px #000000 !important;
+  border-radius: 12px !important;
+  background-color: var(--panel-glass) !important;
+}
+
+/* Efecto viñeta en tarjetas de opción */
+[data-theme="comic-pop"] .tradeoff-option-card {
+  border: 3px solid #000000 !important;
+  box-shadow: 4px 4px 0px #000000 !important;
+  background: #181c33 !important;
+  position: relative;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+[data-theme="comic-pop"] .tradeoff-option-card:hover {
+  transform: translate(-3px, -3px) !important;
+  box-shadow: 7px 7px 0px #000000 !important;
+  border-color: #ffe600 !important;
+}
+
+/* Globos de diálogo de AstroCan estilo BOCADILLO DE CÓMIC */
+[data-theme="comic-pop"] .welcome-mascot-bubble,
+[data-theme="comic-pop"] .sidebar-speech-bubble,
+[data-theme="comic-pop"] .mobile-speech-bubble,
+[data-theme="comic-pop"] .gameover-mascot-bubble {
+  background: #ffffff !important;
+  color: #111111 !important;
+  border: 3px solid #000000 !important;
+  box-shadow: 4px 4px 0px #000000 !important;
+  border-radius: 16px !important;
+  font-weight: 600;
+  position: relative;
+}
+
+[data-theme="comic-pop"] .welcome-mascot-bubble strong,
+[data-theme="comic-pop"] .sidebar-speech-bubble strong,
+[data-theme="comic-pop"] .mobile-speech-bubble strong {
+  color: #0055ff !important;
+}
+
+/* Cola o pico del bocadillo de cómic */
+[data-theme="comic-pop"] .welcome-mascot-bubble::before,
+[data-theme="comic-pop"] .sidebar-speech-bubble::before,
+[data-theme="comic-pop"] .mobile-speech-bubble::before {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-style: solid;
+}
+
+[data-theme="comic-pop"] .welcome-mascot-bubble::before {
+  left: -14px;
+  top: 24px;
+  border-width: 8px 14px 8px 0;
+  border-color: transparent #000000 transparent transparent;
+}
+
+[data-theme="comic-pop"] .sidebar-speech-bubble::before {
+  top: -14px;
+  left: 36px;
+  border-width: 0 8px 14px 8px;
+  border-color: transparent transparent #000000 transparent;
+}
+
+/* Avatares de la mascota con aro de tinta de historieta */
+[data-theme="comic-pop"] .welcome-mascot-img,
+[data-theme="comic-pop"] .mascot-sidebar-avatar,
+[data-theme="comic-pop"] .mascot-mobile-avatar,
+[data-theme="comic-pop"] .gameover-mascot-avatar {
+  border: 3.5px solid #000000 !important;
+  box-shadow: 4px 4px 0px #ffe600 !important;
+}
+
+/* Botones con estilo POP de Cómic */
+[data-theme="comic-pop"] .btn-primary,
+[data-theme="comic-pop"] .btn-choose-option,
+[data-theme="comic-pop"] .pill-btn,
+[data-theme="comic-pop"] .diff-btn,
+[data-theme="comic-pop"] .btn-secondary {
+  border: 2.5px solid #000000 !important;
+  box-shadow: 3.5px 3.5px 0px #000000 !important;
+  font-weight: 800 !important;
+  transition: transform 0.12s ease, box-shadow 0.12s ease !important;
+}
+
+[data-theme="comic-pop"] .btn-primary {
+  background: linear-gradient(135deg, #ffe600, #ffb800) !important;
+  color: #000000 !important;
+  text-shadow: none !important;
+  letter-spacing: 0.5px;
+}
+
+[data-theme="comic-pop"] .btn-primary:hover {
+  transform: translate(-2px, -2px) !important;
+  box-shadow: 5.5px 5.5px 0px #000000 !important;
+  background: #fff033 !important;
+}
+
+[data-theme="comic-pop"] .btn-primary:active,
+[data-theme="comic-pop"] .btn-choose-option:active,
+[data-theme="comic-pop"] .pill-btn:active {
+  transform: translate(2px, 2px) !important;
+  box-shadow: 1px 1px 0px #000000 !important;
+}
+
+[data-theme="comic-pop"] .btn-choose-option {
+  background: #00d2ff !important;
+  color: #000000 !important;
+}
+
+[data-theme="comic-pop"] .btn-choose-option:hover {
+  background: #ffe600 !important;
+  color: #000000 !important;
+}
+
+/* Badges con estilo onomatopeya / cartel de historieta */
+[data-theme="comic-pop"] .tag-badge {
+  background: #ff2a5f !important;
+  color: #ffffff !important;
+  border: 2px solid #000 !important;
+  box-shadow: 2.5px 2.5px 0 #000 !important;
+  font-family: var(--font-display-comic);
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+  transform: rotate(-2deg);
+}
+
+[data-theme="comic-pop"] .day-badge {
+  background: #ffe600 !important;
+  color: #000000 !important;
+  border: 2px solid #000 !important;
+  box-shadow: 2px 2px 0 #000 !important;
+  font-weight: 800;
+}
+
+[data-theme="comic-pop"] .source-box {
+  background: #111425 !important;
+  border: 2.5px solid #000 !important;
+  box-shadow: 3px 3px 0 #000 !important;
+}
+
+[data-theme="comic-pop"] .source-verified-badge {
+  background: #00e676 !important;
+  color: #000 !important;
+  border: 1.5px solid #000 !important;
+  font-weight: 800;
+}
+
+[data-theme="comic-pop"] .science-box {
+  background: #fffae6 !important;
+  color: #111111 !important;
+  border: 2.5px solid #000 !important;
+  box-shadow: 3px 3px 0 #000 !important;
+  font-weight: 600;
+}
+
+/* Barras de Recursos en Cómic Pop: Borde negro y efecto segmentado */
+[data-theme="comic-pop"] .res-bar-track {
+  border: 2px solid #000 !important;
+  background: #000000 !important;
+  height: 10px !important;
+}
+
+[data-theme="comic-pop"] .res-bar-fill {
+  border-right: 2px solid #000;
+}
+
+[data-theme="comic-pop"] .diff-btn.active {
+  background: #ffe600 !important;
+  color: #000 !important;
+  border-color: #000 !important;
+  box-shadow: 5px 5px 0 #000 !important;
+  transform: translate(-2px, -2px) !important;
+}
+
+[data-theme="comic-pop"] .diff-btn.active .diff-title,
+[data-theme="comic-pop"] .diff-btn.active .diff-days,
+[data-theme="comic-pop"] .diff-btn.active .diff-desc {
+  color: #000 !important;
+}
+
+
+/* ==========================================================================
+   TEMA 2: NOVELA GRÁFICA / PULP VINTAGE SCI-FI ([data-theme="comic-retro"])
+   Inspirado en historietas de aventuras espaciales retro (años 50s-70s / Tintín / Pulp):
+   - Paleta de imprenta analógica, tonos papel envejecido y tinta sepia/marino
+   - Bordes dobles tipo viñeta clásica de álbum europeo
+   - Tramas de líneas cruzadas (cross-hatching) en cartelas
+   - Cartelas de narrador ("MIENTRAS TANTO...", "BITÁCORA LUNAR")
+   - Tipografía rotulada vintage y calidez nostálgica
+   ========================================================================== */
+
+[data-theme="comic-retro"] {
+  --bg-deep: #16151f;
+  --panel-glass: rgba(30, 27, 43, 0.94);
+  --panel-glass-solid: #211d33;
+  --panel-border: #d4a373;
+  --border-bright: #e76f51;
+  --nasa-blue: #2a9d8f;
+  --cyan: #e9c46a;
+  --glow: rgba(231, 111, 81, 0.35);
+  --o2: #2ec4b6;
+  --energy: #f4a261;
+  --health: #e76f51;
+  --integrity: #457b9d;
+  --science: #e9c46a;
+  --gain: #2a9d8f;
+  --gain-bg: rgba(42, 157, 143, 0.2);
+  --cost: #e76f51;
+  --cost-bg: rgba(231, 111, 81, 0.2);
+  --txt: #fdfbf7;
+  --txt2: #e8dcc4;
+  --txt3: #bda98c;
+}
+
+/* Fondo con efecto de imprenta y trama cálida */
+[data-theme="comic-retro"] .space-ambient-glow {
+  background: 
+    radial-gradient(circle at 50% 10%, rgba(244, 162, 97, 0.15) 0%, transparent 60%),
+    radial-gradient(circle at 80% 80%, rgba(42, 157, 143, 0.12) 0%, transparent 50%),
+    repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15) 1px, transparent 1px, transparent 4px);
+  opacity: 0.4;
+}
+
+/* Tipografía de Rotulación Vintage */
+[data-theme="comic-retro"] .main-title,
+[data-theme="comic-retro"] .dilemma-title,
+[data-theme="comic-retro"] .gameover-title,
+[data-theme="comic-retro"] .modal-head h3,
+[data-theme="comic-retro"] .transmission-title,
+[data-theme="comic-retro"] .telemetry-title,
+[data-theme="comic-retro"] .rank-badge,
+[data-theme="comic-retro"] .theme-btn-title {
+  font-family: var(--font-display-comic);
+  letter-spacing: 2px;
+  color: #f4a261;
+  text-shadow: 2px 2px 0px #1a162b, 0 0 10px rgba(244, 162, 97, 0.4);
+}
+
+[data-theme="comic-retro"] .main-title {
+  color: #e9c46a;
+  letter-spacing: 3px;
+  border-bottom: 3px double #e76f51;
+  display: inline-block;
+  padding-bottom: 4px;
+}
+
+[data-theme="comic-retro"] .nasa-logo-badge {
+  background: #264653 !important;
+  color: #e9c46a !important;
+  border: 2px solid #e9c46a !important;
+  border-radius: 4px !important;
+  letter-spacing: 1.5px;
+  font-weight: 700;
+  box-shadow: 2px 2px 0 #111 !important;
+}
+
+/* Viñetas clásicas con doble borde de imprenta vintage */
+[data-theme="comic-retro"] .welcome-briefing,
+[data-theme="comic-retro"] .welcome-form,
+[data-theme="comic-retro"] .welcome-mascot-card,
+[data-theme="comic-retro"] .station-sidebar,
+[data-theme="comic-retro"] .top-bar,
+[data-theme="comic-retro"] .dilemma-card,
+[data-theme="comic-retro"] .tradeoff-option-card,
+[data-theme="comic-retro"] .transmission-box,
+[data-theme="comic-retro"] .modal-card,
+[data-theme="comic-retro"] .gameover-inner,
+[data-theme="comic-retro"] .metric-pill,
+[data-theme="comic-retro"] .lesson-card,
+[data-theme="comic-retro"] .sidebar-telemetry {
+  border: 2.5px solid #c9935a !important;
+  outline: 1px dashed rgba(244, 162, 97, 0.4) !important;
+  outline-offset: -5px;
+  border-radius: 8px !important;
+  background-color: var(--panel-glass) !important;
+  box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.45) !important;
+}
+
+/* Tarjetas de Opción en estilo Novela Gráfica Clásica */
+[data-theme="comic-retro"] .tradeoff-option-card {
+  background: #1f1a2e !important;
+  border: 2px solid #b3804d !important;
+  transition: all 0.2s ease;
+}
+
+[data-theme="comic-retro"] .tradeoff-option-card:hover {
+  border-color: #f4a261 !important;
+  background: #2a223e !important;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(244, 162, 97, 0.25) !important;
+}
+
+/* Globos de diálogo estilo cartela de historieta vintage */
+[data-theme="comic-retro"] .welcome-mascot-bubble,
+[data-theme="comic-retro"] .sidebar-speech-bubble,
+[data-theme="comic-retro"] .mobile-speech-bubble,
+[data-theme="comic-retro"] .gameover-mascot-bubble {
+  background: #fbf5e5 !important;
+  color: #1e1b2b !important;
+  border: 2px solid #8c5828 !important;
+  border-radius: 6px !important;
+  font-family: var(--font-body-comic);
+  font-size: 0.95rem;
+  box-shadow: 3px 3px 0 #111 !important;
+}
+
+[data-theme="comic-retro"] .welcome-mascot-bubble strong,
+[data-theme="comic-retro"] .sidebar-speech-bubble strong,
+[data-theme="comic-retro"] .mobile-speech-bubble strong {
+  color: #b04118 !important;
+}
+
+/* Botones en estilo Pulp Sci-Fi */
+[data-theme="comic-retro"] .btn-primary,
+[data-theme="comic-retro"] .btn-choose-option,
+[data-theme="comic-retro"] .pill-btn,
+[data-theme="comic-retro"] .diff-btn,
+[data-theme="comic-retro"] .btn-secondary {
+  border: 2px solid #d4a373 !important;
+  border-radius: 6px !important;
+  font-family: var(--font-body-comic);
+  letter-spacing: 0.5px;
+  font-weight: 700;
+}
+
+[data-theme="comic-retro"] .btn-primary {
+  background: linear-gradient(135deg, #e76f51, #f4a261) !important;
+  color: #fff !important;
+  box-shadow: 3px 3px 0 #1a162b !important;
+}
+
+[data-theme="comic-retro"] .btn-primary:hover {
+  background: linear-gradient(135deg, #f4a261, #e9c46a) !important;
+  color: #1a162b !important;
+  transform: translateY(-1px);
+}
+
+[data-theme="comic-retro"] .btn-choose-option {
+  background: #2a9d8f !important;
+  color: #ffffff !important;
+  box-shadow: 2px 2px 0 #111 !important;
+}
+
+[data-theme="comic-retro"] .btn-choose-option:hover {
+  background: #e76f51 !important;
+  color: #ffffff !important;
+}
+
+/* Badges estilo cartela editorial */
+[data-theme="comic-retro"] .tag-badge {
+  background: #e76f51 !important;
+  color: #fff !important;
+  border: 1px solid #1a162b !important;
+  border-radius: 3px !important;
+  letter-spacing: 1px;
+}
+
+[data-theme="comic-retro"] .day-badge {
+  background: #264653 !important;
+  color: #e9c46a !important;
+  border: 1px solid #e9c46a !important;
+}
+
+[data-theme="comic-retro"] .source-box {
+  background: #181424 !important;
+  border: 1.5px solid #b3804d !important;
+  border-left: 4px solid #f4a261 !important;
+}
+
+[data-theme="comic-retro"] .science-box {
+  background: #242036 !important;
+  border-left: 4px solid #2a9d8f !important;
+  color: #e8dcc4 !important;
+}
+
+/* ==========================================================================
+   COMPONENTES DEL SELECTOR DE TEMAS UI
+   ========================================================================== */
+
+/* 1. Selector en Pantalla de Bienvenida */
+.theme-selector-welcome {
+  margin-top: 14px;
+  margin-bottom: 14px;
+  background: rgba(10, 16, 32, 0.7);
+  border: 1px solid rgba(0, 210, 211, 0.3);
+  border-radius: 12px;
+  padding: 10px 12px;
+  text-align: left;
+}
+
+[data-theme="comic-pop"] .theme-selector-welcome {
+  border: 3px solid #000 !important;
+  box-shadow: 4px 4px 0 #000 !important;
+  background: #151829 !important;
+}
+
+[data-theme="comic-retro"] .theme-selector-welcome {
+  border: 2px solid #b3804d !important;
+  background: #1d182b !important;
+}
+
+.theme-selector-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--cyan);
+  margin-bottom: 8px;
+}
+
+.theme-buttons-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 8px;
+}
+
+.theme-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 10px;
+  background: rgba(20, 30, 55, 0.6);
+  border: 1.5px solid var(--panel-border);
+  border-radius: 10px;
+  color: var(--txt2);
+  cursor: pointer;
+  font-family: var(--font);
+  transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+  text-align: center;
+}
+
+.theme-btn:hover {
+  border-color: var(--cyan);
+  background: rgba(0, 210, 211, 0.12);
+  transform: translateY(-2px);
+}
+
+.theme-btn.active {
+  background: linear-gradient(135deg, rgba(9, 132, 227, 0.35), rgba(0, 210, 211, 0.35));
+  border-color: var(--cyan);
+  box-shadow: 0 0 14px var(--glow);
+  color: #fff;
+}
+
+[data-theme="comic-pop"] .theme-btn.active {
+  background: #ffe600 !important;
+  color: #000 !important;
+  border: 3px solid #000 !important;
+  box-shadow: 4px 4px 0 #000 !important;
+  transform: translate(-2px, -2px) !important;
+}
+
+[data-theme="comic-pop"] .theme-btn.active .theme-btn-title,
+[data-theme="comic-pop"] .theme-btn.active .theme-btn-subtitle {
+  color: #000 !important;
+}
+
+[data-theme="comic-retro"] .theme-btn.active {
+  background: #f4a261 !important;
+  color: #1a162b !important;
+  border: 2px solid #1a162b !important;
+  box-shadow: 3px 3px 0 #111 !important;
+}
+
+[data-theme="comic-retro"] .theme-btn.active .theme-btn-title,
+[data-theme="comic-retro"] .theme-btn.active .theme-btn-subtitle {
+  color: #1a162b !important;
+}
+
+.theme-btn-icon {
+  font-size: 1.4rem;
+  margin-bottom: 2px;
+}
+
+.theme-btn-title {
+  font-size: 0.88rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.theme-btn-subtitle {
+  font-size: 0.74rem;
+  color: var(--txt3);
+  margin-top: 2px;
+}
+
+.theme-btn-badge {
+  position: absolute;
+  top: -6px;
+  right: 6px;
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-size: 0.64rem;
+  font-weight: 800;
+  background: rgba(0, 210, 211, 0.25);
+  color: var(--cyan);
+  border: 1px solid var(--cyan);
+}
+
+.badge-pop {
+  background: #ff2a5f !important;
+  color: #fff !important;
+  border: 1px solid #000 !important;
+}
+
+.badge-retro {
+  background: #2a9d8f !important;
+  color: #fff !important;
+  border: 1px solid #1a162b !important;
+}
+
+/* 2. Modal Selector de Temas */
+.modal-theme-card {
+  max-width: 620px;
+}
+
+.theme-modal-intro {
+  margin-bottom: 12px;
+}
+
+.theme-modal-desc {
+  font-size: 0.88rem;
+  color: var(--txt2);
+  line-height: 1.4;
+  margin-bottom: 8px;
+}
+
+.theme-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.theme-preview-card {
+  background: rgba(14, 21, 40, 0.8);
+  border: 1.5px solid var(--panel-border);
+  border-radius: 12px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+  text-align: left;
+}
+
+.theme-preview-card:hover {
+  border-color: var(--cyan);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px var(--glow);
+}
+
+.theme-preview-card.selected {
+  border-color: var(--cyan);
+  background: rgba(0, 210, 211, 0.12);
+  box-shadow: 0 0 16px var(--glow);
+}
+
+.theme-preview-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.theme-preview-icon {
+  font-size: 1.6rem;
+}
+
+.theme-preview-name {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.theme-preview-swatches {
+  display: flex;
+  gap: 4px;
+  margin: 2px 0;
+}
+
+.theme-swatch {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255, 255, 255, 0.4);
+}
+
+.theme-preview-desc {
+  font-size: 0.78rem;
+  color: var(--txt2);
+  line-height: 1.35;
+  flex: 1;
+}
+
+.theme-preview-btn {
+  margin-top: auto;
+  padding: 6px 10px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--txt2);
+  transition: all 0.15s;
+}
+
+.theme-preview-card.selected .theme-preview-btn {
+  background: var(--cyan);
+  color: #000;
+  font-weight: 800;
+}
+
+/* Indicador visual activo en Top Bar y Sidebar */
+.btn-theme-active-indicator {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--cyan);
+  margin-left: 4px;
+  box-shadow: 0 0 6px var(--cyan);
+}
+
+/* ==========================================================================
+   MINIJUEGOS Y TELEMETRÍA TEMATIZADOS
+   ========================================================================== */
+
+/* Minijuegos en Cómic Pop */
+[data-theme="comic-pop"] .minigame-card {
+  border: 3.5px solid #000000 !important;
+  box-shadow: 6px 6px 0px #000000 !important;
+  border-radius: 14px !important;
+  background: #151829 !important;
+}
+
+[data-theme="comic-pop"] .alarm-badge {
+  background: #ff2a5f !important;
+  color: #fff !important;
+  border: 2.5px solid #000 !important;
+  box-shadow: 3px 3px 0 #000 !important;
+  font-family: var(--font-display-comic);
+  letter-spacing: 1px;
+}
+
+[data-theme="comic-pop"] .countdown-clock {
+  background: #ffe600 !important;
+  color: #000 !important;
+  border: 2.5px solid #000 !important;
+  box-shadow: 3px 3px 0 #000 !important;
+}
+
+[data-theme="comic-pop"] .shield-arc-canvas,
+[data-theme="comic-pop"] #rover-canvas {
+  border: 3px solid #000000 !important;
+  box-shadow: 4px 4px 0px #000000 !important;
+  border-radius: 10px;
+}
+
+/* Semáforo de Textos en Cómic Pop: sombras duras de tinta */
+[data-theme="comic-pop"] .text-status-good {
+  color: #00e676 !important;
+  text-shadow: 1.5px 1.5px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000 !important;
+}
+
+[data-theme="comic-pop"] .text-status-warning {
+  color: #ffe600 !important;
+  text-shadow: 1.5px 1.5px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000 !important;
+}
+
+[data-theme="comic-pop"] .text-status-critical {
+  color: #ff2a5f !important;
+  text-shadow: 2px 2px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000 !important;
+}
+
+/* Minijuegos en Novela Gráfica / Pulp Vintage */
+[data-theme="comic-retro"] .minigame-card {
+  border: 2.5px solid #c9935a !important;
+  outline: 1px dashed rgba(244, 162, 97, 0.4) !important;
+  outline-offset: -5px;
+  background: #1c182b !important;
+  box-shadow: 4px 4px 14px rgba(0, 0, 0, 0.5) !important;
+}
+
+[data-theme="comic-retro"] .alarm-badge {
+  background: #e76f51 !important;
+  color: #fff !important;
+  border: 1.5px solid #1a162b !important;
+  border-radius: 4px !important;
+}
+
+[data-theme="comic-retro"] .countdown-clock {
+  background: #264653 !important;
+  color: #e9c46a !important;
+  border: 1.5px solid #e9c46a !important;
+  border-radius: 4px !important;
+}
+
+[data-theme="comic-retro"] .shield-arc-canvas,
+[data-theme="comic-retro"] #rover-canvas {
+  border: 2px solid #b3804d !important;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+}
+
+/* Semáforo de Textos en Novela Gráfica */
+[data-theme="comic-retro"] .text-status-good {
+  color: #2a9d8f !important;
+}
+
+[data-theme="comic-retro"] .text-status-warning {
+  color: #f4a261 !important;
+}
+
+[data-theme="comic-retro"] .text-status-critical {
+  color: #e76f51 !important;
+}

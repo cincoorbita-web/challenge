@@ -7,6 +7,27 @@ El juego está desarrollado con tecnologías web modernas estándar (HTML5, CSS3
 
 ---
 
+## 🎨 3 Estilos de Interfaz Visual (UI) con Propuestas Cómic
+
+Esta rama (`feature/comic-ui-themes`) introduce un sistema de temas visuales intercambiables en caliente para permitir testear, comparar la experiencia de usuario y recibir feedback:
+
+1. **🚀 Sci-Fi Clásico (Base):**
+   - Estética futurista limpia de puesto de mando lunar de alta tecnología.
+   - Paneles translúcidos con desenfoque de fondo (*glassmorphism*), bordes luminiscentes cian neón y tipografía *Fredoka*.
+2. **💥 Cómic Pop-Art / Superhéroe Espacial (Propuesta Cómic 1):**
+   - Inspirado en cómics de acción contemporáneos, superhéroes y animación (*Spider-Verse*).
+   - Trazos gruesos de tinta negra (`3.5px solid #000`), sombras angulares duras (`5px 5px 0 #000`), tramas de semitono (*Ben-Day halftone dots*), globos de diálogo con pico clásico apuntando a AstroCan, botones que saltan al pulsar y paleta vibrante (Amarillo Cómic `#FFE600`, Cian Eléctrico `#00F0FF`, Magenta Acción `#FF2A5F`).
+3. **📜 Novela Gráfica / Pulp Vintage Sci-Fi (Propuesta Cómic 2):**
+   - Inspirado en historietas de aventuras espaciales de los años 50s-70s (*Tintín en la Luna*, *Buck Rogers*, cómics francobelgas de época dorada).
+   - Viñetas con bordes dobles de imprenta analógica, tonos cálidos de papel espacial (`#f4ecd8`, naranja atómico `#e76f51`, mostaza `#f4a261`, verde azulado `#2a9d8f`), tramas de grabado y cartelas de narrador de historieta.
+
+**¿Cómo alternar entre los estilos?**
+- **En la Pantalla de Bienvenida:** Selector con 3 botones interactivos antes de asumir el mando.
+- **Durante la Partida (en caliente):** Botón `🎨 Estilo UI` en la barra superior (móvil/tablet) y en el panel lateral de estación (PC/Laptop).
+- **Modal de Previsualización:** Ventana modal con muestras de color, descripción detallada y cambio rápido con persistencia en `localStorage`.
+
+---
+
 ## 🎨 Tipografía Fredoka y Semáforo de Recursos en Tiempo Real
 
 - **Tipografía Amigable y Moderna (Fredoka):** La interfaz utiliza la fuente redondeada *Fredoka* (Google Fonts), diseñada para brindar máxima legibilidad, calidez y un tono lúdico adecuado para niños de 7 a 12 años.
