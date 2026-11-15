@@ -966,6 +966,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Mostrar Fuente Oficial de la NASA con certificación de ciencia real
     if (dilemmaSourceBox && localized.dataSource) {
+      const isDonki = localized.isSolarEvent || (localized.dataSource && localized.dataSource.url && localized.dataSource.url.includes('DONKI'));
       dilemmaSourceBox.innerHTML = `
         <div class="source-header">
           <span class="source-verified-badge">${isEn ? '🔬 REAL NASA SCIENCE' : '🔬 CIENCIA REAL DE LA NASA'}</span>
@@ -976,7 +977,10 @@ document.addEventListener('DOMContentLoaded', () => {
           <a href="${localized.dataSource.url}" target="_blank" rel="noopener noreferrer" title="${isEn ? 'View official NASA science repository' : 'Consultar repositorio científico oficial de la NASA'}">
             ${localized.dataSource.name} ↗
           </a>
-          <div class="source-detail-text">${localized.dataSource.detail}</div>
+          <div class="source-detail-text">
+            ${localized.dataSource.detail}
+            ${isDonki ? ` &bull; <a href="https://api.nasa.gov/#DONKI" target="_blank" rel="noopener noreferrer" style="color: var(--cyan); text-decoration: underline;" title="${isEn ? 'Official NASA API Documentation' : 'Documentación Oficial API NASA'}">${isEn ? 'API Docs' : 'Doc API'} ↗</a>` : ''}
+          </div>
         </div>
       `;
       dilemmaSourceBox.classList.remove('hidden');
@@ -1469,7 +1473,7 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
 
         <h3 style="margin-top: 24px;">☀️ ${isEn ? 'NASA DONKI Space Weather Database' : 'Base de Clima Espacial DONKI (Space Weather Database)'}</h3>
-        <p class="section-intro">${isEn ? 'Authentic solar events tracked by NASA heliophysics fleet searchable at' : 'Eventos solares auténticos monitoreados por la flota de heliofísica de la NASA consultables en'} <a href="https://api.nasa.gov/DONKI" target="_blank" rel="noopener noreferrer">api.nasa.gov/DONKI</a>:</p>
+        <p class="section-intro">${isEn ? 'Authentic solar events tracked by NASA heliophysics fleet searchable at' : 'Eventos solares auténticos monitoreados por la flota de heliofísica de la NASA consultables en'} <a href="https://ccmc.gsfc.nasa.gov/tools/DONKI/" target="_blank" rel="noopener noreferrer">ccmc.gsfc.nasa.gov/tools/DONKI/</a> (${isEn ? 'API Docs:' : 'Documentación API:'} <a href="https://api.nasa.gov/#DONKI" target="_blank" rel="noopener noreferrer">api.nasa.gov/#DONKI</a>):</p>
         <div class="science-cards-grid">
           ${donkiEvents.map(e => `
             <div class="science-archive-item">
@@ -1477,10 +1481,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 <span class="archive-badge" style="background: rgba(255, 71, 87, 0.2); border-color: #ff4757;">
                   ${e.id} • ${e.severity}
                 </span>
-                <span class="archive-craft-tag">${e.spacecraft || (isEn ? 'NASA Fleet' : 'Flota NASA')}</span>
+                <a href="https://ccmc.gsfc.nasa.gov/tools/DONKI/" target="_blank" rel="noopener noreferrer" class="archive-source-link">${isEn ? 'View on NASA DONKI ↗' : 'Ver en NASA DONKI ↗'}</a>
               </div>
               <h4>${e.title}</h4>
               <p><strong>${isEn ? 'Catalog Date:' : 'Fecha en Catálogo:'}</strong> ${e.catalogDate} | <strong>${isEn ? 'Speed:' : 'Velocidad:'}</strong> ${e.speed} km/s</p>
+              <p><strong>${isEn ? 'Observatory / Fleet:' : 'Observatorio / Flota:'}</strong> ${e.spacecraft || (isEn ? 'NASA Fleet' : 'Flota NASA')}</p>
               <p><strong>${isEn ? 'Estimated Dose:' : 'Dosis Estimada:'}</strong> ${e.radiationDoseMsv} mSv</p>
               <p class="archive-kid-expl">${e.scienceFact}</p>
             </div>

@@ -156,7 +156,7 @@ Para evitar que las misiones de 14 y 28 días sean matemáticamente imposibles d
 ## 🔬 Integración de Datos Científicos Reales de la NASA y Rejugabilidad Inteligente
 
 Cada evento incluye la fuente oficial con enlace directo para que los jugadores comprendan que interactúan con ciencia espacial real y verificada:
-- **NASA DONKI (`api.nasa.gov/DONKI`):** Consulta en tiempo real de eyecciones de masa coronal (CME) y tormentas solares, con transición automática a un banco de 8 eventos históricos oficiales (incluyendo la tormenta solar del Día de la Madre de mayo 2024, la tormenta de Halloween de 2003 y el evento Carrington).
+- **NASA DONKI (`ccmc.gsfc.nasa.gov/tools/DONKI/` y `api.nasa.gov/#DONKI`):** Portal web y API oficial de clima espacial del Goddard Space Flight Center para consulta de eyecciones de masa coronal (CME) y tormentas solares, con transición automática a un banco de eventos históricos oficiales (incluyendo la tormenta solar del Día de la Madre de mayo 2024, la tormenta de Halloween de 2003 y el evento Carrington).
 - **NASA OSDR (`osdr.nasa.gov`):** Repositorio biológico con 10 estudios científicos reales integrados:
   - **OSD-379:** Plantas cultivadas en regolito lunar de Apolo 11, 12 y 17 (*Arabidopsis thaliana*).
   - **OSD-546:** Disfunción mitocondrial e inmunodepresión por radiación cósmica.

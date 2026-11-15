@@ -30,7 +30,7 @@ class MissionEventManager {
         scientificContext: 'En la Tierra, el campo magnético desvía estas partículas creando auroras. En la Luna, los astronautas dependen de búnkeres de regolito y blindaje electromagnético activo.',
         dataSource: {
           name: 'NASA DONKI (Space Weather Database)',
-          url: 'https://api.nasa.gov/DONKI',
+          url: 'https://ccmc.gsfc.nasa.gov/tools/DONKI/',
           detail: 'Telemetría de la flota espacial heliofísica SDO, SOHO, STEREO y ACE'
         },
         isSolarEvent: true,
@@ -107,7 +107,7 @@ class MissionEventManager {
         scientificContext: 'La misión LCROSS de la NASA estrelló una etapa de cohete en la Luna, detectando un 5.5% de hielo de agua en los cráteres del polo sur.',
         dataSource: {
           name: 'NASA LCROSS & Lunar Reconnaissance Orbiter (LRO)',
-          url: 'https://www.nasa.gov/mission/lcross-702/',
+          url: 'https://science.nasa.gov/mission/lcross/',
           detail: 'Confirmación espectral de hielo en zonas de sombra permanente (PSR)'
         },
         options: [
@@ -175,7 +175,7 @@ class MissionEventManager {
         scientificContext: 'Los astronautas del programa Apolo reportaron que el polvo destruyó trajes espaciales y causó irritación respiratoria (fiebre del heno lunar).',
         dataSource: {
           name: 'NASA Lunar Dust & Electrodynamic Dust Shield (EDS)',
-          url: 'https://www.nasa.gov/lunar-dust',
+          url: 'https://science.nasa.gov/moon/moon-dust/',
           detail: 'Programa Apolo y desarrollo de tecnología de barrido electrostático'
         },
         options: [
@@ -345,7 +345,7 @@ class MissionEventManager {
         scientificContext: 'El instrumento LEND de la sonda LRO mide neutrones reflejados para crear mapas de agua subterránea que guiarán a los exploradores lunares.',
         dataSource: {
           name: 'NASA Lunar Reconnaissance Orbiter (LEND & Diviner)',
-          url: 'https://www.nasa.gov/mission/lro/',
+          url: 'https://science.nasa.gov/mission/lro/',
           detail: 'Detección de hidrógeno y mapeo térmico de cráteres polares'
         },
         options: [
@@ -601,9 +601,9 @@ class MissionEventManager {
       scientificContext: donkiData.scienceFact || 'En la Tierra, la magnetosfera y la atmósfera nos protegen creando auroras. En la Luna, los astronautas dependen de escudos de regolito y campos electromagnéticos.',
       dataSource: {
         name: isLive ? 'NASA DONKI API (Consulta en Tiempo Real)' : `NASA DONKI Space Weather Database (${craft})`,
-        url: 'https://api.nasa.gov/DONKI',
+        url: 'https://ccmc.gsfc.nasa.gov/tools/DONKI/',
         detail: isLive 
-          ? `Transmisión en tiempo real desde api.nasa.gov/DONKI (ID: ${donkiData.id})`
+          ? `Transmisión en tiempo real desde NASA DONKI (ID: ${donkiData.id})`
           : `Registro de heliofísica de la NASA del ${donkiData.catalogDate} — Misión ${craft}`
       },
       isSolarEvent: true,
