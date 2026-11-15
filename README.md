@@ -107,25 +107,48 @@ Para evitar que las misiones de 14 y 28 días sean matemáticamente imposibles d
 
 ---
 
-## 🔬 Integración de Datos Científicos Reales de la NASA
+## 🔬 Integración de Datos Científicos Reales de la NASA y Rejugabilidad Inteligente
 
-Cada evento incluye la fuente oficial con enlace directo para aprender más:
-- **NASA DONKI (`api.nasa.gov/DONKI`):** Consulta en tiempo real de eyecciones de masa coronal (CME) y tormentas solares, con transición automática a registros históricos oficiales si no hay red.
-- **NASA OSDR (`osdr.nasa.gov`):** Estudios biológicos auténticos:
-  - **OSD-379:** Plantas cultivadas en regolito de Apolo 11, 12 y 17.
+Cada evento incluye la fuente oficial con enlace directo para que los jugadores comprendan que interactúan con ciencia espacial real y verificada:
+- **NASA DONKI (`api.nasa.gov/DONKI`):** Consulta en tiempo real de eyecciones de masa coronal (CME) y tormentas solares, con transición automática a un banco de 8 eventos históricos oficiales (incluyendo la tormenta solar del Día de la Madre de mayo 2024, la tormenta de Halloween de 2003 y el evento Carrington).
+- **NASA OSDR (`osdr.nasa.gov`):** Repositorio biológico con 10 estudios científicos reales integrados:
+  - **OSD-379:** Plantas cultivadas en regolito lunar de Apolo 11, 12 y 17 (*Arabidopsis thaliana*).
   - **OSD-546:** Disfunción mitocondrial e inmunodepresión por radiación cósmica.
-  - **OSD-120:** Pérdida de densidad ósea y muscular en 1/6 g.
-  - **OSD-244:** Desfase circadiano en hábitats cerrados.
-  - **OSD-612:** Biopelículas bacterianas en recicladores de agua ECLSS.
-- **NASA LCROSS & LRO:** Hielo de agua en zonas de sombra permanente (PSR) del Cráter Shackleton.
+  - **OSD-120:** Pérdida de densidad ósea y masa muscular en gravedad lunar (1/6 g).
+  - **OSD-244:** Desfase del ritmo circadiano y regulación de melatonina en hábitats cerrados.
+  - **OSD-612:** Biopelículas bacterianas en recicladores de agua potable ECLSS.
+  - **OSD-477:** Resistencia del microbioma vegetal lunar e interacción con hongos micorrícicos.
+  - **OSD-313:** Presión intracraneal y síndrome neuro-ocular (SANS) en microgravedad.
+  - **OSD-665:** Daño al ADN y reparación por radiación galáctica en cultivos de levaduras.
+  - **OSD-253:** Efectos del polvo de regolito fino en el tejido pulmonar de roedores.
+  - **OSD-578:** Eficiencia fotosintética y transpiración en microalgas (*Chlorella vulgaris*).
+- **NASA LCROSS & LRO:** Detección de hielo de agua en zonas de sombra permanente (PSR) del Cráter Shackleton.
+- **Memoria de Rejugabilidad y Aleatorización entre Partidas:** Cada vez que el comandante asume el mando, el juego baraja eventos no mostrados en partidas anteriores guardados en `localStorage` (`orbita5_seen_events` y `orbita5_seen_donki`), garantizando contenido fresco, variado y altamente educativo en cada nueva partida.
 
 ---
 
 ## 📤 Certificado Oficial para Compartir (Sin Base de Datos)
 
-- Genera un diploma en PNG de alta resolución (**1080 × 1350 px**) con Canvas 2D.
-- Incluye nombre del astronauta, medalla, rango, días sobrevividos, puntuación, ciencia y barras finales de recursos con tipografía Fredoka.
+- Genera un diploma en PNG de alta resolución (**1080 × 1350 px**) dibujado con Canvas 2D.
+- **Trofeo Dorado en Victoria:** Cuando el astronauta completa con éxito la misión, el certificado exhibe un ícono de trofeo dorado (`🏆`) en lugar de medallas convencionales, distinguiendo la hazaña espacial.
+- Incluye nombre del astronauta, rango alcanzado, días de supervivencia, puntuación final, puntos de ciencia y barras de recursos finales con tipografía Fredoka.
 - Utiliza la **Web Share API nativa** para compartir por **WhatsApp**, **Telegram**, etc., permitiendo a los niños competir sanamente sin requerir servidores ni bases de datos.
+
+---
+
+## 🏷️ Versión y Registro de Cambios (Changelog)
+
+### `v1.0.0` - ORBITA5: Comandante Lunar
+- **Nombre Oficial ORBITA5:** Adaptado plenamente a las normas de NASA Space Apps Challenge (sin uso de nombres de misiones oficiales).
+- **Arquitectura Web Pura:** 100% del lado del cliente en HTML5, CSS3 y JavaScript ES6+, sin dependencias externas, sin frameworks pesados y sin bases de datos.
+- **Ciencia Real NASA:** Integración en vivo con API DONKI (clima espacial) y 10 investigaciones biológicas de NASA OSDR con enlaces directos a sus publicaciones.
+- **Memoria de Rejugabilidad:** Selección aleatoria de eventos y filtro de sucesos ya vistos entre partidas consecutivas.
+- **Validación de Credencial de Astronauta:** Control interactivo que exige registrar el nombre del comandante antes de iniciar la misión, con feedback animado y mensajes de AstroCan.
+- **Narración y Selector de Voces:** Síntesis de voz con Web Speech API priorizada en Español Latinoamericano, panel para explorar y probar voces instaladas, y lectura separada de misiones y opciones.
+- **AstroCan Reactivo:** Mascota y copiloto con 7 estados emocionales basados en la situación de los recursos y las alertas de la base.
+- **Diseño Adaptativo con Semáforo:** Tipografía *Fredoka*, semáforo de color dinámico en recursos (>50% verde, 26-50% ámbar, ≤25% rojo crítico) y 3 vistas optimizadas (PC de 2 columnas, Tablet y Celular).
+- **Lienzo Espacial Procedural:** Fondo Canvas 2D a 60 FPS con el Puesto Avanzado ORBITA5 a gran escala (cúpula de regolito, biolaboratorio, paneles verticales, torre de radio, tanques y rover).
+- **Certificado 2D con Trofeo:** Generación en alta resolución (1080x1350) con ícono de trofeo dorado en misiones cumplidas y compatibilidad con Web Share API.
 
 ---
 
