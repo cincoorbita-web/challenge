@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
@@ -24,79 +24,96 @@
         <div class="welcome-top-controls">
           <div class="nasa-logo-badge">🚀 NASA SPACE APPS CHALLENGE 2026</div>
           <div class="welcome-lang-picker">
-            <button type="button" class="lang-switch-btn active" data-lang="es" title="Cambiar a Español">🇪🇸 ES</button>
-            <button type="button" class="lang-switch-btn" data-lang="en" title="Switch to English">🇺🇸 EN</button>
+            <button type="button" class="lang-switch-btn active" data-lang="en" title="Switch to English">🇺🇸 EN</button>
+            <button type="button" class="lang-switch-btn" data-lang="es" title="Cambiar a Español">🇪🇸 ES</button>
           </div>
         </div>
         <h1 class="main-title">ORBITA5</h1>
-        <p id="main-subtitle" class="main-subtitle">Simulador de supervivencia lunar para jóvenes astronautas (7–12 años)</p>
+        <p id="main-subtitle" class="main-subtitle">Lunar survival simulator for junior astronauts (ages 7–12)</p>
 
         <!-- Tarjeta de bienvenida con AstroCan -->
         <div class="welcome-mascot-card">
           <img src="assets/mascot/greeting.jpg" alt="AstroCan" class="welcome-mascot-img">
           <div id="welcome-mascot-bubble" class="welcome-mascot-bubble">
-            <strong>¡Hola, Comandante!</strong> Soy <strong>AstroCan</strong>, tu fiel copiloto en el Polo Sur Lunar. ¿Cuál es tu nombre de astronauta y qué nivel de misión asumiremos hoy?
+            <strong>Hello, Commander!</strong> I am <strong>AstroCan</strong>, your faithful co-pilot at the Lunar South Pole. What is your astronaut name and which mission level will we undertake today?
           </div>
         </div>
 
         <div class="welcome-briefing">
-          <h3 id="briefing-title">📍 Tu Misión: Base Lunar en el Polo Sur (Cráter Shackleton)</h3>
-          <p id="briefing-p1">Gestionarás el primer puesto avanzado humano en la Luna. Aquí no hay aire, no hay agua líquida y la temperatura va de +105°C a -200°C.</p>
-          <p id="briefing-rule" class="rule-highlight">⚖️ <strong>Regla de Oro:</strong> ¡Ninguna opción es gratis! Cada decisión exige una compensación real (trade-off).</p>
+          <h3 id="briefing-title">📍 Your Mission: Lunar South Pole Base (Shackleton Crater)</h3>
+          <p id="briefing-p1">You will manage humanity's first outpost on the Moon. There is no air, no liquid water, and temperatures swing from +105°C to -200°C.</p>
+          <p id="briefing-rule" class="rule-highlight">⚖️ <strong>Golden Rule:</strong> No choice is free! Every single decision requires a real trade-off.</p>
         </div>
 
         <div class="welcome-form">
-          <div class="form-row">
-            <label id="label-player-name" for="input-player-name">👤 Tu nombre de astronauta:</label>
-            <input type="text" id="input-player-name" class="text-input" placeholder="Ej: Comandante Sofía" maxlength="20" autocomplete="off" required>
-            <div id="name-validation-msg" class="validation-error-msg hidden">⚠️ Ingresa tu nombre de astronauta para registrar tu credencial antes de asumir el mando.</div>
+          <!-- Selector de Idioma en la vista Home (ingreso de nombre y misiones) -->
+          <div class="lang-selector-welcome">
+            <label id="label-site-lang" class="form-label-sm">🌐 Mission Language / Idioma:</label>
+            <div class="welcome-lang-switch">
+              <button type="button" class="lang-switch-btn active" data-lang="en" title="English / Inglés">
+                <span class="lang-switch-flag">🇺🇸</span>
+                <span class="lang-switch-code">EN</span>
+                <span class="lang-switch-label">English</span>
+              </button>
+              <button type="button" class="lang-switch-btn" data-lang="es" title="Spanish / Español">
+                <span class="lang-switch-flag">🇪🇸</span>
+                <span class="lang-switch-code">ES</span>
+                <span class="lang-switch-label">Español</span>
+              </button>
+            </div>
           </div>
 
-          <label id="label-mission-level" class="form-label-sm">🎯 Nivel de Misión:</label>
+          <div class="form-row">
+            <label id="label-player-name" for="input-player-name">👤 Your astronaut name:</label>
+            <input type="text" id="input-player-name" class="text-input" placeholder="Ex: Commander Alex" maxlength="20" autocomplete="off" required>
+            <div id="name-validation-msg" class="validation-error-msg hidden">⚠️ Please enter your astronaut name to register your flight badge before taking command.</div>
+          </div>
+
+          <label id="label-mission-level" class="form-label-sm">🎯 Mission Level:</label>
           <div class="difficulty-selector">
             <button type="button" class="diff-btn active" data-diff="1">
-              <span id="diff-1-title" class="diff-title">🥉 Cadete</span>
-              <span id="diff-1-days" class="diff-days">7 Días</span>
-              <span id="diff-1-desc" class="diff-desc">Sol constante, impacto estándar.</span>
+              <span id="diff-1-title" class="diff-title">🥉 Cadet</span>
+              <span id="diff-1-days" class="diff-days">7 Days</span>
+              <span id="diff-1-desc" class="diff-desc">Constant sunlight, standard impact.</span>
             </button>
             <button type="button" class="diff-btn" data-diff="2">
-              <span id="diff-2-title" class="diff-title">🥈 Especialista</span>
-              <span id="diff-2-days" class="diff-days">14 Días</span>
-              <span id="diff-2-desc" class="diff-desc">Atardecer polar, impacto moderado.</span>
+              <span id="diff-2-title" class="diff-title">🥈 Specialist</span>
+              <span id="diff-2-days" class="diff-days">14 Days</span>
+              <span id="diff-2-desc" class="diff-desc">Polar twilight, moderate impact.</span>
             </button>
             <button type="button" class="diff-btn" data-diff="3">
-              <span id="diff-3-title" class="diff-title">🥇 Comandante</span>
-              <span id="diff-3-days" class="diff-days">28 Días</span>
-              <span id="diff-3-desc" class="diff-desc">14 días de noche a -173°C, maratón.</span>
+              <span id="diff-3-title" class="diff-title">🥇 Commander</span>
+              <span id="diff-3-days" class="diff-days">28 Days</span>
+              <span id="diff-3-desc" class="diff-desc">14 days of night at -173°C, marathon.</span>
             </button>
           </div>
 
           <!-- Selector de Estilo de Interfaz (UI) en Pantalla de Bienvenida -->
           <div class="theme-selector-welcome">
-            <label id="theme-selector-label" class="theme-selector-label">🎨 Estilo Visual de la Interfaz (UI):</label>
+            <label id="theme-selector-label" class="theme-selector-label">🎨 UI Visual Style:</label>
             <div class="theme-buttons-row">
               <button type="button" class="theme-btn active" data-theme-val="default">
                 <span id="theme-btn-badge-1" class="theme-btn-badge">Base</span>
                 <span class="theme-btn-icon">🚀</span>
-                <span id="theme-btn-title-1" class="theme-btn-title">Sci-Fi Clásico</span>
-                <span id="theme-btn-sub-1" class="theme-btn-subtitle">Futurista y Limpio</span>
+                <span id="theme-btn-title-1" class="theme-btn-title">Classic Sci-Fi</span>
+                <span id="theme-btn-sub-1" class="theme-btn-subtitle">Futuristic &amp; Clean</span>
               </button>
               <button type="button" class="theme-btn" data-theme-val="comic-pop">
-                <span id="theme-btn-badge-2" class="theme-btn-badge badge-pop">¡Acción!</span>
+                <span id="theme-btn-badge-2" class="theme-btn-badge badge-pop">Action!</span>
                 <span class="theme-btn-icon">💥</span>
-                <span id="theme-btn-title-2" class="theme-btn-title">Cómic Pop-Art</span>
-                <span id="theme-btn-sub-2" class="theme-btn-subtitle">Tinta y Halftone</span>
+                <span id="theme-btn-title-2" class="theme-btn-title">Pop-Art Comic</span>
+                <span id="theme-btn-sub-2" class="theme-btn-subtitle">Ink &amp; Halftone</span>
               </button>
               <button type="button" class="theme-btn" data-theme-val="comic-retro">
                 <span id="theme-btn-badge-3" class="theme-btn-badge badge-retro">Vintage</span>
                 <span class="theme-btn-icon">📜</span>
-                <span id="theme-btn-title-3" class="theme-btn-title">Novela Gráfica</span>
-                <span id="theme-btn-sub-3" class="theme-btn-subtitle">Pulp Clásico 70s</span>
+                <span id="theme-btn-title-3" class="theme-btn-title">Graphic Novel</span>
+                <span id="theme-btn-sub-3" class="theme-btn-subtitle">Pulp Classic 70s</span>
               </button>
             </div>
           </div>
 
-          <button id="btn-start-mission" class="btn-primary pulse-btn">🚀 ASUMIR EL MANDO</button>
+          <button id="btn-start-mission" class="btn-primary pulse-btn">🚀 TAKE COMMAND</button>
         </div>
       </div>
     </section>

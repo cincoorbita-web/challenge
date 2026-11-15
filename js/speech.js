@@ -13,7 +13,7 @@ class SpeechNarratorService {
     this.onStateChangeCallback = null;
     this.onVoiceChangeCallback = null;
     this.voices = [];
-    this.currentLang = (typeof window !== 'undefined' && window.i18n) ? window.i18n.getLanguage() : 'es';
+    this.currentLang = (typeof window !== 'undefined' && window.i18n) ? window.i18n.getLanguage() : 'en';
     this.preferredVoices = {
       es: null,
       en: null

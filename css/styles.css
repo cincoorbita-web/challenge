@@ -247,6 +247,67 @@ body {
   text-align: left;
 }
 
+/* Selector de Idioma prominente en Home Form */
+.lang-selector-welcome {
+  margin-bottom: 14px;
+  background: rgba(14, 21, 40, 0.55);
+  border: 1px solid var(--panel-border);
+  border-radius: 12px;
+  padding: 10px 12px;
+}
+
+.welcome-lang-switch {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.welcome-lang-switch .lang-switch-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 9px 12px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1.5px solid var(--panel-border);
+  color: var(--txt2);
+  font-family: var(--font);
+  font-size: 0.92rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.welcome-lang-switch .lang-switch-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  border-color: var(--cyan);
+  transform: translateY(-1px);
+}
+
+.welcome-lang-switch .lang-switch-btn.active {
+  background: linear-gradient(135deg, rgba(0, 210, 211, 0.25), rgba(9, 132, 227, 0.35));
+  border-color: var(--cyan);
+  color: #fff;
+  box-shadow: 0 0 14px var(--glow), inset 0 0 8px rgba(0, 210, 211, 0.3);
+}
+
+.lang-switch-flag {
+  font-size: 1.2rem;
+}
+
+.lang-switch-code {
+  font-weight: 800;
+  letter-spacing: 0.5px;
+}
+
+.lang-switch-label {
+  font-size: 0.82rem;
+  opacity: 0.85;
+}
+
 .form-row {
   margin-bottom: 10px;
 }

@@ -38,6 +38,7 @@ class I18nManager {
         diff_3_days: '28 Días',
         diff_3_desc: '14 días de noche a -173°C, maratón.',
         label_ui_theme: '🎨 Estilo Visual de la Interfaz (UI):',
+        label_site_lang: '🌐 Idioma / Language:',
         theme_default_title: 'Sci-Fi Clásico',
         theme_default_sub: 'Futurista y Limpio',
         theme_pop_title: 'Cómic Pop-Art',
@@ -233,6 +234,7 @@ class I18nManager {
         diff_3_days: '28 Days',
         diff_3_desc: '14 days of night at -173°C, endurance marathon.',
         label_ui_theme: '🎨 UI Visual Style:',
+        label_site_lang: '🌐 Language / Idioma:',
         theme_default_title: 'Classic Sci-Fi',
         theme_default_sub: 'Futuristic & Clean',
         theme_pop_title: 'Pop-Art Comic',
@@ -790,7 +792,7 @@ class I18nManager {
     } catch (e) {
       console.warn('[I18n] Error leyendo idioma de localStorage:', e);
     }
-    return 'es';
+    return 'en';
   }
 
   getLanguage() {

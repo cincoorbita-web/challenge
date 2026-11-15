@@ -96,16 +96,24 @@
   letter-spacing: 1px;
 }
 
-[data-theme="comic-pop"] .welcome-lang-picker {
+[data-theme="comic-pop"] .welcome-lang-picker,
+[data-theme="comic-pop"] .lang-selector-welcome {
   border: 2.5px solid #000 !important;
   box-shadow: 3px 3px 0 #000 !important;
   background: #111425 !important;
 }
 
+[data-theme="comic-pop"] .welcome-lang-switch .lang-switch-btn {
+  border: 2px solid #000 !important;
+  background: #1a1e38 !important;
+  color: #fff !important;
+  box-shadow: 2px 2px 0 #000 !important;
+}
+
 [data-theme="comic-pop"] .lang-switch-btn.active {
   background: #ffe600 !important;
   color: #000 !important;
-  border: 1.5px solid #000 !important;
+  border: 2px solid #000 !important;
   box-shadow: 2px 2px 0 #000 !important;
 }
 
@@ -382,9 +390,16 @@
   box-shadow: 2px 2px 0 #111 !important;
 }
 
-[data-theme="comic-retro"] .welcome-lang-picker {
+[data-theme="comic-retro"] .welcome-lang-picker,
+[data-theme="comic-retro"] .lang-selector-welcome {
   border: 2px solid #b3804d !important;
   background: #1a162b !important;
+}
+
+[data-theme="comic-retro"] .welcome-lang-switch .lang-switch-btn {
+  border: 1.5px solid #b3804d !important;
+  background: rgba(244, 236, 216, 0.06) !important;
+  color: #f4ecd8 !important;
 }
 
 [data-theme="comic-retro"] .lang-switch-btn.active {

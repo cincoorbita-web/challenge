@@ -134,7 +134,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const welcomeThemeBtns = document.querySelectorAll('.theme-btn');
 
   // Controles de Internacionalización (i18n: ES / EN)
-  const welcomeLangBtns = document.querySelectorAll('.welcome-lang-picker .lang-switch-btn');
+  const langSwitchBtns = document.querySelectorAll('.lang-switch-btn');
+  const labelSiteLang = document.getElementById('label-site-lang');
   const btnTopLang = document.getElementById('btn-top-lang');
   const topLangLabel = document.getElementById('top-lang-label');
   const btnSidebarLang = document.getElementById('btn-sidebar-lang');
@@ -223,12 +224,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const lang = window.i18n.getLanguage();
     const isEn = lang === 'en';
 
-    // 1. Selector de bienvenida (botones ES / EN)
-    if (welcomeLangBtns && welcomeLangBtns.length > 0) {
-      welcomeLangBtns.forEach(btn => {
+    // 1. Selectores de idioma (botones ES / EN en barra superior y formulario de bienvenida)
+    if (langSwitchBtns && langSwitchBtns.length > 0) {
+      langSwitchBtns.forEach(btn => {
         const btnLang = btn.dataset.lang;
         btn.classList.toggle('active', btnLang === lang);
       });
+    }
+    if (labelSiteLang) {
+      labelSiteLang.textContent = window.i18n.t('label_site_lang');
     }
 
     // 2. Botón de cabecera superior y panel lateral
@@ -351,9 +355,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Eventos de selección de idioma en la pantalla de bienvenida
-  if (welcomeLangBtns && welcomeLangBtns.length > 0) {
-    welcomeLangBtns.forEach(btn => {
+  // Eventos de selección de idioma en la pantalla de bienvenida y formulario home
+  if (langSwitchBtns && langSwitchBtns.length > 0) {
+    langSwitchBtns.forEach(btn => {
       btn.addEventListener('click', () => {
         window.gameAudio.playClick();
         const targetLang = btn.dataset.lang;

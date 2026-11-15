@@ -9,12 +9,13 @@ El juego está desarrollado con tecnologías web modernas estándar (HTML5, CSS3
 
 ## 🌐 Internacionalización (i18n) Bilingüe Completa y Síntesis de Voz Multilingüe
 
-**ORBITA5** cuenta con soporte bilingüe de primer nivel (**Español** e **Inglés**) para toda la experiencia del usuario:
+**ORBITA5** cuenta con soporte bilingüe de primer nivel (**Español** e **Inglés**) para toda la experiencia del usuario, iniciando por defecto en **Inglés (EN)**:
 - **Conmutador de Idioma Accesible:**
-  - En la pantalla de bienvenida mediante selector interactivo (`🇪🇸 ES` / `🇺🇸 EN`).
-  - En la barra superior (móvil y tablet) con el botón `🌐 EN / ES`.
+  - En el formulario central de la pantalla de bienvenida (justo antes de ingresar el nombre de astronauta y seleccionar misiones), mediante selector dual destacado (`[🇺🇸 EN English]` / `[🇪🇸 ES Español]`) con estado activo visible.
+  - En la esquina superior derecha de bienvenida mediante botones de acceso rápido (`🇺🇸 EN` / `🇪🇸 ES`).
+  - En la barra superior de juego (móvil y tablet) con el botón `🌐 EN / ES`.
   - En el panel lateral de estación (PC/Laptop) con el botón `🌐 Idioma: Español / English`.
-  - Persistencia automática de la preferencia del usuario en `localStorage` (`orbita5_lang`).
+  - Persistencia automática de la preferencia del usuario en `localStorage` (`orbita5_lang`), arrancando en inglés cuando no existe preferencia previa.
 - **Traducción Integral del Contenido:**
   - Interfaz de usuario completa (menús, botones, modales, alertas y telemetría).
   - Todos los dilemas espaciales, datos de ciencia real y fuentes oficiales de la NASA.
@@ -33,7 +34,7 @@ El juego está desarrollado con tecnologías web modernas estándar (HTML5, CSS3
 
 ## 🎨 3 Estilos de Interfaz Visual (UI) con Propuestas Cómic
 
-Esta rama (`feature/comic-ui-themes`) introduce un sistema de temas visuales intercambiables en caliente para permitir testear, comparar la experiencia de usuario y recibir feedback:
+**ORBITA5** cuenta con un sistema de temas visuales intercambiables en caliente para permitir testear, comparar la experiencia de usuario y recibir feedback:
 
 1. **🚀 Sci-Fi Clásico (Base):**
    - Estética futurista limpia de puesto de mando lunar de alta tecnología.
