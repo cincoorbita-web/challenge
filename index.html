@@ -1,657 +1,570 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <meta name="ai-usage" content="Código y estructura web desarrollados con asistencia de Gemini y Claude (Antigravity).">
-  <title>ORBITA5 | Junior Astronaut Mission Trainer</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Comic+Neue:ital,wght@0,400;0,700;1,400;1,700&family=Fredoka:wght@300..700&family=Permanent+Marker&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/styles.css">
-  <link rel="stylesheet" href="css/space-scene.css">
-  <link rel="stylesheet" href="css/minigames.css">
-  <link rel="stylesheet" href="css/themes.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>ORBITA 5 — Portal Espacial Educativo & Videojuegos Lunares</title>
+  
+  <meta name="description" content="Portal oficial del equipo ORBITA 5. Presentación del proyecto y acceso a los dos videojuegos educativos para jóvenes astronautas (7 a 12 años): Simulador de Supervivencia Lunar y Base Lunar.">
+  <meta name="ai-usage" content="Código, diseño e ilustraciones desarrollados con asistencia de Inteligencia Artificial (Gemini y Claude a través de Antigravity).">
+
+  <!-- Estilos del Portal -->
+  <link rel="stylesheet" href="css/portal.css">
 </head>
 <body>
-  <canvas id="space-canvas"></canvas>
-  <div class="space-ambient-glow"></div>
 
-  <main class="app-wrapper">
+  <!-- Fondo Canvas Espacial Interactivo -->
+  <canvas id="space-starfield"></canvas>
+  <div class="portal-ambient-glow"></div>
 
-    <!-- ====== 1. PANTALLA DE BIENVENIDA ====== -->
-    <section id="screen-welcome" class="screen welcome-screen">
-      <div class="welcome-inner">
-        <div class="welcome-top-controls">
-          <div class="nasa-logo-badge">🚀 DESAFÍO ESPACIAL 2026</div>
-          <div class="welcome-lang-picker">
-            <button type="button" class="lang-switch-btn active" data-lang="en" title="Switch to English">🇺🇸 EN</button>
-            <button type="button" class="lang-switch-btn" data-lang="es" title="Cambiar a Español">🇪🇸 ES</button>
-          </div>
+  <!-- Contenedor Principal -->
+  <div class="portal-wrapper">
+
+    <!-- ====================================================================
+         1. BARRA DE NAVEGACIÓN SUPERIOR
+         ==================================================================== -->
+    <header class="portal-navbar">
+      <a href="#hero" class="nav-brand">
+        <span class="nav-brand-logo">🪐</span>
+        <div class="nav-brand-text">
+          <span class="nav-brand-name">ORBITA 5</span>
+          <span class="nav-brand-badge" id="nav-team-tag">EQUIPO DE MISIÓN LUNAR</span>
         </div>
-        <h1 class="main-title">ORBITA5</h1>
-        <p id="main-subtitle" class="main-subtitle">Lunar survival simulator for junior astronauts (ages 7–12)</p>
+      </a>
 
-        <!-- Tarjeta de bienvenida con AstroCan -->
-        <div class="welcome-mascot-card">
-          <div class="contenedor-ia">
-            <img src="assets/mascot/greeting.jpg" alt="AstroCan" class="welcome-mascot-img">
-            <span class="marca-ia" data-ai-label="true">AI Generated</span>
-          </div>
-          <div id="welcome-mascot-bubble" class="welcome-mascot-bubble">
-            <strong>Hello, Commander!</strong> I am <strong>AstroCan</strong>, your faithful co-pilot at the Lunar South Pole. What is your astronaut name and which mission level will we undertake today?
-          </div>
-        </div>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="#juegos" id="nav-link-games">🎮 Videojuegos</a></li>
+          <li><a href="#equipo" id="nav-link-team">👥 El Equipo</a></li>
+          <li><a href="#mision" id="nav-link-mission">🎯 Propósito</a></li>
+          <li><a href="#tecnologia" id="nav-link-tech">🔬 Tecnología</a></li>
+        </ul>
+      </nav>
 
-        <div class="welcome-briefing">
-          <h3 id="briefing-title">📍 Your Mission: Lunar South Pole Base (Shackleton Crater)</h3>
-          <p id="briefing-p1">You will manage humanity's first outpost on the Moon. There is no air, no liquid water, and temperatures swing from +105°C to -200°C.</p>
-          <p id="briefing-rule" class="rule-highlight">⚖️ <strong>Golden Rule:</strong> No choice is free! Every single decision requires a real trade-off.</p>
-        </div>
-
-        <div class="welcome-form">
-          <!-- Selector de Idioma en la vista Home (ingreso de nombre y misiones) -->
-          <div class="lang-selector-welcome">
-            <label id="label-site-lang" class="form-label-sm">🌐 Mission Language / Idioma:</label>
-            <div class="welcome-lang-switch">
-              <button type="button" class="lang-switch-btn active" data-lang="en" title="English / Inglés">
-                <span class="lang-switch-flag">🇺🇸</span>
-                <span class="lang-switch-code">EN</span>
-                <span class="lang-switch-label">English</span>
-              </button>
-              <button type="button" class="lang-switch-btn" data-lang="es" title="Spanish / Español">
-                <span class="lang-switch-flag">🇪🇸</span>
-                <span class="lang-switch-code">ES</span>
-                <span class="lang-switch-label">Español</span>
-              </button>
-            </div>
-          </div>
-
-          <div class="form-row">
-            <label id="label-player-name" for="input-player-name">👤 Your astronaut name:</label>
-            <input type="text" id="input-player-name" class="text-input" placeholder="Ex: Commander Alex" maxlength="20" autocomplete="off" required>
-            <div id="name-validation-msg" class="validation-error-msg hidden">⚠️ Please enter your astronaut name to register your flight badge before taking command.</div>
-          </div>
-
-          <label id="label-mission-level" class="form-label-sm">🎯 Mission Level:</label>
-          <div class="difficulty-selector">
-            <button type="button" class="diff-btn active" data-diff="1">
-              <span id="diff-1-title" class="diff-title">🥉 Cadet</span>
-              <span id="diff-1-days" class="diff-days">7 Days</span>
-              <span id="diff-1-desc" class="diff-desc">Constant sunlight, standard impact.</span>
-            </button>
-            <button type="button" class="diff-btn" data-diff="2">
-              <span id="diff-2-title" class="diff-title">🥈 Specialist</span>
-              <span id="diff-2-days" class="diff-days">14 Days</span>
-              <span id="diff-2-desc" class="diff-desc">Polar twilight, moderate impact.</span>
-            </button>
-            <button type="button" class="diff-btn" data-diff="3">
-              <span id="diff-3-title" class="diff-title">🥇 Commander</span>
-              <span id="diff-3-days" class="diff-days">28 Days</span>
-              <span id="diff-3-desc" class="diff-desc">14 days of night at -173°C, marathon.</span>
-            </button>
-          </div>
-
-          <!-- Selector de Estilo de Interfaz (UI) en Pantalla de Bienvenida -->
-          <div class="theme-selector-welcome">
-            <label id="theme-selector-label" class="theme-selector-label">🎨 UI Visual Style:</label>
-            <div class="theme-buttons-row">
-              <button type="button" class="theme-btn active" data-theme-val="default">
-                <span id="theme-btn-badge-1" class="theme-btn-badge">Base</span>
-                <span class="theme-btn-icon">🚀</span>
-                <span id="theme-btn-title-1" class="theme-btn-title">Classic Sci-Fi</span>
-                <span id="theme-btn-sub-1" class="theme-btn-subtitle">Futuristic &amp; Clean</span>
-              </button>
-              <button type="button" class="theme-btn" data-theme-val="comic-pop">
-                <span id="theme-btn-badge-2" class="theme-btn-badge badge-pop">Action!</span>
-                <span class="theme-btn-icon">💥</span>
-                <span id="theme-btn-title-2" class="theme-btn-title">Pop-Art Comic</span>
-                <span id="theme-btn-sub-2" class="theme-btn-subtitle">Ink &amp; Halftone</span>
-              </button>
-              <button type="button" class="theme-btn" data-theme-val="comic-retro">
-                <span id="theme-btn-badge-3" class="theme-btn-badge badge-retro">Vintage</span>
-                <span class="theme-btn-icon">📜</span>
-                <span id="theme-btn-title-3" class="theme-btn-title">Graphic Novel</span>
-                <span id="theme-btn-sub-3" class="theme-btn-subtitle">Pulp Classic 70s</span>
-              </button>
-            </div>
-          </div>
-
-          <!-- Botones de Selección de Modo (7-9 años y 10-12 años) -->
-          <div class="welcome-action-buttons">
-            <button id="btn-junior-mode" type="button" class="btn-junior pulse-btn-junior" title="Modo Aventura para jóvenes astronautas de 7 a 9 años">
-              <span class="btn-mode-badge junior-badge-label">👶 7–9 AÑOS / YEARS</span>
-              <div class="btn-mode-content">
-                <span class="btn-mode-icon">🎮</span>
-                <div class="btn-mode-texts">
-                  <strong id="btn-junior-title">MODO AVENTURA JUNIOR</strong>
-                  <small id="btn-junior-sub">¡Conduce con AstroCan, esquiva obstáculos y aprende con voz!</small>
-                </div>
-              </div>
-            </button>
-
-            <button id="btn-start-mission" type="button" class="btn-primary btn-tactical-mode" title="Simulador táctico para astronautas de 10 a 12 años">
-              <span class="btn-mode-badge tactical-badge-label">🧑‍🚀 10–12 AÑOS / YEARS</span>
-              <div class="btn-mode-content">
-                <span class="btn-mode-icon">🚀</span>
-                <div class="btn-mode-texts">
-                  <strong id="btn-start-title">SIMULADOR DE MANDO</strong>
-                  <small id="btn-start-sub">Toma decisiones estratégicas y gestiona recursos de supervivencia</small>
-                </div>
-              </div>
-            </button>
-          </div>
-
-          <!-- Declaración de Uso de Inteligencia Artificial (NASA AI Disclosure) -->
-          <div class="welcome-ai-disclosure">
-            <p class="nota-ia text-center">
-              <small id="welcome-ai-note">🤖 <strong>AI Usage Disclosure:</strong> Code and web structure developed with Gemini and Claude assistance (Antigravity). AstroCan illustrations and voice narration generated with AI.</small>
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ====== 2. PANTALLA DE JUEGO (ADAPTADA A CELULAR, TABLET Y PC) ====== -->
-    <section id="screen-game" class="screen game-screen hidden">
-
-      <!-- Contenedor general de Estación (permite 2 columnas en Desktop) -->
-      <div class="station-layout">
-
-        <!-- PANEL LATERAL PARA LAPTOP / PC (Desktop Station Panel) -->
-        <aside class="station-sidebar">
-          <div class="sidebar-mascot-box">
-            <div class="mascot-avatar-container contenedor-ia">
-              <img id="mascot-sidebar-img" src="assets/mascot/greeting.jpg" alt="AstroCan" class="mascot-sidebar-avatar">
-              <div class="mascot-online-dot"></div>
-              <span class="marca-ia" data-ai-label="true">AI Generated</span>
-            </div>
-            <div class="mascot-info">
-              <strong class="mascot-name">AstroCan</strong>
-              <span id="mascot-sidebar-role" class="mascot-role">Copiloto de Misión</span>
-            </div>
-            <div id="mascot-sidebar-bubble" class="sidebar-speech-bubble">
-              ¡Sistemas de la base en línea! Esperando tus órdenes, Comandante.
-            </div>
-          </div>
-
-          <!-- Diagnóstico de recursos lateral en PC con Barras y Semáforo -->
-          <div class="sidebar-telemetry">
-            <h4 id="sidebar-telemetry-title" class="telemetry-title">📡 Telemetría de la Base</h4>
-            <div class="sidebar-res-list">
-              <div id="side-row-o2" class="side-res-row">
-                <div class="side-res-header">
-                  <span id="side-label-o2" class="side-res-label">💨 Oxígeno:</span>
-                  <strong id="side-val-o2" class="side-res-val">100%</strong>
-                </div>
-                <div class="side-bar-track">
-                  <div id="side-bar-o2" class="side-bar-fill fill-o2" style="width: 100%"></div>
-                </div>
-              </div>
-              <div id="side-row-energy" class="side-res-row">
-                <div class="side-res-header">
-                  <span id="side-label-energy" class="side-res-label">⚡ Baterías:</span>
-                  <strong id="side-val-energy" class="side-res-val">100%</strong>
-                </div>
-                <div class="side-bar-track">
-                  <div id="side-bar-energy" class="side-bar-fill fill-energy" style="width: 100%"></div>
-                </div>
-              </div>
-              <div id="side-row-health" class="side-res-row">
-                <div class="side-res-header">
-                  <span id="side-label-health" class="side-res-label">❤️ Salud:</span>
-                  <strong id="side-val-health" class="side-res-val">100%</strong>
-                </div>
-                <div class="side-bar-track">
-                  <div id="side-bar-health" class="side-bar-fill fill-health" style="width: 100%"></div>
-                </div>
-              </div>
-              <div id="side-row-integrity" class="side-res-row">
-                <div class="side-res-header">
-                  <span id="side-label-integrity" class="side-res-label">🛡️ Casco:</span>
-                  <strong id="side-val-integrity" class="side-res-val">100%</strong>
-                </div>
-                <div class="side-bar-track">
-                  <div id="side-bar-integrity" class="side-bar-fill fill-integrity" style="width: 100%"></div>
-                </div>
-              </div>
-              <div id="side-row-science" class="side-res-row side-science-row">
-                <div class="side-res-header">
-                  <span id="side-label-science" class="side-res-label">🔬 Ciencia:</span>
-                  <strong id="side-val-science" class="side-res-val">0 pts</strong>
-                </div>
-                <div class="side-bar-track">
-                  <div id="side-bar-science" class="side-bar-fill fill-science" style="width: 0%"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="sidebar-actions">
-            <button id="btn-sidebar-lang" class="pill-btn sidebar-btn">🌐 <span id="sidebar-lang-label">Idioma: Español</span></button>
-            <button id="btn-sidebar-theme" class="pill-btn sidebar-btn">🎨 <span id="sidebar-theme-prefix">Estilo UI:</span> <span id="sidebar-theme-name">Sci-Fi</span></button>
-            <button id="btn-sidebar-voice" class="pill-btn sidebar-btn">🎙️ <span id="sidebar-voice-label">Cambiar Voz</span></button>
-            <button id="btn-sidebar-science" class="pill-btn sidebar-btn">🔬 <span id="sidebar-science-label">Archivo Científico</span></button>
-            <button id="btn-sidebar-sound" class="pill-btn sidebar-btn">🔊 <span id="sidebar-sound-label">Sonido</span></button>
-            <button id="btn-sidebar-abort" class="pill-btn btn-danger-pill sidebar-btn">🛑 <span id="sidebar-abort-label">Abortar Misión</span></button>
-          </div>
-        </aside>
-
-        <!-- TERMINAL PRINCIPAL (Visible en todos los dispositivos) -->
-        <div class="station-main-terminal">
-
-          <!-- Barra Superior (Móvil y Tablet) -->
-          <header class="top-bar">
-            <div class="bar-left">
-              <span class="astronaut-name">👨‍🚀 <strong id="hud-player-name">Cmd</strong></span>
-              <span class="day-badge" id="hud-day-text">Día 1/7</span>
-            </div>
-            <div class="bar-right">
-              <button id="btn-top-lang" class="pill-btn btn-lang" title="Switch language / Cambiar idioma">🌐 <span id="top-lang-label">EN</span></button>
-              <button id="btn-top-theme" class="pill-btn" title="Cambiar estilo visual de interfaz (UI)">🎨 <span id="top-theme-name">UI</span></button>
-              <button id="btn-top-voice" class="pill-btn" title="Cambiar tipo de voz de narración">🎙️</button>
-              <button id="btn-open-science" class="pill-btn">🔬 <span id="top-science-label">Archivo Científico</span></button>
-              <button id="btn-toggle-sound" class="pill-btn">🔊</button>
-              <button id="btn-abort-mission" class="pill-btn btn-danger-pill" title="Volver a la sala de mando">🛑 <span id="top-abort-label">Abortar</span></button>
-            </div>
-          </header>
-
-          <!-- Barra Ambiental -->
-          <div class="env-bar">
-            <span class="env-item"><span id="hud-env-icon">☀️</span> <strong id="hud-env-phase">Día Solar</strong></span>
-            <span class="env-item">🌡️ <strong id="hud-env-temp">+85°C</strong></span>
-            <span class="env-item">🔆 <strong id="hud-env-sun">100%</strong></span>
-          </div>
-
-          <!-- Recursos Compactos (Móvil y Tablet) -->
-          <div class="res-strip">
-            <div class="res-mini"><span class="res-icon">💨</span><div class="res-bar-track"><div id="bar-o2" class="res-bar-fill fill-o2" style="width:100%"></div></div><span id="val-o2" class="res-num">100%</span></div>
-            <div class="res-mini"><span class="res-icon">⚡</span><div class="res-bar-track"><div id="bar-energy" class="res-bar-fill fill-energy" style="width:100%"></div></div><span id="val-energy" class="res-num">100%</span></div>
-            <div class="res-mini"><span class="res-icon">❤️</span><div class="res-bar-track"><div id="bar-health" class="res-bar-fill fill-health" style="width:100%"></div></div><span id="val-health" class="res-num">100%</span></div>
-            <div class="res-mini"><span class="res-icon">🛡️</span><div class="res-bar-track"><div id="bar-integrity" class="res-bar-fill fill-integrity" style="width:100%"></div></div><span id="val-integrity" class="res-num">100%</span></div>
-            <div class="res-mini res-science"><span class="res-icon">🔬</span><span id="hud-science-val" class="res-num science-val">0</span></div>
-          </div>
-
-          <!-- Franja de Compañero para Móvil y Tablet (oculta en PC) -->
-          <div class="mobile-mascot-strip">
-            <div class="contenedor-ia">
-              <img id="mascot-mobile-img" src="assets/mascot/greeting.jpg" alt="AstroCan" class="mascot-mobile-avatar">
-              <span class="marca-ia marca-ia-sm" data-ai-label="true">AI</span>
-            </div>
-            <div id="mascot-mobile-bubble" class="mobile-speech-bubble">
-              ¡Listo para la misión lunar, Comandante!
-            </div>
-          </div>
-
-          <!-- Contenido Principal Scrollable -->
-          <div class="game-content-scroll">
-
-            <!-- Tarjeta de Dilema -->
-            <article id="dilemma-card" class="dilemma-card">
-              <div class="dilemma-top">
-                <div class="dilemma-top-tags">
-                  <span id="dilemma-tag" class="tag-badge">ALERTA</span>
-                  <span id="dilemma-sender" class="sender-text">📡 Transmisión</span>
-                </div>
-                <!-- Controles de Audio y Voz -->
-                <div class="dilemma-audio-controls">
-                  <button id="btn-change-voice" class="pill-btn btn-voice" title="Cambiar tipo de voz para la narración" data-ai-generated="true" aria-label="Cambiar voz de Inteligencia Artificial">
-                    🎙️ <span id="current-voice-label">Voz: Auto</span>
-                  </button>
-                  <button id="btn-narrate-dilemma" class="pill-btn btn-narrate" title="Reproducir en audio este dilema" data-ai-generated="true" aria-label="Audio narrado generado por Inteligencia Artificial">
-                    📢 Escuchar Misión
-                  </button>
-                </div>
-                <div class="audio-ai-container">
-                  <audio id="player-narrator-audio" class="hidden-audio-player" data-ai-generated="true" aria-label="Audio narrado generado por Inteligencia Artificial"></audio>
-                  <p class="nota-ia"><small id="dilemma-audio-note">AI-generated narrated audio (Voice synthesis / Web Speech API).</small></p>
-                </div>
-              </div>
-
-              <h2 id="dilemma-title" class="dilemma-title">Cargando...</h2>
-              <p id="dilemma-desc" class="dilemma-desc">Descripción del escenario...</p>
-              <div id="dilemma-source-box" class="source-box"></div>
-              <div id="dilemma-science-box" class="science-box">💡 Contexto científico...</div>
-              <div id="dilemma-options-container" class="options-grid"></div>
-            </article>
-
-            <!-- Minijuego Container -->
-            <section id="minigame-container" class="minigame-container hidden"></section>
-
-            <!-- Feedback de Transmisión -->
-            <article id="transmission-box" class="transmission-box hidden">
-              <h3 class="transmission-title">📻 Informe de Control de Misión</h3>
-              <div id="transmission-text"></div>
-              <button id="btn-next-day" class="btn-primary">☀️ AVANZAR AL SIGUIENTE DÍA</button>
-            </article>
-
-          </div>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- ====== 3. PANTALLA DE FIN DE MISIÓN ====== -->
-    <section id="screen-gameover" class="screen gameover-screen hidden">
-      <div class="gameover-inner">
-
-        <!-- Mascota en fin de misión -->
-        <div class="gameover-mascot-row">
-          <div class="contenedor-ia">
-            <img id="gameover-mascot-img" class="gameover-mascot-avatar" src="assets/mascot/celebrating.jpg" alt="AstroCan">
-            <span class="marca-ia" data-ai-label="true">AI Generated</span>
-          </div>
-          <div id="gameover-mascot-bubble" class="gameover-mascot-bubble">
-            ¡Misión completada, Comandante!
-          </div>
-        </div>
-
-        <h2 id="gameover-title" class="gameover-title">🎉 ¡MISIÓN CUMPLIDA!</h2>
-        <p id="gameover-subtitle" class="gameover-subtitle">Felicitaciones...</p>
-        <div id="gameover-rank" class="rank-badge">🥇 Comandante</div>
-
-        <div class="metrics-row">
-          <div class="metric-pill"><span id="lbl-gameover-score">PUNTUACIÓN</span><strong id="gameover-score">0</strong></div>
-          <div class="metric-pill"><span id="lbl-gameover-days">DÍAS</span><strong id="gameover-days">0/7</strong></div>
-          <div class="metric-pill"><span id="lbl-gameover-science">CIENCIA</span><strong id="gameover-science">0</strong></div>
-        </div>
-
-        <div id="gameover-lesson-box" class="lesson-card lesson-success">
-          <div id="gameover-lesson-text"></div>
-        </div>
-
-        <div class="gameover-actions">
-          <button id="btn-share-cert" class="btn-primary" style="background: linear-gradient(135deg, #6c5ce7, #a29bfe);">
-            📤 COMPARTIR CERTIFICADO
+      <div class="nav-actions">
+        <!-- Selector de Idioma (ES / EN) -->
+        <div class="lang-toggle-group">
+          <button type="button" class="lang-btn active" data-lang="es" id="btn-lang-es">
+            <span>🇪🇸</span> ES
           </button>
-          <button id="btn-restart" class="btn-secondary">🔄 NUEVA MISIÓN</button>
+          <button type="button" class="lang-btn" data-lang="en" id="btn-lang-en">
+            <span>🇺🇸</span> EN
+          </button>
         </div>
+      </div>
+    </header>
+
+    <!-- ====================================================================
+         2. SECCIÓN HERO (PRESENTACIÓN)
+         ==================================================================== -->
+    <section class="hero-section" id="hero">
+      <div class="hero-pill-badge" id="hero-badge">
+        🚀 DESAFÍO ESPACIAL INTERNACIONAL 2026
+      </div>
+
+      <h1 class="hero-title">ORBITA 5</h1>
+
+      <p class="hero-subtitle" id="hero-subtitle">
+        Portal de Aprendizaje Interactivo y Videojuegos Lunares para Jóvenes Astronautas (7 a 12 años)
+      </p>
+
+      <p class="hero-desc" id="hero-desc">
+        Diseñado para inspirar a la próxima generación de exploradores espaciales mediante ciencia real, toma de decisiones tácticas en gravedad lunar y desafíos de acción física. ¡Elegí tu misión y comenzá tu viaje a la Luna!
+      </p>
+
+      <div class="hero-cta-group">
+        <a href="#juegos" class="btn-cta btn-cta-primary" id="hero-cta-games">
+          🕹️ Explorar Videojuegos
+        </a>
+        <a href="#equipo" class="btn-cta btn-cta-secondary" id="hero-cta-team">
+          👥 Conocer al Equipo ORBITA 5
+        </a>
       </div>
     </section>
 
-    <!-- ====== 3B. PANTALLA DE JUEGO ARCADE JUNIOR (7 A 9 AÑOS) ====== -->
-    <section id="screen-junior-arcade" class="screen junior-screen hidden">
-      <div class="junior-layout">
+    <!-- ====================================================================
+         3. SECCIÓN DE LOS 2 VIDEOJUEGOS (THE 2 GAME OPTIONS)
+         ==================================================================== -->
+    <section class="games-section" id="juegos">
+      <div class="section-head">
+        <span class="section-tag" id="games-tag">EXPERIENCIAS INTERACTIVAS</span>
+        <h2 class="section-title" id="games-title">Elegí tu Desafío Lunar</h2>
+        <p class="section-subtitle" id="games-subtitle">
+          Dos modos de juego complementarios que abordan la exploración espacial desde el comando táctico y la acción en plataformas 3D.
+        </p>
+      </div>
 
-        <!-- Barra Superior Junior -->
-        <header class="junior-top-bar">
-          <div class="junior-bar-left">
-            <span class="junior-avatar-mini contenedor-ia">
-              <img src="assets/mascot/greeting.jpg" alt="AstroCan" class="junior-mini-img">
-              <span class="marca-ia marca-ia-sm" data-ai-label="true">AI</span>
-            </span>
-            <div class="junior-title-group">
-              <h2 id="junior-screen-title" class="junior-main-title">Expedición Lunar Junior</h2>
-              <span class="junior-day-badge">📅 <strong id="junior-hud-day">Día 1 / 5</strong></span>
-            </div>
+      <div class="games-grid">
+
+        <!-- ==================== OPCIÓN 1 ==================== -->
+        <article class="game-card game-card-1">
+          <div class="game-card-badge-row">
+            <span class="game-type-badge badge-sim" id="game1-badge">Simulación Táctica & Arcade</span>
+            <span class="game-age-tag">7–12 Años</span>
           </div>
 
-          <div class="junior-day-progress-wrapper">
-            <span class="junior-progress-label" id="junior-lbl-progress">Progreso del Día:</span>
-            <div class="junior-progress-track">
-              <div id="junior-bar-progress" class="junior-progress-fill" style="width: 0%"></div>
-            </div>
+          <div class="game-visual-box game-visual-sim">
+            <img src="assets/mascot/greeting.jpg" alt="AstroCan Copiloto" class="sim-preview-mascot">
           </div>
 
-          <div class="junior-bar-right">
-            <button id="junior-btn-voice" class="pill-btn btn-voice" title="Cambiar tipo de voz de narración" data-ai-generated="true">
-              🎙️ <span id="junior-voice-label">Voz: Auto</span>
-            </button>
-            <button id="junior-btn-audio-toggle" class="pill-btn audio-active" title="Activar/Silenciar narración en voz alta">
-              🔊 Voz de Misión: Activada
-            </button>
-            <button id="junior-btn-exit" class="pill-btn btn-danger-pill" title="Volver al menú principal">
-              🏠 Salir
-            </button>
-          </div>
-        </header>
+          <h3 class="game-card-title" id="game1-title">
+            Simulador de supervivencia lunar para jóvenes astronautas
+          </h3>
 
-        <!-- Franja de Recursos de Supervivencia con Semáforo -->
-        <div class="junior-res-strip">
-          <div class="junior-res-item">
-            <span class="junior-res-icon">💨</span>
-            <span class="junior-res-name" id="junior-lbl-o2">Oxígeno:</span>
-            <div class="junior-res-track">
-              <div id="junior-bar-o2" class="junior-res-fill fill-o2" style="width: 100%"></div>
-            </div>
-            <strong id="junior-val-o2" class="junior-res-num">100%</strong>
-          </div>
+          <p class="game-card-desc" id="game1-desc">
+            Gestioná el puesto avanzado humano en el Cráter Shackleton (Polo Sur Lunar). Controlá los 5 recursos vitales (Oxígeno, Energía, Agua, Comida e Integridad) mediante trade-offs reales, o jugá al <strong>Modo Aventura Junior</strong> esquivando obstáculos espaciales.
+          </p>
 
-          <div class="junior-res-item">
-            <span class="junior-res-icon">⚡</span>
-            <span class="junior-res-name" id="junior-lbl-energy">Baterías:</span>
-            <div class="junior-res-track">
-              <div id="junior-bar-energy" class="junior-res-fill fill-energy" style="width: 100%"></div>
-            </div>
-            <strong id="junior-val-energy" class="junior-res-num">100%</strong>
+          <ul class="game-features-list">
+            <li><span class="feat-icon">👨‍🚀</span> <span id="game1-feat1"><strong>3 Niveles de Misión:</strong> Cadete (7d), Especialista (14d) y Comandante (28d).</span></li>
+            <li><span class="feat-icon">🕹️</span> <span id="game1-feat2"><strong>Modo Aventura Junior (5 días):</strong> Desplazamiento dinámico y recarga de recursos.</span></li>
+            <li><span class="feat-icon">🐶</span> <span id="game1-feat3"><strong>Copiloto AstroCan:</strong> Expresiones emocionales animadas guiadas por IA.</span></li>
+            <li><span class="feat-icon">📊</span> <span id="game1-feat4"><strong>Telemetría Semáforo:</strong> Monitoreo de recursos en tiempo real.</span></li>
+            <li><span class="feat-icon">🎙️</span> <span id="game1-feat5"><strong>Voz Multilingüe & 3 Estilos:</strong> Sci-Fi, Cómic Pop-Art y Novela Gráfica.</span></li>
+          </ul>
+
+          <a href="simulador.html" class="btn-game-launch btn-game-sim" id="game1-btn">
+            🚀 JUGAR SIMULADOR LUNAR
+          </a>
+        </article>
+
+        <!-- ==================== OPCIÓN 2 ==================== -->
+        <article class="game-card game-card-2">
+          <div class="game-card-badge-row">
+            <span class="game-type-badge badge-base" id="game2-badge">Plataformas 3D & Runner</span>
+            <span class="game-age-tag">7–12 Años</span>
           </div>
 
-          <div class="junior-res-item">
-            <span class="junior-res-icon">🛡️</span>
-            <span class="junior-res-name" id="junior-lbl-hull">Casco:</span>
-            <div class="junior-res-track">
-              <div id="junior-bar-hull" class="junior-res-fill fill-hull" style="width: 100%"></div>
-            </div>
-            <strong id="junior-val-hull" class="junior-res-num">100%</strong>
+          <div class="game-visual-box game-visual-base">
+            <div class="base-preview-orb"></div>
           </div>
 
-          <div class="junior-res-item junior-res-science">
-            <span class="junior-res-icon">🔬</span>
-            <span class="junior-res-name" id="junior-lbl-science">Muestras:</span>
-            <strong id="junior-val-science" class="junior-res-num science-val">0 pts</strong>
-          </div>
-        </div>
+          <h3 class="game-card-title" id="game2-title">
+            Base Lunar
+          </h3>
 
-        <!-- Contenedor del Canvas Interactivo -->
-        <div class="junior-canvas-container">
-          <canvas id="junior-arcade-canvas" width="800" height="420"></canvas>
+          <p class="game-card-desc" id="game2-desc">
+            Corré, saltá y maniobrá a través de plataformas en gravedad espacial hasta llegar a la Luna. Personalizá tu traje en 3D con Three.js, esquivá micrometeoritos, gestioná tu mochila de suministros y aprendé datos reales del clima solar.
+          </p>
 
-          <!-- Banner de Transmisión Radial Educativa en vivo (reproducción fluida con audio) -->
-          <div id="junior-broadcast-card" class="junior-broadcast-card hidden" role="status" aria-live="polite">
-            <div class="broadcast-left">
-              <span class="broadcast-icon">📻</span>
-              <div class="broadcast-mascot-avatar">
-                <img src="assets/mascot/thinking.jpg" alt="AstroCan" class="broadcast-mascot-img">
-              </div>
-            </div>
-            <div class="broadcast-body">
-              <div class="broadcast-tag-line">
-                <span class="broadcast-badge" id="junior-broadcast-tag">📡 TRANSMISIÓN EDUCATIVA ESPACIAL</span>
-                <span class="broadcast-live-dot">● EN VIVO</span>
-              </div>
-              <h4 id="junior-broadcast-title" class="broadcast-headline">¡Dato Curioso!</h4>
-              <p id="junior-broadcast-text" class="broadcast-desc">Narrando dato científico...</p>
-              <div class="broadcast-progress-track">
-                <div id="junior-broadcast-fill" class="broadcast-progress-fill" style="width: 0%"></div>
-              </div>
-            </div>
-            <div class="broadcast-actions">
-              <button id="junior-btn-broadcast-skip" class="pill-btn btn-skip-broadcast" title="Continuar de inmediato">
-                ⏭️ <span id="junior-btn-skip-label">Continuar ya</span>
-              </button>
-            </div>
-          </div>
+          <ul class="game-features-list">
+            <li><span class="feat-icon">🏃‍♂️</span> <span id="game2-feat1"><strong>10 Etapas Progresivas:</strong> Desde el despegue hasta la Base Lunar argentina 🇦🇷.</span></li>
+            <li><span class="feat-icon">🎨</span> <span id="game2-feat2"><strong>Personalización de Traje 3D:</strong> Renderizado interactivo con Three.js.</span></li>
+            <li><span class="feat-icon">☀️</span> <span id="game2-feat3"><strong>Clima Espacial en Vivo:</strong> Basado en el archivo solar DONKI de eventos solares.</span></li>
+            <li><span class="feat-icon">🎒</span> <span id="game2-feat4"><strong>Mochila de Supervivencia:</strong> Uso estratégico de O₂, Agua y Raciones.</span></li>
+            <li><span class="feat-icon">🧠</span> <span id="game2-feat5"><strong>Desafíos y Trivias:</strong> Datos educativos reales entre niveles con síntesis de voz.</span></li>
+          </ul>
 
-          <!-- Controles Táctiles en Pantalla (para Celular y Tablet) -->
-          <div class="junior-touch-bar">
-            <button id="junior-touch-left" class="junior-touch-btn btn-touch-dir" aria-label="Mover a la izquierda">
-              ◀
-            </button>
-            <button id="junior-touch-jump" class="junior-touch-btn btn-touch-jump" aria-label="Saltar con baja gravedad lunar">
-              🚀 SALTAR
-            </button>
-            <button id="junior-touch-right" class="junior-touch-btn btn-touch-dir" aria-label="Mover a la derecha">
-              ▶
-            </button>
-          </div>
-        </div>
-
-        <!-- Modal Educativo: Dato Científico de la NASA al completar el día -->
-        <div id="junior-modal-fact" class="modal-overlay hidden" role="dialog" aria-modal="true">
-          <div class="modal-card junior-fact-card">
-            <header class="modal-head junior-fact-head">
-              <span id="junior-fact-day-tag" class="tag-badge">TRANSMISIÓN EDUCATIVA — DÍA 1 DE 5</span>
-              <span class="junior-audio-badge">📢 Auto-Voz Activada</span>
-            </header>
-            <div class="modal-body junior-fact-body">
-              <div class="junior-fact-mascot-box">
-                <div class="contenedor-ia">
-                  <img src="assets/mascot/thinking.jpg" alt="AstroCan" class="junior-fact-mascot-img">
-                  <span class="marca-ia" data-ai-label="true">AI</span>
-                </div>
-                <strong class="junior-mascot-label">AstroCan explica:</strong>
-              </div>
-
-              <div class="junior-fact-content">
-                <h3 id="junior-fact-title" class="junior-fact-headline">¡El Salto de la Jirafa en la Luna!</h3>
-                <p id="junior-fact-body" class="junior-fact-text">
-                  En la Luna la gravedad es 6 veces menor que en la Tierra...
-                </p>
-                <div class="junior-nasa-badge-box">
-                  <span id="junior-fact-nasa-badge" class="badge-nasa-fact">🔬 Ciencia Espacial Real</span>
-                </div>
-              </div>
-            </div>
-            <div class="junior-fact-actions">
-              <button id="junior-btn-listen-again" class="btn-secondary">
-                📢 Escuchar de nuevo
-              </button>
-              <button id="junior-btn-next-day" class="btn-primary pulse-btn">
-                👉 CONTINUAR AL SIGUIENTE DÍA
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Modal de Fin de Expedición / Victoria / Reintento -->
-        <div id="junior-modal-end" class="modal-overlay hidden" role="dialog" aria-modal="true">
-          <div class="modal-card junior-end-card">
-            <div class="junior-end-mascot">
-              <div class="contenedor-ia">
-                <img src="assets/mascot/celebrating.jpg" alt="AstroCan" class="junior-end-img">
-                <span class="marca-ia" data-ai-label="true">AI</span>
-              </div>
-            </div>
-            <h2 id="junior-end-title" class="junior-end-title">🎉 ¡EXPEDICIÓN JUNIOR COMPLETADA!</h2>
-            <p id="junior-end-subtitle" class="junior-end-sub">¡Completaste con valentía los 5 días lunares explorando con AstroCan!</p>
-            <div id="junior-end-stars" class="junior-stars">⭐⭐⭐</div>
-            <div id="junior-end-stats" class="junior-end-stats-box"></div>
-            <div class="junior-end-actions">
-              <button id="junior-btn-end-restart" class="btn-primary">🔄 Jugar de Nuevo</button>
-              <button id="junior-btn-end-home" class="btn-secondary">🏠 Volver a la Base</button>
-            </div>
-          </div>
-        </div>
+          <a href="base-lunar.html" class="btn-game-launch btn-game-base" id="game2-btn">
+            🌕 JUGAR BASE LUNAR
+          </a>
+        </article>
 
       </div>
     </section>
 
-    <!-- ====== 4. MODAL ARCHIVO CIENTÍFICO ====== -->
-    <div id="modal-science" class="modal-overlay hidden" role="dialog" aria-modal="true">
-      <div class="modal-card">
-        <header class="modal-head">
-          <h3 id="modal-science-title">🔬 Archivo Científico Espacial</h3>
-          <button id="btn-close-science" class="modal-close" aria-label="Cerrar">&times;</button>
-        </header>
-        <div class="modal-body" id="science-content"></div>
+    <!-- ====================================================================
+         4. PRESENTACIÓN DEL EQUIPO ORBITA 5
+         ==================================================================== -->
+    <section class="team-section" id="equipo">
+      <div class="section-head">
+        <span class="section-tag" id="team-tag">QUIÉNES SOMOS</span>
+        <h2 class="section-title" id="team-title">Presentación del Equipo ORBITA 5</h2>
+        <p class="section-subtitle" id="team-subtitle">
+          Unidos por la pasión de acercar la ciencia aeroespacial a las nuevas generaciones a través de la tecnología web.
+        </p>
       </div>
-    </div>
 
-    <!-- ====== 5. MODAL ABORTAR MISIÓN ====== -->
-    <div id="modal-abort" class="modal-overlay hidden" role="dialog" aria-modal="true">
-      <div class="modal-card modal-abort-card">
-        <header class="modal-head modal-head-danger">
-          <h3 id="modal-abort-title">🛑 Abortar Misión ORBITA5</h3>
-          <button id="btn-close-abort-x" class="modal-close" aria-label="Cerrar">&times;</button>
-        </header>
-        <div class="modal-body modal-abort-body">
-          <div class="abort-icon">⚠️</div>
-          <p id="modal-abort-prompt" class="abort-prompt"><strong>¿Seguro que deseas abortar la misión lunar?</strong></p>
-          <p id="modal-abort-desc" class="abort-desc">Se cancelará la simulación actual y regresarás a la sala de mando inicial para cambiar tu nombre de astronauta o elegir otro nivel de dificultad.</p>
-          <div class="abort-actions">
-            <button id="btn-confirm-abort" class="btn-primary btn-danger-action">🚀 Sí, Abortar y Salir</button>
-            <button id="btn-cancel-abort" class="btn-secondary">Continuar Misión</button>
-          </div>
+      <div class="team-lead-box">
+        <h3 class="team-lead-title" id="team-lead-title">Nuestra Misión y Visión</h3>
+        <p class="team-lead-text" id="team-lead-p1">
+          En <strong>ORBITA 5</strong> creemos que la ciencia no se aprende memorizando, sino experimentando. Para el desafío de este año nos propusimos crear una plataforma web integral pensada para niños de <strong>7 a 12 años</strong>, cubriendo tanto a los más pequeños que aprenden jugando de forma visual y auditiva, como a los jóvenes cadetes que buscan el reto estratégico de gestionar una base espacial.
+        </p>
+        <p class="team-lead-text" id="team-lead-p2">
+          Ambos juegos integran principios científicos reales —como las temperaturas extremas del Cráter Shackleton, el polvo abrasivo lunar, la radiación solar y la escasez de recursos— en mecánicas dinámicas donde cada decisión tiene consecuencias reales (<strong>trade-offs</strong>).
+        </p>
+      </div>
+
+      <!-- Pilares del Proyecto -->
+      <div class="team-pillars-grid" id="mision">
+        <div class="pillar-card">
+          <div class="pillar-icon">🎓</div>
+          <h4 class="pillar-title" id="pillar1-title">Pedagogía STEAM</h4>
+          <p class="pillar-desc" id="pillar1-desc">
+            Contenidos adaptados para fomentar la curiosidad científica, la física gravitacional y el pensamiento crítico en la infancia.
+          </p>
+        </div>
+
+        <div class="pillar-card">
+          <div class="pillar-icon">⚖️</div>
+          <h4 class="pillar-title" id="pillar2-title">Regla de Oro: Trade-Offs</h4>
+          <p class="pillar-desc" id="pillar2-desc">
+            Enseña que ningún recurso es infinito. Cada mejora en un sistema vital exige una compensación consciente en otro.
+          </p>
+        </div>
+
+        <div class="pillar-card">
+          <div class="pillar-icon">🌐</div>
+          <h4 class="pillar-title" id="pillar3-title">Accesibilidad Universal</h4>
+          <p class="pillar-desc" id="pillar3-desc">
+            Soporte bilingüe completo (ES/EN), síntesis vocal con auto-lectura para niños y compatibilidad total con celulares, tablets y PC.
+          </p>
+        </div>
+
+        <div class="pillar-card">
+          <div class="pillar-icon">🔬</div>
+          <h4 class="pillar-title" id="pillar4-title">Datos Espaciales Reales</h4>
+          <p class="pillar-desc" id="pillar4-desc">
+            Inspirado en el programa Artemis, la Estación Espacial Internacional (ISS) y el archivo de clima solar DONKI.
+          </p>
         </div>
       </div>
-    </div>
 
-    <!-- ====== 6. MODAL SELECTOR DE VOCES ====== -->
-    <div id="modal-voice" class="modal-overlay hidden" role="dialog" aria-modal="true">
-      <div class="modal-card modal-voice-card">
-        <header class="modal-head">
-          <h3 id="modal-voice-title">🎙️ Voces de Control de Misión</h3>
-          <button id="btn-close-voice-x" class="modal-close" aria-label="Cerrar">&times;</button>
-        </header>
-        <div class="modal-body modal-voice-body">
-          <div class="voice-modal-intro">
-            <p id="modal-voice-desc" class="voice-modal-desc">
-              Selecciona la voz de síntesis que prefieras para escuchar las alertas y decisiones en tu base lunar:
-            </p>
-            <div class="voice-current-banner">
-              <span id="modal-voice-active-label" class="voice-banner-label">Voz activa:</span>
-              <strong id="modal-current-voice-text" class="voice-banner-value">🌎 Cargando voz...</strong>
-            </div>
-            <p class="nota-ia"><small id="modal-voice-note">🔊 Audio y síntesis vocal generados con Inteligencia Artificial (Web Speech API).</small></p>
-          </div>
+      <!-- Disciplinas y Roles del Equipo -->
+      <div class="team-roles-grid">
+        <div class="role-card">
+          <div class="role-icon">💻</div>
+          <h4 class="role-title" id="role1-title">Desarrollo Web & Gráficos</h4>
+          <p class="role-desc" id="role1-desc">Arquitectura modular limpia en HTML5, Canvas 2D, Three.js y Web Audio API sin dependencias externas pesadas.</p>
+        </div>
 
-          <div id="voice-options-list" class="voice-options-list">
-            <!-- Rellenado dinámicamente con las voces del navegador -->
-          </div>
+        <div class="role-card">
+          <div class="role-icon">🎨</div>
+          <h4 class="role-title" id="role2-title">Diseño UI/UX & Estilos</h4>
+          <p class="role-desc" id="role2-desc">Experiencias visuales inmersivas, temas de cómic retro, efectos dinámicos de semáforo y controles táctiles fluidos.</p>
+        </div>
 
-          <div class="voice-modal-footer">
-            <button id="btn-cycle-voice-fast" class="btn-secondary">🔄 Siguiente Voz Rápida</button>
-            <button id="btn-close-voice" class="btn-primary">Listo</button>
-          </div>
+        <div class="role-card">
+          <div class="role-icon">📚</div>
+          <h4 class="role-title" id="role3-title">Ciencia & Didáctica</h4>
+          <p class="role-desc" id="role3-desc">Curaduría de conceptos astronómicos y diseño de dilemas espaciales adaptados pedagógicamente para el rango 7–12 años.</p>
+        </div>
+
+        <div class="role-card">
+          <div class="role-icon">🤖</div>
+          <h4 class="role-title" id="role4-title">Integración de IA Ética</h4>
+          <p class="role-desc" id="role4-desc">Aplicación responsable de herramientas de asistencia de IA para código, voz sintetizada e ilustraciones del copiloto AstroCan.</p>
         </div>
       </div>
-    </div>
 
-    <!-- ====== 7. MODAL SELECTOR DE ESTILO VISUAL / TEMAS ====== -->
-    <div id="modal-theme" class="modal-overlay hidden" role="dialog" aria-modal="true">
-      <div class="modal-card modal-theme-card">
-        <header class="modal-head">
-          <h3 id="modal-theme-title">🎨 Estilo Visual de la Interfaz (UI)</h3>
-          <button id="btn-close-theme-x" class="modal-close" aria-label="Cerrar">&times;</button>
-        </header>
-        <div class="modal-body">
-          <div class="theme-modal-intro">
-            <p id="modal-theme-desc" class="theme-modal-desc">
-              Selecciona cómo deseas experimentar <strong>ORBITA5</strong>. Puedes alternar libremente entre la interfaz base de ciencia ficción y las propuestas con estilo cómic:
-            </p>
-          </div>
-
-          <div id="theme-cards-grid" class="theme-cards-grid">
-            <!-- Rellenado dinámicamente con los temas -->
-          </div>
-
-          <div class="voice-modal-footer">
-            <button id="btn-cycle-theme-fast" class="btn-secondary">🔄 Alternar Estilo Rápido</button>
-            <button id="btn-close-theme" class="btn-primary">Listo</button>
-          </div>
+      <!-- Cuadro de Transparencia de Inteligencia Artificial -->
+      <div class="ai-disclosure-box" id="tecnologia">
+        <div class="ai-disclosure-icon">🤖</div>
+        <div>
+          <h4 class="ai-disclosure-title" id="ai-title">Transparencia y Divulgación de Inteligencia Artificial (NASA AI Guidelines)</h4>
+          <p class="ai-disclosure-text" id="ai-desc">
+            Para el desarrollo de esta plataforma se emplearon herramientas de asistencia de IA (Gemini y Claude a través de Antigravity) para acelerar la estructuración de código y diseño. Las ilustraciones del copiloto AstroCan y la narración oral de misiones utilizan IA y Web Speech API, identificadas con etiquetas visibles para el usuario y los jurados evaluadores.
+          </p>
         </div>
       </div>
-    </div>
 
-  </main>
+    </section>
 
-  <!-- Hub de partículas y deltas animados de recursos (Gains / Losses) -->
-  <div id="floating-delta-hub" class="floating-delta-hub" aria-hidden="true"></div>
+    <!-- ====================================================================
+         5. PIE DE PÁGINA (FOOTER)
+         ==================================================================== -->
+    <footer class="portal-footer">
+      <div>
+        <p><strong>ORBITA 5</strong> — Plataforma Educativa Espacial © 2026</p>
+        <p><small id="footer-subtitle">Desarrollado para el Desafío Espacial Internacional 2026.</small></p>
+      </div>
 
-  <script src="js/theme-manager.js"></script>
-  <script src="js/i18n.js"></script>
-  <script src="js/audio.js"></script>
-  <script src="js/speech.js"></script>
-  <script src="js/mascot.js"></script>
-  <script src="js/space-canvas.js"></script>
-  <script src="js/data-donki.js"></script>
-  <script src="js/data-osdr.js"></script>
-  <script src="js/game-state.js"></script>
-  <script src="js/events.js"></script>
-  <script src="js/minigame-shield.js"></script>
-  <script src="js/minigame-rover.js"></script>
-  <script src="js/certificate.js"></script>
-  <script src="js/junior-arcade.js"></script>
-  <script src="js/main.js"></script>
+      <div class="footer-links">
+        <a href="simulador.html" id="footer-link-sim">Simulador Lunar</a>
+        <a href="base-lunar.html" id="footer-link-base">Base Lunar</a>
+        <a href="#hero" id="footer-link-top">Subir ⬆</a>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- ====================================================================
+       SCRIPTS: STARFIELD CANVAS & MOTOR BILINGÜE (i18n)
+       ==================================================================== -->
+  <script>
+    /* ==========================================================================
+       1. STARFIELD CANVAS DE FONDO CÓSMICO
+       ========================================================================== */
+    (function initStarfield() {
+      const canvas = document.getElementById('space-starfield');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      let stars = [];
+      const numStars = 140;
+
+      function resize() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      }
+      window.addEventListener('resize', resize);
+      resize();
+
+      for (let i = 0; i < numStars; i++) {
+        stars.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          radius: Math.random() * 1.6 + 0.4,
+          alpha: Math.random(),
+          speed: Math.random() * 0.02 + 0.005,
+          color: Math.random() > 0.3 ? '#e6ecff' : (Math.random() > 0.5 ? '#00e5ff' : '#ffd15c')
+        });
+      }
+
+      function renderStars() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        for (let star of stars) {
+          star.alpha += star.speed;
+          if (star.alpha > 1 || star.alpha < 0.2) star.speed = -star.speed;
+
+          ctx.beginPath();
+          ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+          ctx.fillStyle = star.color;
+          ctx.globalAlpha = Math.max(0.1, Math.min(1, star.alpha));
+          ctx.fill();
+        }
+        ctx.globalAlpha = 1.0;
+        requestAnimationFrame(renderStars);
+      }
+      renderStars();
+    })();
+
+    /* ==========================================================================
+       2. MOTOR DE INTERNACIONALIZACIÓN BILINGÜE (ES / EN)
+       ========================================================================== */
+    (function initI18n() {
+      const translations = {
+        es: {
+          navTeamTag: "EQUIPO DE MISIÓN LUNAR",
+          navGames: "🎮 Videojuegos",
+          navTeam: "👥 El Equipo",
+          navMission: "🎯 Propósito",
+          navTech: "🔬 Tecnología",
+          heroBadge: "🚀 DESAFÍO ESPACIAL INTERNACIONAL 2026",
+          heroTitle: "ORBITA 5",
+          heroSubtitle: "Portal de Aprendizaje Interactivo y Videojuegos Lunares para Jóvenes Astronautas (7 a 12 años)",
+          heroDesc: "Diseñado para inspirar a la próxima generación de exploradores espaciales mediante ciencia real, toma de decisiones tácticas en gravedad lunar y desafíos de acción física. ¡Elegí tu misión y comenzá tu viaje a la Luna!",
+          heroCtaGames: "🕹️ Explorar Videojuegos",
+          heroCtaTeam: "👥 Conocer al Equipo ORBITA 5",
+          gamesTag: "EXPERIENCIAS INTERACTIVAS",
+          gamesTitle: "Elegí tu Desafío Lunar",
+          gamesSubtitle: "Dos modos de juego complementarios que abordan la exploración espacial desde el comando táctico y la acción en plataformas 3D.",
+          game1Badge: "Simulación Táctica & Arcade",
+          game1Title: "Simulador de supervivencia lunar para jóvenes astronautas",
+          game1Desc: "Gestioná el puesto avanzado humano en el Cráter Shackleton (Polo Sur Lunar). Controlá los 5 recursos vitales (Oxígeno, Energía, Agua, Comida e Integridad) mediante trade-offs reales, o jugá al <strong>Modo Aventura Junior</strong> esquivando obstáculos espaciales.",
+          game1Feat1: "<strong>3 Niveles de Misión:</strong> Cadete (7d), Especialista (14d) y Comandante (28d).",
+          game1Feat2: "<strong>Modo Aventura Junior (5 días):</strong> Desplazamiento dinámico y recarga de recursos.",
+          game1Feat3: "<strong>Copiloto AstroCan:</strong> Expresiones emocionales animadas guiadas por IA.",
+          game1Feat4: "<strong>Telemetría Semáforo:</strong> Monitoreo de recursos en tiempo real.",
+          game1Feat5: "<strong>Voz Multilingüe & 3 Estilos:</strong> Sci-Fi, Cómic Pop-Art y Novela Gráfica.",
+          game1Btn: "🚀 JUGAR SIMULADOR LUNAR",
+          game2Badge: "Plataformas 3D & Runner",
+          game2Title: "Base Lunar",
+          game2Desc: "Corré, saltá y maniobrá a través de plataformas en gravedad espacial hasta llegar a la Luna. Personalizá tu traje en 3D con Three.js, esquivá micrometeoritos, gestioná tu mochila de suministros y aprendé datos reales del clima solar.",
+          game2Feat1: "<strong>10 Etapas Progresivas:</strong> Desde el despegue hasta la Base Lunar argentina 🇦🇷.",
+          game2Feat2: "<strong>Personalización de Traje 3D:</strong> Renderizado interactivo con Three.js.",
+          game2Feat3: "<strong>Clima Espacial en Vivo:</strong> Basado en el archivo solar DONKI de eventos solares.",
+          game2Feat4: "<strong>Mochila de Supervivencia:</strong> Uso estratégico de O₂, Agua y Raciones.",
+          game2Feat5: "<strong>Desafíos y Trivias:</strong> Datos educativos reales entre niveles con síntesis de voz.",
+          game2Btn: "🌕 JUGAR BASE LUNAR",
+          teamTag: "QUIÉNES SOMOS",
+          teamTitle: "Presentación del Equipo ORBITA 5",
+          teamSubtitle: "Unidos por la pasión de acercar la ciencia aeroespacial a las nuevas generaciones a través de la tecnología web.",
+          teamLeadTitle: "Nuestra Misión y Visión",
+          teamLeadP1: "En <strong>ORBITA 5</strong> creemos que la ciencia no se aprende memorizando, sino experimentando. Para el desafío de este año nos propusimos crear una plataforma web integral pensada para niños de <strong>7 a 12 años</strong>, cubriendo tanto a los más pequeños que aprenden jugando de forma visual y auditiva, como a los jóvenes cadetes que buscan el reto estratégico de gestionar una base espacial.",
+          teamLeadP2: "Ambos juegos integran principios científicos reales —como las temperaturas extremas del Cráter Shackleton, el polvo abrasivo lunar, la radiación solar y la escasez de recursos— en mecánicas dinámicas donde cada decisión tiene consecuencias reales (<strong>trade-offs</strong>).",
+          pillar1Title: "Pedagogía STEAM",
+          pillar1Desc: "Contenidos adaptados para fomentar la curiosidad científica, la física gravitacional y el pensamiento crítico en la infancia.",
+          pillar2Title: "Regla de Oro: Trade-Offs",
+          pillar2Desc: "Enseña que ningún recurso es infinito. Cada mejora en un sistema vital exige una compensación consciente en otro.",
+          pillar3Title: "Accesibilidad Universal",
+          pillar3Desc: "Soporte bilingüe completo (ES/EN), síntesis vocal con auto-lectura para niños y compatibilidad total con celulares, tablets y PC.",
+          pillar4Title: "Datos Espaciales Reales",
+          pillar4Desc: "Inspirado en el programa Artemis, la Estación Espacial Internacional (ISS) y el archivo de clima solar DONKI.",
+          role1Title: "Desarrollo Web & Gráficos",
+          role1Desc: "Arquitectura modular limpia en HTML5, Canvas 2D, Three.js y Web Audio API sin dependencias externas pesadas.",
+          role2Title: "Diseño UI/UX & Estilos",
+          role2Desc: "Experiencias visuales inmersivas, temas de cómic retro, efectos dinámicos de semáforo y controles táctiles fluidos.",
+          role3Title: "Ciencia & Didáctica",
+          role3Desc: "Curaduría de conceptos astronómicos y diseño de dilemas espaciales adaptados pedagógicamente para el rango 7–12 años.",
+          role4Title: "Integración de IA Ética",
+          role4Desc: "Aplicación responsable de herramientas de asistencia de IA para código, voz sintetizada e ilustraciones del copiloto AstroCan.",
+          aiTitle: "Transparencia y Divulgación de Inteligencia Artificial (NASA AI Guidelines)",
+          aiDesc: "Para el desarrollo de esta plataforma se emplearon herramientas de asistencia de IA (Gemini y Claude a través de Antigravity) para acelerar la estructuración de código y diseño. Las ilustraciones del copiloto AstroCan y la narración oral de misiones utilizan IA y Web Speech API, identificadas con etiquetas visibles para el usuario y los jurados evaluadores.",
+          footerSubtitle: "Desarrollado para el Desafío Espacial Internacional 2026.",
+          footerLinkSim: "Simulador Lunar",
+          footerLinkBase: "Base Lunar",
+          footerLinkTop: "Subir ⬆"
+        },
+        en: {
+          navTeamTag: "LUNAR MISSION CREW",
+          navGames: "🎮 Video Games",
+          navTeam: "👥 The Team",
+          navMission: "🎯 Mission & Purpose",
+          navTech: "🔬 Technology",
+          heroBadge: "🚀 GLOBAL SPACE CHALLENGE 2026",
+          heroTitle: "ORBITA 5",
+          heroSubtitle: "Interactive Learning Portal & Lunar Video Games for Junior Astronauts (Ages 7–12)",
+          heroDesc: "Engineered to inspire the next generation of space explorers through real science, tactical decision-making in lunar gravity, and physics-driven action challenges. Choose your mission and blast off to the Moon!",
+          heroCtaGames: "🕹️ Explore Games",
+          heroCtaTeam: "👥 Meet Team ORBITA 5",
+          gamesTag: "INTERACTIVE EXPERIENCES",
+          gamesTitle: "Choose Your Lunar Challenge",
+          gamesSubtitle: "Two complementary game modes addressing deep space exploration through tactical command and 3D platforming action.",
+          game1Badge: "Tactical Simulation & Arcade",
+          game1Title: "Lunar Survival Simulator for Junior Astronauts",
+          game1Desc: "Manage humanity's first lunar outpost at Shackleton Crater (Lunar South Pole). Balance the 5 vital resources (Oxygen, Energy, Water, Food, and Integrity) with real trade-offs, or jump into <strong>Junior Arcade Mode</strong> dodging hazards in space.",
+          game1Feat1: "<strong>3 Mission Levels:</strong> Cadet (7d), Specialist (14d), and Commander (28d).",
+          game1Feat2: "<strong>Junior Arcade Mode (5 Days):</strong> Fast-paced dodging, resource bubbles and learning facts.",
+          game1Feat3: "<strong>AstroCan Co-pilot:</strong> Animated emotional expressions assisted by AI.",
+          game1Feat4: "<strong>Traffic Light Telemetry:</strong> Live vital resource meters and indicators.",
+          game1Feat5: "<strong>Multilingual Voice & 3 Styles:</strong> Sci-Fi Clean, Pop-Art Comic, and Pulp Graphic Novel.",
+          game1Btn: "🚀 PLAY LUNAR SIMULATOR",
+          game2Badge: "3D Platformer & Runner",
+          game2Title: "Lunar Base",
+          game2Desc: "Run, jump, and maneuver across space platforms all the way to the Moon. Customize your spacesuit in full 3D with Three.js, avoid micrometeoroids, manage your survival backpack, and learn real solar storm science.",
+          game2Feat1: "<strong>10 Progressive Stages:</strong> From Earth launch pad to the Argentine Lunar Base 🇦🇷.",
+          game2Feat2: "<strong>3D Spacesuit Customizer:</strong> Interactive real-time color rendering with Three.js.",
+          game2Feat3: "<strong>Real Space Weather Data:</strong> Powered by the public NASA DONKI solar event catalog.",
+          game2Feat4: "<strong>Survival Backpack:</strong> Tactical consumption of O₂, Water, and Energy rations.",
+          game2Feat5: "<strong>Trivia & Scientific Facts:</strong> Real educational science between stages with voice narration.",
+          game2Btn: "🌕 PLAY LUNAR BASE",
+          teamTag: "WHO WE ARE",
+          teamTitle: "Meet Team ORBITA 5",
+          teamSubtitle: "United by the passion to bring aerospace science to new generations through modern web technology.",
+          teamLeadTitle: "Our Mission and Vision",
+          teamLeadP1: "At <strong>ORBITA 5</strong> we believe science is learned through experience, not rote memorization. For this challenge, we created a comprehensive web platform tailored for kids aged <strong>7 to 12 years</strong>, welcoming younger children through visual/audio arcade play, as well as older cadets seeking the tactical challenge of managing an outpost.",
+          teamLeadP2: "Both games integrate real aerospace science — such as Shackleton Crater's extreme -200°C temperatures, abrasive lunar regolith, solar storms, and tight resource budgets — wrapped in engaging mechanics where every choice requires a conscious <strong>trade-off</strong>.",
+          pillar1Title: "STEAM Education",
+          pillar1Desc: "Engaging content designed to spark scientific curiosity, gravitational physics, and critical thinking in youth.",
+          pillar2Title: "Golden Rule: Trade-offs",
+          pillar2Desc: "Teaches that space resources are finite. Every vital system gain requires a calculated sacrifice elsewhere.",
+          pillar3Title: "Universal Accessibility",
+          pillar3Desc: "Full bilingual support (ES/EN), text-to-speech audio narration for non-readers, and cross-device mobile/desktop play.",
+          pillar4Title: "Real Aerospace Science",
+          pillar4Desc: "Inspired by the Artemis program, the International Space Station (ISS), and open solar databases like DONKI.",
+          role1Title: "Web Development & Graphics",
+          role1Desc: "Clean modular architecture using HTML5, Canvas 2D, Three.js, and Web Audio API with zero heavyweight bloat.",
+          role2Title: "UI/UX & Retro Art Direction",
+          role2Desc: "Immersive interfaces inspired by vintage space cockpits, comic aesthetics, and intuitive touch controls.",
+          role3Title: "Science & STEAM Pedagogy",
+          role3Desc: "Careful curation of astronomical facts and age-appropriate dilemma design for children aged 7–12.",
+          role4Title: "Ethical AI Integration",
+          role4Desc: "Transparent use of AI tools for code architecture, synthesized voice, and AstroCan co-pilot illustrations.",
+          aiTitle: "Artificial Intelligence Transparency & Disclosure (NASA AI Guidelines)",
+          aiDesc: "This platform was built with the assistance of AI development tools (Gemini and Claude via Antigravity) for code structuring and UI design. AstroCan mascot illustrations and mission voice narration incorporate AI and Web Speech API, clearly marked with visible tags for users and evaluators.",
+          footerSubtitle: "Developed for the International Space Apps Challenge 2026.",
+          footerLinkSim: "Lunar Simulator",
+          footerLinkBase: "Lunar Base",
+          footerLinkTop: "Top ⬆"
+        }
+      };
+
+      let currentLang = 'es';
+      try {
+        const stored = localStorage.getItem('orbita5_lang');
+        if (stored === 'en' || stored === 'es') currentLang = stored;
+      } catch (e) {}
+
+      const btnEs = document.getElementById('btn-lang-es');
+      const btnEn = document.getElementById('btn-lang-en');
+
+      function setLanguage(lang) {
+        currentLang = lang;
+        try { localStorage.setItem('orbita5_lang', lang); } catch (e) {}
+
+        if (btnEs && btnEn) {
+          btnEs.classList.toggle('active', lang === 'es');
+          btnEn.classList.toggle('active', lang === 'en');
+        }
+
+        document.documentElement.lang = lang;
+        const d = translations[lang];
+
+        const setHTML = (id, html) => {
+          const el = document.getElementById(id);
+          if (el) el.innerHTML = html;
+        };
+        const setText = (id, txt) => {
+          const el = document.getElementById(id);
+          if (el) el.textContent = txt;
+        };
+
+        setText('nav-team-tag', d.navTeamTag);
+        setText('nav-link-games', d.navGames);
+        setText('nav-link-team', d.navTeam);
+        setText('nav-link-mission', d.navMission);
+        setText('nav-link-tech', d.navTech);
+
+        setText('hero-badge', d.heroBadge);
+        setText('hero-title', d.heroTitle);
+        setText('hero-subtitle', d.heroSubtitle);
+        setText('hero-desc', d.heroDesc);
+        setText('hero-cta-games', d.heroCtaGames);
+        setText('hero-cta-team', d.heroCtaTeam);
+
+        setText('games-tag', d.gamesTag);
+        setText('games-title', d.gamesTitle);
+        setText('games-subtitle', d.gamesSubtitle);
+
+        setText('game1-badge', d.game1Badge);
+        setText('game1-title', d.game1Title);
+        setHTML('game1-desc', d.game1Desc);
+        setHTML('game1-feat1', d.game1Feat1);
+        setHTML('game1-feat2', d.game1Feat2);
+        setHTML('game1-feat3', d.game1Feat3);
+        setHTML('game1-feat4', d.game1Feat4);
+        setHTML('game1-feat5', d.game1Feat5);
+        setText('game1-btn', d.game1Btn);
+
+        setText('game2-badge', d.game2Badge);
+        setText('game2-title', d.game2Title);
+        setHTML('game2-desc', d.game2Desc);
+        setHTML('game2-feat1', d.game2Feat1);
+        setHTML('game2-feat2', d.game2Feat2);
+        setHTML('game2-feat3', d.game2Feat3);
+        setHTML('game2-feat4', d.game2Feat4);
+        setHTML('game2-feat5', d.game2Feat5);
+        setText('game2-btn', d.game2Btn);
+
+        setText('team-tag', d.teamTag);
+        setText('team-title', d.teamTitle);
+        setText('team-subtitle', d.teamSubtitle);
+        setText('team-lead-title', d.teamLeadTitle);
+        setHTML('team-lead-p1', d.teamLeadP1);
+        setHTML('team-lead-p2', d.teamLeadP2);
+
+        setText('pillar1-title', d.pillar1Title);
+        setText('pillar1-desc', d.pillar1Desc);
+        setText('pillar2-title', d.pillar2Title);
+        setText('pillar2-desc', d.pillar2Desc);
+        setText('pillar3-title', d.pillar3Title);
+        setText('pillar3-desc', d.pillar3Desc);
+        setText('pillar4-title', d.pillar4Title);
+        setText('pillar4-desc', d.pillar4Desc);
+
+        setText('role1-title', d.role1Title);
+        setText('role1-desc', d.role1Desc);
+        setText('role2-title', d.role2Title);
+        setText('role2-desc', d.role2Desc);
+        setText('role3-title', d.role3Title);
+        setText('role3-desc', d.role3Desc);
+        setText('role4-title', d.role4Title);
+        setText('role4-desc', d.role4Desc);
+
+        setText('ai-title', d.aiTitle);
+        setText('ai-desc', d.aiDesc);
+
+        setText('footer-subtitle', d.footerSubtitle);
+        setText('footer-link-sim', d.footerLinkSim);
+        setText('footer-link-base', d.footerLinkBase);
+        setText('footer-link-top', d.footerLinkTop);
+      }
+
+      if (btnEs) btnEs.addEventListener('click', () => setLanguage('es'));
+      if (btnEn) btnEn.addEventListener('click', () => setLanguage('en'));
+
+      setLanguage(currentLang);
+    })();
+  </script>
 </body>
 </html>
