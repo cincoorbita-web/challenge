@@ -1,9 +1,21 @@
-# 🚀 ORBITA5: Comandante Lunar
-### Junior Astronaut Mission Trainer | NASA International Space Apps Challenge
+# 🪐 ORBITA 5 — Portal Espacial Educativo & Videojuegos Lunares
+### Plataforma de Aprendizaje Interactivo para Jóvenes Astronautas (7 a 12 años) | Desafío Espacial 2026
 
-**ORBITA5: Comandante Lunar** es una aplicación interactiva y videojuego web educativo diseñado para niños de entre 7 y 12 años. Su objetivo es transmitir de forma clara, visual y emocionante las verdaderas restricciones de la supervivencia en el espacio profundo y la toma de decisiones basada en **compensaciones reales (trade-offs)**.
+**ORBITA 5** es un portal web integral y suite de videojuegos educativos diseñada para inspirar a niños y jóvenes de **7 a 12 años** en los fundamentos de la exploración espacial, la física lunar y la toma de decisiones basada en **compensaciones reales (trade-offs)**.
 
-El juego está desarrollado con tecnologías web modernas estándar (HTML5, CSS3, JavaScript modular, Canvas 2D, Web Audio API y Web Speech API), funcionando al 100% en el cliente y de manera autónoma (incluso sin conexión a internet ni dependencias externas).
+A través del portal principal (`index.html`), los usuarios pueden conocer la visión del equipo **ORBITA 5** y acceder directamente a dos experiencias de juego complementarias:
+
+1. **🚀 Simulador de Supervivencia Lunar para Jóvenes Astronautas** (`simulador.html`):
+   - **Modo Comando Táctico (7, 14 y 28 días):** Gestión estratégica de los 5 recursos vitales (Oxígeno, Energía, Agua, Comida e Integridad) en el Cráter Shackleton (Polo Sur Lunar).
+   - **Modo Aventura Junior (5 días):** Mini-juego arcade de desplazamiento ágil para niños de 7 a 9 años, esquivando asteroides y recolectando suministros con datos científicos y narración por voz automática.
+   - **Copiloto AstroCan con IA:** Mascota espacial con expresiones animadas e indicadores semáforo de recursos.
+   - **3 Estilos Visuales:** Sci-Fi Clásico, Cómic Pop-Art y Novela Gráfica Vintage.
+
+2. **🌕 Base Lunar** (`base-lunar.html`):
+   - **Plataformas y Física en Gravedad Lunar:** 10 etapas desde el despegue en la Tierra hasta la Base Lunar argentina 🇦🇷.
+   - **Personalización de Traje 3D (Three.js):** Trajes espaciales interactivos personalizables.
+   - **Clima Espacial en Tiempo Real:** Basado en el catálogo público DONKI de eventos solares y tormentas geomagnéticas.
+   - **Mochila de Suministros & Trivias Educativas:** Preguntas científicas y datos reales entre niveles con síntesis de voz.
 
 ---
 

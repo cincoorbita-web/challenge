@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="ai-usage" content="Código y estructura web desarrollados con asistencia de Gemini y Claude (Antigravity).">
+  <title>ORBITA5 | Junior Astronaut Mission Trainer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Comic+Neue:ital,wght@0,400;0,700;1,400;1,700&family=Fredoka:wght@300..700&family=Permanent+Marker&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/space-scene.css">
+  <link rel="stylesheet" href="css/minigames.css">
+  <link rel="stylesheet" href="css/themes.css">
+</head>
+<body>
+  <canvas id="space-canvas"></canvas>
+  <div class="space-ambient-glow"></div>
+
+  <main class="app-wrapper">
+
+    <!-- ====== 1. PANTALLA DE BIENVENIDA ====== -->
+    <section id="screen-welcome" class="screen welcome-screen">
+      <div class="welcome-inner">
+        <div class="welcome-top-controls">
+          <a href="index.html" class="portal-link-btn" title="Volver al Portal ORBITA 5">🏠 Portal ORBITA 5</a>
+          <div class="nasa-logo-badge">🚀 DESAFÍO ESPACIAL 2026</div>
+          <div class="welcome-lang-picker">
+            <button type="button" class="lang-switch-btn active" data-lang="en" title="Switch to English">🇺🇸 EN</button>
+            <button type="button" class="lang-switch-btn" data-lang="es" title="Cambiar a Español">🇪🇸 ES</button>
+          </div>
+        </div>
+        <h1 class="main-title">ORBITA5</h1>
+        <p id="main-subtitle" class="main-subtitle">Lunar survival simulator for junior astronauts (ages 7–12)</p>
+
+        <!-- Tarjeta de bienvenida con AstroCan -->
+        <div class="welcome-mascot-card">
+          <div class="contenedor-ia">
+            <img src="assets/mascot/greeting.jpg" alt="AstroCan" class="welcome-mascot-img">
+            <span class="marca-ia" data-ai-label="true">AI Generated</span>
+          </div>
+          <div id="welcome-mascot-bubble" class="welcome-mascot-bubble">
+            <strong>Hello, Commander!</strong> I am <strong>AstroCan</strong>, your faithful co-pilot at the Lunar South Pole. What is your astronaut name and which mission level will we undertake today?
+          </div>
+        </div>
+
+        <div class="welcome-briefing">
+          <h3 id="briefing-title">📍 Your Mission: Lunar South Pole Base (Shackleton Crater)</h3>
+          <p id="briefing-p1">You will manage humanity's first outpost on the Moon. There is no air, no liquid water, and temperatures swing from +105°C to -200°C.</p>
+          <p id="briefing-rule" class="rule-highlight">⚖️ <strong>Golden Rule:</strong> No choice is free! Every single decision requires a real trade-off.</p>
+        </div>
+
+        <div class="welcome-form">
+          <!-- Selector de Idioma en la vista Home (ingreso de nombre y misiones) -->
+          <div class="lang-selector-welcome">
+            <label id="label-site-lang" class="form-label-sm">🌐 Mission Language / Idioma:</label>
+            <div class="welcome-lang-switch">
+              <button type="button" class="lang-switch-btn active" data-lang="en" title="English / Inglés">
+                <span class="lang-switch-flag">🇺🇸</span>
+                <span class="lang-switch-code">EN</span>
+                <span class="lang-switch-label">English</span>
+              </button>
+              <button type="button" class="lang-switch-btn" data-lang="es" title="Spanish / Español">
+                <span class="lang-switch-flag">🇪🇸</span>
+                <span class="lang-switch-code">ES</span>
+                <span class="lang-switch-label">Español</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <label id="label-player-name" for="input-player-name">👤 Your astronaut name:</label>
+            <input type="text" id="input-player-name" class="text-input" placeholder="Ex: Commander Alex" maxlength="20" autocomplete="off" required>
+            <div id="name-validation-msg" class="validation-error-msg hidden">⚠️ Please enter your astronaut name to register your flight badge before taking command.</div>
+          </div>
+
+          <label id="label-mission-level" class="form-label-sm">🎯 Mission Level:</label>
+          <div class="difficulty-selector">
+            <button type="button" class="diff-btn active" data-diff="1">
+              <span id="diff-1-title" class="diff-title">🥉 Cadet</span>
+              <span id="diff-1-days" class="diff-days">7 Days</span>
+              <span id="diff-1-desc" class="diff-desc">Constant sunlight, standard impact.</span>
+            </button>
+            <button type="button" class="diff-btn" data-diff="2">
+              <span id="diff-2-title" class="diff-title">🥈 Specialist</span>
+              <span id="diff-2-days" class="diff-days">14 Days</span>
+              <span id="diff-2-desc" class="diff-desc">Polar twilight, moderate impact.</span>
+            </button>
+            <button type="button" class="diff-btn" data-diff="3">
+              <span id="diff-3-title" class="diff-title">🥇 Commander</span>
+              <span id="diff-3-days" class="diff-days">28 Days</span>
+              <span id="diff-3-desc" class="diff-desc">14 days of night at -173°C, marathon.</span>
+            </button>
+          </div>
+
+          <!-- Selector de Estilo de Interfaz (UI) en Pantalla de Bienvenida -->
+          <div class="theme-selector-welcome">
+            <label id="theme-selector-label" class="theme-selector-label">🎨 UI Visual Style:</label>
+            <div class="theme-buttons-row">
+              <button type="button" class="theme-btn active" data-theme-val="default">
+                <span id="theme-btn-badge-1" class="theme-btn-badge">Base</span>
+                <span class="theme-btn-icon">🚀</span>
+                <span id="theme-btn-title-1" class="theme-btn-title">Classic Sci-Fi</span>
+                <span id="theme-btn-sub-1" class="theme-btn-subtitle">Futuristic &amp; Clean</span>
+              </button>
+              <button type="button" class="theme-btn" data-theme-val="comic-pop">
+                <span id="theme-btn-badge-2" class="theme-btn-badge badge-pop">Action!</span>
+                <span class="theme-btn-icon">💥</span>
+                <span id="theme-btn-title-2" class="theme-btn-title">Pop-Art Comic</span>
+                <span id="theme-btn-sub-2" class="theme-btn-subtitle">Ink &amp; Halftone</span>
+              </button>
+              <button type="button" class="theme-btn" data-theme-val="comic-retro">
+                <span id="theme-btn-badge-3" class="theme-btn-badge badge-retro">Vintage</span>
+                <span class="theme-btn-icon">📜</span>
+                <span id="theme-btn-title-3" class="theme-btn-title">Graphic Novel</span>
+                <span id="theme-btn-sub-3" class="theme-btn-subtitle">Pulp Classic 70s</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Botones de Selección de Modo (7-9 años y 10-12 años) -->
+          <div class="welcome-action-buttons">
+            <button id="btn-junior-mode" type="button" class="btn-junior pulse-btn-junior" title="Modo Aventura para jóvenes astronautas de 7 a 9 años">
+              <span class="btn-mode-badge junior-badge-label">👶 7–9 AÑOS / YEARS</span>
+              <div class="btn-mode-content">
+                <span class="btn-mode-icon">🎮</span>
+                <div class="btn-mode-texts">
+                  <strong id="btn-junior-title">MODO AVENTURA JUNIOR</strong>
+                  <small id="btn-junior-sub">¡Conduce con AstroCan, esquiva obstáculos y aprende con voz!</small>
+                </div>
+              </div>
+            </button>
+
+            <button id="btn-start-mission" type="button" class="btn-primary btn-tactical-mode" title="Simulador táctico para astronautas de 10 a 12 años">
+              <span class="btn-mode-badge tactical-badge-label">🧑‍🚀 10–12 AÑOS / YEARS</span>
+              <div class="btn-mode-content">
+                <span class="btn-mode-icon">🚀</span>
+                <div class="btn-mode-texts">
+                  <strong id="btn-start-title">SIMULADOR DE MANDO</strong>
+                  <small id="btn-start-sub">Toma decisiones estratégicas y gestiona recursos de supervivencia</small>
+                </div>
+              </div>
+            </button>
+          </div>
+
+          <!-- Declaración de Uso de Inteligencia Artificial (NASA AI Disclosure) -->
+          <div class="welcome-ai-disclosure">
+            <p class="nota-ia text-center">
+              <small id="welcome-ai-note">🤖 <strong>AI Usage Disclosure:</strong> Code and web structure developed with Gemini and Claude assistance (Antigravity). AstroCan illustrations and voice narration generated with AI.</small>
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====== 2. PANTALLA DE JUEGO (ADAPTADA A CELULAR, TABLET Y PC) ====== -->
+    <section id="screen-game" class="screen game-screen hidden">
+
+      <!-- Contenedor general de Estación (permite 2 columnas en Desktop) -->
+      <div class="station-layout">
+
+        <!-- PANEL LATERAL PARA LAPTOP / PC (Desktop Station Panel) -->
+        <aside class="station-sidebar">
+          <div class="sidebar-mascot-box">
+            <div class="mascot-avatar-container contenedor-ia">
+              <img id="mascot-sidebar-img" src="assets/mascot/greeting.jpg" alt="AstroCan" class="mascot-sidebar-avatar">
+              <div class="mascot-online-dot"></div>
+              <span class="marca-ia" data-ai-label="true">AI Generated</span>
+            </div>
+            <div class="mascot-info">
+              <strong class="mascot-name">AstroCan</strong>
+              <span id="mascot-sidebar-role" class="mascot-role">Copiloto de Misión</span>
+            </div>
+            <div id="mascot-sidebar-bubble" class="sidebar-speech-bubble">
+              ¡Sistemas de la base en línea! Esperando tus órdenes, Comandante.
+            </div>
+          </div>
+
+          <!-- Diagnóstico de recursos lateral en PC con Barras y Semáforo -->
+          <div class="sidebar-telemetry">
+            <h4 id="sidebar-telemetry-title" class="telemetry-title">📡 Telemetría de la Base</h4>
+            <div class="sidebar-res-list">
+              <div id="side-row-o2" class="side-res-row">
+                <div class="side-res-header">
+                  <span id="side-label-o2" class="side-res-label">💨 Oxígeno:</span>
+                  <strong id="side-val-o2" class="side-res-val">100%</strong>
+                </div>
+                <div class="side-bar-track">
+                  <div id="side-bar-o2" class="side-bar-fill fill-o2" style="width: 100%"></div>
+                </div>
+              </div>
+              <div id="side-row-energy" class="side-res-row">
+                <div class="side-res-header">
+                  <span id="side-label-energy" class="side-res-label">⚡ Baterías:</span>
+                  <strong id="side-val-energy" class="side-res-val">100%</strong>
+                </div>
+                <div class="side-bar-track">
+                  <div id="side-bar-energy" class="side-bar-fill fill-energy" style="width: 100%"></div>
+                </div>
+              </div>
+              <div id="side-row-health" class="side-res-row">
+                <div class="side-res-header">
+                  <span id="side-label-health" class="side-res-label">❤️ Salud:</span>
+                  <strong id="side-val-health" class="side-res-val">100%</strong>
+                </div>
+                <div class="side-bar-track">
+                  <div id="side-bar-health" class="side-bar-fill fill-health" style="width: 100%"></div>
+                </div>
+              </div>
+              <div id="side-row-integrity" class="side-res-row">
+                <div class="side-res-header">
+                  <span id="side-label-integrity" class="side-res-label">🛡️ Casco:</span>
+                  <strong id="side-val-integrity" class="side-res-val">100%</strong>
+                </div>
+                <div class="side-bar-track">
+                  <div id="side-bar-integrity" class="side-bar-fill fill-integrity" style="width: 100%"></div>
+                </div>
+              </div>
+              <div id="side-row-science" class="side-res-row side-science-row">
+                <div class="side-res-header">
+                  <span id="side-label-science" class="side-res-label">🔬 Ciencia:</span>
+                  <strong id="side-val-science" class="side-res-val">0 pts</strong>
+                </div>
+                <div class="side-bar-track">
+                  <div id="side-bar-science" class="side-bar-fill fill-science" style="width: 0%"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="sidebar-actions">
+            <button id="btn-sidebar-lang" class="pill-btn sidebar-btn">🌐 <span id="sidebar-lang-label">Idioma: Español</span></button>
+            <button id="btn-sidebar-theme" class="pill-btn sidebar-btn">🎨 <span id="sidebar-theme-prefix">Estilo UI:</span> <span id="sidebar-theme-name">Sci-Fi</span></button>
+            <button id="btn-sidebar-voice" class="pill-btn sidebar-btn">🎙️ <span id="sidebar-voice-label">Cambiar Voz</span></button>
+            <button id="btn-sidebar-science" class="pill-btn sidebar-btn">🔬 <span id="sidebar-science-label">Archivo Científico</span></button>
+            <button id="btn-sidebar-sound" class="pill-btn sidebar-btn">🔊 <span id="sidebar-sound-label">Sonido</span></button>
+            <button id="btn-sidebar-abort" class="pill-btn btn-danger-pill sidebar-btn">🛑 <span id="sidebar-abort-label">Abortar Misión</span></button>
+          </div>
+        </aside>
+
+        <!-- TERMINAL PRINCIPAL (Visible en todos los dispositivos) -->
+        <div class="station-main-terminal">
+
+          <!-- Barra Superior (Móvil y Tablet) -->
+          <header class="top-bar">
+            <div class="bar-left">
+              <span class="astronaut-name">👨‍🚀 <strong id="hud-player-name">Cmd</strong></span>
+              <span class="day-badge" id="hud-day-text">Día 1/7</span>
+            </div>
+            <div class="bar-right">
+              <button id="btn-top-lang" class="pill-btn btn-lang" title="Switch language / Cambiar idioma">🌐 <span id="top-lang-label">EN</span></button>
+              <button id="btn-top-theme" class="pill-btn" title="Cambiar estilo visual de interfaz (UI)">🎨 <span id="top-theme-name">UI</span></button>
+              <button id="btn-top-voice" class="pill-btn" title="Cambiar tipo de voz de narración">🎙️</button>
+              <button id="btn-open-science" class="pill-btn">🔬 <span id="top-science-label">Archivo Científico</span></button>
+              <button id="btn-toggle-sound" class="pill-btn">🔊</button>
+              <button id="btn-abort-mission" class="pill-btn btn-danger-pill" title="Volver a la sala de mando">🛑 <span id="top-abort-label">Abortar</span></button>
+            </div>
+          </header>
+
+          <!-- Barra Ambiental -->
+          <div class="env-bar">
+            <span class="env-item"><span id="hud-env-icon">☀️</span> <strong id="hud-env-phase">Día Solar</strong></span>
+            <span class="env-item">🌡️ <strong id="hud-env-temp">+85°C</strong></span>
+            <span class="env-item">🔆 <strong id="hud-env-sun">100%</strong></span>
+          </div>
+
+          <!-- Recursos Compactos (Móvil y Tablet) -->
+          <div class="res-strip">
+            <div class="res-mini"><span class="res-icon">💨</span><div class="res-bar-track"><div id="bar-o2" class="res-bar-fill fill-o2" style="width:100%"></div></div><span id="val-o2" class="res-num">100%</span></div>
+            <div class="res-mini"><span class="res-icon">⚡</span><div class="res-bar-track"><div id="bar-energy" class="res-bar-fill fill-energy" style="width:100%"></div></div><span id="val-energy" class="res-num">100%</span></div>
+            <div class="res-mini"><span class="res-icon">❤️</span><div class="res-bar-track"><div id="bar-health" class="res-bar-fill fill-health" style="width:100%"></div></div><span id="val-health" class="res-num">100%</span></div>
+            <div class="res-mini"><span class="res-icon">🛡️</span><div class="res-bar-track"><div id="bar-integrity" class="res-bar-fill fill-integrity" style="width:100%"></div></div><span id="val-integrity" class="res-num">100%</span></div>
+            <div class="res-mini res-science"><span class="res-icon">🔬</span><span id="hud-science-val" class="res-num science-val">0</span></div>
+          </div>
+
+          <!-- Franja de Compañero para Móvil y Tablet (oculta en PC) -->
+          <div class="mobile-mascot-strip">
+            <div class="contenedor-ia">
+              <img id="mascot-mobile-img" src="assets/mascot/greeting.jpg" alt="AstroCan" class="mascot-mobile-avatar">
+              <span class="marca-ia marca-ia-sm" data-ai-label="true">AI</span>
+            </div>
+            <div id="mascot-mobile-bubble" class="mobile-speech-bubble">
+              ¡Listo para la misión lunar, Comandante!
+            </div>
+          </div>
+
+          <!-- Contenido Principal Scrollable -->
+          <div class="game-content-scroll">
+
+            <!-- Tarjeta de Dilema -->
+            <article id="dilemma-card" class="dilemma-card">
+              <div class="dilemma-top">
+                <div class="dilemma-top-tags">
+                  <span id="dilemma-tag" class="tag-badge">ALERTA</span>
+                  <span id="dilemma-sender" class="sender-text">📡 Transmisión</span>
+                </div>
+                <!-- Controles de Audio y Voz -->
+                <div class="dilemma-audio-controls">
+                  <button id="btn-change-voice" class="pill-btn btn-voice" title="Cambiar tipo de voz para la narración" data-ai-generated="true" aria-label="Cambiar voz de Inteligencia Artificial">
+                    🎙️ <span id="current-voice-label">Voz: Auto</span>
+                  </button>
+                  <button id="btn-narrate-dilemma" class="pill-btn btn-narrate" title="Reproducir en audio este dilema" data-ai-generated="true" aria-label="Audio narrado generado por Inteligencia Artificial">
+                    📢 Escuchar Misión
+                  </button>
+                </div>
+                <div class="audio-ai-container">
+                  <audio id="player-narrator-audio" class="hidden-audio-player" data-ai-generated="true" aria-label="Audio narrado generado por Inteligencia Artificial"></audio>
+                  <p class="nota-ia"><small id="dilemma-audio-note">AI-generated narrated audio (Voice synthesis / Web Speech API).</small></p>
+                </div>
+              </div>
+
+              <h2 id="dilemma-title" class="dilemma-title">Cargando...</h2>
+              <p id="dilemma-desc" class="dilemma-desc">Descripción del escenario...</p>
+              <div id="dilemma-source-box" class="source-box"></div>
+              <div id="dilemma-science-box" class="science-box">💡 Contexto científico...</div>
+              <div id="dilemma-options-container" class="options-grid"></div>
+            </article>
+
+            <!-- Minijuego Container -->
+            <section id="minigame-container" class="minigame-container hidden"></section>
+
+            <!-- Feedback de Transmisión -->
+            <article id="transmission-box" class="transmission-box hidden">
+              <h3 class="transmission-title">📻 Informe de Control de Misión</h3>
+              <div id="transmission-text"></div>
+              <button id="btn-next-day" class="btn-primary">☀️ AVANZAR AL SIGUIENTE DÍA</button>
+            </article>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ====== 3. PANTALLA DE FIN DE MISIÓN ====== -->
+    <section id="screen-gameover" class="screen gameover-screen hidden">
+      <div class="gameover-inner">
+
+        <!-- Mascota en fin de misión -->
+        <div class="gameover-mascot-row">
+          <div class="contenedor-ia">
+            <img id="gameover-mascot-img" class="gameover-mascot-avatar" src="assets/mascot/celebrating.jpg" alt="AstroCan">
+            <span class="marca-ia" data-ai-label="true">AI Generated</span>
+          </div>
+          <div id="gameover-mascot-bubble" class="gameover-mascot-bubble">
+            ¡Misión completada, Comandante!
+          </div>
+        </div>
+
+        <h2 id="gameover-title" class="gameover-title">🎉 ¡MISIÓN CUMPLIDA!</h2>
+        <p id="gameover-subtitle" class="gameover-subtitle">Felicitaciones...</p>
+        <div id="gameover-rank" class="rank-badge">🥇 Comandante</div>
+
+        <div class="metrics-row">
+          <div class="metric-pill"><span id="lbl-gameover-score">PUNTUACIÓN</span><strong id="gameover-score">0</strong></div>
+          <div class="metric-pill"><span id="lbl-gameover-days">DÍAS</span><strong id="gameover-days">0/7</strong></div>
+          <div class="metric-pill"><span id="lbl-gameover-science">CIENCIA</span><strong id="gameover-science">0</strong></div>
+        </div>
+
+        <div id="gameover-lesson-box" class="lesson-card lesson-success">
+          <div id="gameover-lesson-text"></div>
+        </div>
+
+        <div class="gameover-actions">
+          <button id="btn-share-cert" class="btn-primary" style="background: linear-gradient(135deg, #6c5ce7, #a29bfe);">
+            📤 COMPARTIR CERTIFICADO
+          </button>
+          <button id="btn-restart" class="btn-secondary">🔄 NUEVA MISIÓN</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====== 3B. PANTALLA DE JUEGO ARCADE JUNIOR (7 A 9 AÑOS) ====== -->
+    <section id="screen-junior-arcade" class="screen junior-screen hidden">
+      <div class="junior-layout">
+
+        <!-- Barra Superior Junior -->
+        <header class="junior-top-bar">
+          <div class="junior-bar-left">
+            <span class="junior-avatar-mini contenedor-ia">
+              <img src="assets/mascot/greeting.jpg" alt="AstroCan" class="junior-mini-img">
+              <span class="marca-ia marca-ia-sm" data-ai-label="true">AI</span>
+            </span>
+            <div class="junior-title-group">
+              <h2 id="junior-screen-title" class="junior-main-title">Expedición Lunar Junior</h2>
+              <span class="junior-day-badge">📅 <strong id="junior-hud-day">Día 1 / 5</strong></span>
+            </div>
+          </div>
+
+          <div class="junior-day-progress-wrapper">
+            <span class="junior-progress-label" id="junior-lbl-progress">Progreso del Día:</span>
+            <div class="junior-progress-track">
+              <div id="junior-bar-progress" class="junior-progress-fill" style="width: 0%"></div>
+            </div>
+          </div>
+
+          <div class="junior-bar-right">
+            <button id="junior-btn-voice" class="pill-btn btn-voice" title="Cambiar tipo de voz de narración" data-ai-generated="true">
+              🎙️ <span id="junior-voice-label">Voz: Auto</span>
+            </button>
+            <button id="junior-btn-audio-toggle" class="pill-btn audio-active" title="Activar/Silenciar narración en voz alta">
+              🔊 Voz de Misión: Activada
+            </button>
+            <button id="junior-btn-exit" class="pill-btn btn-danger-pill" title="Volver al menú principal">
+              🏠 Salir
+            </button>
+          </div>
+        </header>
+
+        <!-- Franja de Recursos de Supervivencia con Semáforo -->
+        <div class="junior-res-strip">
+          <div class="junior-res-item">
+            <span class="junior-res-icon">💨</span>
+            <span class="junior-res-name" id="junior-lbl-o2">Oxígeno:</span>
+            <div class="junior-res-track">
+              <div id="junior-bar-o2" class="junior-res-fill fill-o2" style="width: 100%"></div>
+            </div>
+            <strong id="junior-val-o2" class="junior-res-num">100%</strong>
+          </div>
+
+          <div class="junior-res-item">
+            <span class="junior-res-icon">⚡</span>
+            <span class="junior-res-name" id="junior-lbl-energy">Baterías:</span>
+            <div class="junior-res-track">
+              <div id="junior-bar-energy" class="junior-res-fill fill-energy" style="width: 100%"></div>
+            </div>
+            <strong id="junior-val-energy" class="junior-res-num">100%</strong>
+          </div>
+
+          <div class="junior-res-item">
+            <span class="junior-res-icon">🛡️</span>
+            <span class="junior-res-name" id="junior-lbl-hull">Casco:</span>
+            <div class="junior-res-track">
+              <div id="junior-bar-hull" class="junior-res-fill fill-hull" style="width: 100%"></div>
+            </div>
+            <strong id="junior-val-hull" class="junior-res-num">100%</strong>
+          </div>
+
+          <div class="junior-res-item junior-res-science">
+            <span class="junior-res-icon">🔬</span>
+            <span class="junior-res-name" id="junior-lbl-science">Muestras:</span>
+            <strong id="junior-val-science" class="junior-res-num science-val">0 pts</strong>
+          </div>
+        </div>
+
+        <!-- Contenedor del Canvas Interactivo -->
+        <div class="junior-canvas-container">
+          <canvas id="junior-arcade-canvas" width="800" height="420"></canvas>
+
+          <!-- Banner de Transmisión Radial Educativa en vivo (reproducción fluida con audio) -->
+          <div id="junior-broadcast-card" class="junior-broadcast-card hidden" role="status" aria-live="polite">
+            <div class="broadcast-left">
+              <span class="broadcast-icon">📻</span>
+              <div class="broadcast-mascot-avatar">
+                <img src="assets/mascot/thinking.jpg" alt="AstroCan" class="broadcast-mascot-img">
+              </div>
+            </div>
+            <div class="broadcast-body">
+              <div class="broadcast-tag-line">
+                <span class="broadcast-badge" id="junior-broadcast-tag">📡 TRANSMISIÓN EDUCATIVA ESPACIAL</span>
+                <span class="broadcast-live-dot">● EN VIVO</span>
+              </div>
+              <h4 id="junior-broadcast-title" class="broadcast-headline">¡Dato Curioso!</h4>
+              <p id="junior-broadcast-text" class="broadcast-desc">Narrando dato científico...</p>
+              <div class="broadcast-progress-track">
+                <div id="junior-broadcast-fill" class="broadcast-progress-fill" style="width: 0%"></div>
+              </div>
+            </div>
+            <div class="broadcast-actions">
+              <button id="junior-btn-broadcast-skip" class="pill-btn btn-skip-broadcast" title="Continuar de inmediato">
+                ⏭️ <span id="junior-btn-skip-label">Continuar ya</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Controles Táctiles en Pantalla (para Celular y Tablet) -->
+          <div class="junior-touch-bar">
+            <button id="junior-touch-left" class="junior-touch-btn btn-touch-dir" aria-label="Mover a la izquierda">
+              ◀
+            </button>
+            <button id="junior-touch-jump" class="junior-touch-btn btn-touch-jump" aria-label="Saltar con baja gravedad lunar">
+              🚀 SALTAR
+            </button>
+            <button id="junior-touch-right" class="junior-touch-btn btn-touch-dir" aria-label="Mover a la derecha">
+              ▶
+            </button>
+          </div>
+        </div>
+
+        <!-- Modal Educativo: Dato Científico de la NASA al completar el día -->
+        <div id="junior-modal-fact" class="modal-overlay hidden" role="dialog" aria-modal="true">
+          <div class="modal-card junior-fact-card">
+            <header class="modal-head junior-fact-head">
+              <span id="junior-fact-day-tag" class="tag-badge">TRANSMISIÓN EDUCATIVA — DÍA 1 DE 5</span>
+              <span class="junior-audio-badge">📢 Auto-Voz Activada</span>
+            </header>
+            <div class="modal-body junior-fact-body">
+              <div class="junior-fact-mascot-box">
+                <div class="contenedor-ia">
+                  <img src="assets/mascot/thinking.jpg" alt="AstroCan" class="junior-fact-mascot-img">
+                  <span class="marca-ia" data-ai-label="true">AI</span>
+                </div>
+                <strong class="junior-mascot-label">AstroCan explica:</strong>
+              </div>
+
+              <div class="junior-fact-content">
+                <h3 id="junior-fact-title" class="junior-fact-headline">¡El Salto de la Jirafa en la Luna!</h3>
+                <p id="junior-fact-body" class="junior-fact-text">
+                  En la Luna la gravedad es 6 veces menor que en la Tierra...
+                </p>
+                <div class="junior-nasa-badge-box">
+                  <span id="junior-fact-nasa-badge" class="badge-nasa-fact">🔬 Ciencia Espacial Real</span>
+                </div>
+              </div>
+            </div>
+            <div class="junior-fact-actions">
+              <button id="junior-btn-listen-again" class="btn-secondary">
+                📢 Escuchar de nuevo
+              </button>
+              <button id="junior-btn-next-day" class="btn-primary pulse-btn">
+                👉 CONTINUAR AL SIGUIENTE DÍA
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Modal de Fin de Expedición / Victoria / Reintento -->
+        <div id="junior-modal-end" class="modal-overlay hidden" role="dialog" aria-modal="true">
+          <div class="modal-card junior-end-card">
+            <div class="junior-end-mascot">
+              <div class="contenedor-ia">
+                <img src="assets/mascot/celebrating.jpg" alt="AstroCan" class="junior-end-img">
+                <span class="marca-ia" data-ai-label="true">AI</span>
+              </div>
+            </div>
+            <h2 id="junior-end-title" class="junior-end-title">🎉 ¡EXPEDICIÓN JUNIOR COMPLETADA!</h2>
+            <p id="junior-end-subtitle" class="junior-end-sub">¡Completaste con valentía los 5 días lunares explorando con AstroCan!</p>
+            <div id="junior-end-stars" class="junior-stars">⭐⭐⭐</div>
+            <div id="junior-end-stats" class="junior-end-stats-box"></div>
+            <div class="junior-end-actions">
+              <button id="junior-btn-end-restart" class="btn-primary">🔄 Jugar de Nuevo</button>
+              <button id="junior-btn-end-home" class="btn-secondary">🏠 Volver a la Base</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ====== 4. MODAL ARCHIVO CIENTÍFICO ====== -->
+    <div id="modal-science" class="modal-overlay hidden" role="dialog" aria-modal="true">
+      <div class="modal-card">
+        <header class="modal-head">
+          <h3 id="modal-science-title">🔬 Archivo Científico Espacial</h3>
+          <button id="btn-close-science" class="modal-close" aria-label="Cerrar">&times;</button>
+        </header>
+        <div class="modal-body" id="science-content"></div>
+      </div>
+    </div>
+
+    <!-- ====== 5. MODAL ABORTAR MISIÓN ====== -->
+    <div id="modal-abort" class="modal-overlay hidden" role="dialog" aria-modal="true">
+      <div class="modal-card modal-abort-card">
+        <header class="modal-head modal-head-danger">
+          <h3 id="modal-abort-title">🛑 Abortar Misión ORBITA5</h3>
+          <button id="btn-close-abort-x" class="modal-close" aria-label="Cerrar">&times;</button>
+        </header>
+        <div class="modal-body modal-abort-body">
+          <div class="abort-icon">⚠️</div>
+          <p id="modal-abort-prompt" class="abort-prompt"><strong>¿Seguro que deseas abortar la misión lunar?</strong></p>
+          <p id="modal-abort-desc" class="abort-desc">Se cancelará la simulación actual y regresarás a la sala de mando inicial para cambiar tu nombre de astronauta o elegir otro nivel de dificultad.</p>
+          <div class="abort-actions">
+            <button id="btn-confirm-abort" class="btn-primary btn-danger-action">🚀 Sí, Abortar y Salir</button>
+            <button id="btn-cancel-abort" class="btn-secondary">Continuar Misión</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ====== 6. MODAL SELECTOR DE VOCES ====== -->
+    <div id="modal-voice" class="modal-overlay hidden" role="dialog" aria-modal="true">
+      <div class="modal-card modal-voice-card">
+        <header class="modal-head">
+          <h3 id="modal-voice-title">🎙️ Voces de Control de Misión</h3>
+          <button id="btn-close-voice-x" class="modal-close" aria-label="Cerrar">&times;</button>
+        </header>
+        <div class="modal-body modal-voice-body">
+          <div class="voice-modal-intro">
+            <p id="modal-voice-desc" class="voice-modal-desc">
+              Selecciona la voz de síntesis que prefieras para escuchar las alertas y decisiones en tu base lunar:
+            </p>
+            <div class="voice-current-banner">
+              <span id="modal-voice-active-label" class="voice-banner-label">Voz activa:</span>
+              <strong id="modal-current-voice-text" class="voice-banner-value">🌎 Cargando voz...</strong>
+            </div>
+            <p class="nota-ia"><small id="modal-voice-note">🔊 Audio y síntesis vocal generados con Inteligencia Artificial (Web Speech API).</small></p>
+          </div>
+
+          <div id="voice-options-list" class="voice-options-list">
+            <!-- Rellenado dinámicamente con las voces del navegador -->
+          </div>
+
+          <div class="voice-modal-footer">
+            <button id="btn-cycle-voice-fast" class="btn-secondary">🔄 Siguiente Voz Rápida</button>
+            <button id="btn-close-voice" class="btn-primary">Listo</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ====== 7. MODAL SELECTOR DE ESTILO VISUAL / TEMAS ====== -->
+    <div id="modal-theme" class="modal-overlay hidden" role="dialog" aria-modal="true">
+      <div class="modal-card modal-theme-card">
+        <header class="modal-head">
+          <h3 id="modal-theme-title">🎨 Estilo Visual de la Interfaz (UI)</h3>
+          <button id="btn-close-theme-x" class="modal-close" aria-label="Cerrar">&times;</button>
+        </header>
+        <div class="modal-body">
+          <div class="theme-modal-intro">
+            <p id="modal-theme-desc" class="theme-modal-desc">
+              Selecciona cómo deseas experimentar <strong>ORBITA5</strong>. Puedes alternar libremente entre la interfaz base de ciencia ficción y las propuestas con estilo cómic:
+            </p>
+          </div>
+
+          <div id="theme-cards-grid" class="theme-cards-grid">
+            <!-- Rellenado dinámicamente con los temas -->
+          </div>
+
+          <div class="voice-modal-footer">
+            <button id="btn-cycle-theme-fast" class="btn-secondary">🔄 Alternar Estilo Rápido</button>
+            <button id="btn-close-theme" class="btn-primary">Listo</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Hub de partículas y deltas animados de recursos (Gains / Losses) -->
+  <div id="floating-delta-hub" class="floating-delta-hub" aria-hidden="true"></div>
+
+  <script src="js/theme-manager.js"></script>
+  <script src="js/i18n.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/speech.js"></script>
+  <script src="js/mascot.js"></script>
+  <script src="js/space-canvas.js"></script>
+  <script src="js/data-donki.js"></script>
+  <script src="js/data-osdr.js"></script>
+  <script src="js/game-state.js"></script>
+  <script src="js/events.js"></script>
+  <script src="js/minigame-shield.js"></script>
+  <script src="js/minigame-rover.js"></script>
+  <script src="js/certificate.js"></script>
+  <script src="js/junior-arcade.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
