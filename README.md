@@ -159,6 +159,11 @@ Cada evento incluye la fuente oficial con enlace directo para que los jugadores 
 
 ## 🏷️ Versión y Registro de Cambios (Changelog)
 
+### `v1.1.0` - ORBITA5: Alternativas Visuales Cómic & Certificado Limpio
+- **3 Estilos de Interfaz Visual (UI):** Soporte en caliente para alternar entre *Sci-Fi Clásico* (Base), *Cómic Pop-Art* (superhéroe moderno con líneas de tinta gruesa, halftone y sombras duras) y *Novela Gráfica* (pulp vintage de los años 60s-70s con tonos cálidos y viñetas dobles).
+- **Selector de UI Interactivo:** Integrado en la pantalla de bienvenida, barra superior, panel lateral y modal de previsualización con persistencia en `localStorage`.
+- **Certificado Oficial Optimizado:** Eliminación del texto superior de la competencia para un diploma más limpio, espacioso y enfocado exclusivamente en los logros del astronauta en ORBITA5.
+
 ### `v1.0.0` - ORBITA5: Comandante Lunar
 - **Nombre Oficial ORBITA5:** Adaptado plenamente a las normas de NASA Space Apps Challenge (sin uso de nombres de misiones oficiales).
 - **Arquitectura Web Pura:** 100% del lado del cliente en HTML5, CSS3 y JavaScript ES6+, sin dependencias externas, sin frameworks pesados y sin bases de datos.

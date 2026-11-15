@@ -47,32 +47,19 @@ class CertificateGenerator {
     // ——— ENCABEZADO ———
     ctx.textAlign = 'center';
 
-    // Badge "NASA SPACE APPS CHALLENGE"
-    const badgeY = 110;
-    ctx.fillStyle = 'rgba(9, 132, 227, 0.3)';
-    this.roundRect(ctx, W / 2 - 230, badgeY - 22, 460, 44, 22);
-    ctx.fill();
-    ctx.strokeStyle = 'rgba(0, 210, 211, 0.7)';
-    ctx.lineWidth = 1.5;
-    this.roundRect(ctx, W / 2 - 230, badgeY - 22, 460, 44, 22);
-    ctx.stroke();
-    ctx.fillStyle = '#00d2d3';
-    ctx.font = 'bold 18px system-ui, sans-serif';
-    ctx.fillText('🚀  NASA SPACE APPS CHALLENGE 2026  •  JUNIOR ASTRONAUT TRAINER', W / 2, badgeY + 6);
-
     // Título principal
     ctx.fillStyle = '#ffffff';
-    ctx.font = 'bold 52px system-ui, sans-serif';
-    ctx.fillText(isVictory ? 'MISIÓN CUMPLIDA' : 'MISIÓN EVACUADA', W / 2, 210);
+    ctx.font = 'bold 54px system-ui, sans-serif';
+    ctx.fillText(isVictory ? 'MISIÓN CUMPLIDA' : 'MISIÓN EVACUADA', W / 2, 175);
 
     // Subtítulo
     ctx.font = 'bold 28px Fredoka, system-ui, sans-serif';
     ctx.fillStyle = '#00d2d3';
-    ctx.fillText('ORBITA5: COMANDANTE LUNAR', W / 2, 260);
+    ctx.fillText('ORBITA5: COMANDANTE LUNAR', W / 2, 230);
 
     // ——— TROFEO (victoria) O ICONO DE ALERTA (derrota) ———
-    const medalY = 360;
-    const medalSize = 80;
+    const medalY = 345;
+    const medalSize = 85;
     ctx.font = `${medalSize}px system-ui, sans-serif`;
     // En victoria mostramos un trofeo dorado en lugar de una medalla
     const trophyIcon = isVictory ? '🏆' : scoreData.medal;
