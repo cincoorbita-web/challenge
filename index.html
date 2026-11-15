@@ -41,7 +41,8 @@
         <div class="welcome-form">
           <div class="form-row">
             <label for="input-player-name">👤 Tu nombre de astronauta:</label>
-            <input type="text" id="input-player-name" class="text-input" placeholder="Ej: Comandante Sofía" maxlength="20" autocomplete="off">
+            <input type="text" id="input-player-name" class="text-input" placeholder="Ej: Comandante Sofía" maxlength="20" autocomplete="off" required>
+            <div id="name-validation-msg" class="validation-error-msg hidden">⚠️ Ingresa tu nombre de astronauta para registrar tu credencial antes de asumir el mando.</div>
           </div>
 
           <label class="form-label-sm">🎯 Nivel de Misión:</label>

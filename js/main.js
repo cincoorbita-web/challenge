@@ -33,6 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Elementos de la pantalla de bienvenida
   const inputPlayerName = document.getElementById('input-player-name');
+  const nameValidationMsg = document.getElementById('name-validation-msg');
   const btnStartMission = document.getElementById('btn-start-mission');
   const difficultyButtons = document.querySelectorAll('.diff-btn');
   let selectedDifficulty = 1;
@@ -320,10 +321,35 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // ========================================================================
-  // 4. Inicio de Misión
+  // 4. Inicio de Misión con Control de Nombre Requerido
   // ========================================================================
-  btnStartMission.addEventListener('click', () => {
-    const name = inputPlayerName.value.trim() || 'Comandante Mateo';
+  function handleStartMission() {
+    const rawName = inputPlayerName ? inputPlayerName.value.trim() : '';
+
+    // Control estricto: no se puede asumir el mando si previamente no se ingresa el nombre de astronauta
+    if (!rawName) {
+      if (inputPlayerName) {
+        inputPlayerName.classList.remove('input-error');
+        void inputPlayerName.offsetWidth; // Reflow para reiniciar animación shake
+        inputPlayerName.classList.add('input-error');
+        inputPlayerName.focus();
+      }
+      if (nameValidationMsg) {
+        nameValidationMsg.classList.remove('hidden');
+      }
+      window.gameAudio.playAlarm();
+      window.astroMascot.setEmotion(
+        'thinking',
+        '¡Comandante! Necesito registrar tu nombre en el manifiesto oficial de vuelo antes de asumir el mando.'
+      );
+      return;
+    }
+
+    // Nombre válido: limpiar avisos
+    if (inputPlayerName) inputPlayerName.classList.remove('input-error');
+    if (nameValidationMsg) nameValidationMsg.classList.add('hidden');
+
+    const name = rawName;
     window.gameAudio.playQuindar(true);
     window.gameAudio.startAmbient();
 
@@ -351,7 +377,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Cargar primer dilema
     loadNextDilemma();
-  });
+  }
+
+  btnStartMission.addEventListener('click', handleStartMission);
+
+  if (inputPlayerName) {
+    // Permitir iniciar también con la tecla Enter
+    inputPlayerName.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        handleStartMission();
+      }
+    });
+
+    // Limpiar mensaje de error en tiempo real mientras el usuario escribe
+    inputPlayerName.addEventListener('input', () => {
+      if (inputPlayerName.value.trim().length > 0) {
+        inputPlayerName.classList.remove('input-error');
+        if (nameValidationMsg) nameValidationMsg.classList.add('hidden');
+      }
+    });
+  }
 
   // ========================================================================
   // 5. Abortar Misión (Modal y confirmación)

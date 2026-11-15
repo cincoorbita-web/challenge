@@ -45,6 +45,14 @@ Pensando en la autonomía del niño y evitando saturarlo con párrafos largos:
 
 ---
 
+## 🛑 Validación de Credencial de Astronauta y Control de Mando
+
+- **Registro Obligatorio de Nombre:** Para personalizar la experiencia educativa, el certificado y los diálogos de Control de Misión, el juego exige ingresar el nombre antes de asumir el mando.
+- **Feedback Interactivo:** Si el jugador intenta pulsar *Asumir el Mando* con el campo vacío, el sistema ejecuta una animación visual de atención (*shake* con borde de advertencia), enfoca el campo de texto y AstroCan le explica amablemente en su globo de diálogo que debe registrarse en el manifiesto oficial de vuelo.
+- **Soporte Teclado:** Permite avanzar rápidamente pulsando la tecla `Enter` tras ingresar el nombre.
+
+---
+
 ## 🛑 Botón para Abortar Misión
 
 Si el jugador desea cambiar de nivel de dificultad o probar con otro nombre de astronauta:

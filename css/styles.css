@@ -230,6 +230,34 @@ body {
   box-shadow: 0 0 10px var(--glow);
 }
 
+.text-input.input-error {
+  border-color: #ff4757 !important;
+  box-shadow: 0 0 14px rgba(255, 71, 87, 0.6) !important;
+  animation: shakeInput 0.4s ease-in-out;
+}
+
+@keyframes shakeInput {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-6px); }
+  40%, 80% { transform: translateX(6px); }
+}
+
+.validation-error-msg {
+  font-size: 0.82rem;
+  color: #ff6b81;
+  font-weight: 600;
+  margin-top: 6px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  animation: fadeInMsg 0.25s ease-out;
+}
+
+@keyframes fadeInMsg {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 .difficulty-selector {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
