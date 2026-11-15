@@ -256,6 +256,76 @@ body {
   padding: 10px 12px;
 }
 
+/* ==========================================================================
+   ETIQUETAS Y MARCAS DE AGUA DE INTELIGENCIA ARTIFICIAL (NASA AI DISCLOSURE)
+   ========================================================================== */
+.contenedor-ia {
+  position: relative;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+.marca-ia {
+  position: absolute;
+  bottom: 2px;
+  right: -2px;
+  background: rgba(0, 0, 0, 0.78);
+  color: #ffffff;
+  font-family: var(--font, sans-serif);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2.5px 6.5px;
+  border-radius: 4px;
+  pointer-events: none;
+  z-index: 6;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.55);
+  letter-spacing: 0.2px;
+  white-space: nowrap;
+  line-height: 1.2;
+}
+
+.marca-ia-sm {
+  font-size: 9px;
+  padding: 1.5px 4.5px;
+  bottom: 0px;
+  right: -2px;
+}
+
+/* Nota descriptiva de audio generado por IA */
+.nota-ia {
+  display: block;
+  font-size: 0.74rem;
+  color: var(--txt3, #8ca0ba);
+  margin-top: 4px;
+  margin-bottom: 2px;
+  line-height: 1.35;
+  opacity: 0.92;
+}
+
+.audio-ai-container {
+  width: 100%;
+  margin-top: 4px;
+}
+
+.hidden-audio-player {
+  display: none;
+}
+
+.welcome-ai-disclosure {
+  margin-top: 14px;
+  padding: 8px 12px;
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: 8px;
+  border: 1px dashed rgba(255, 255, 255, 0.14);
+}
+
+.welcome-ai-disclosure .nota-ia {
+  margin: 0;
+  font-size: 0.76rem;
+  color: var(--txt2);
+}
+
 .welcome-lang-switch {
   display: grid;
   grid-template-columns: 1fr 1fr;

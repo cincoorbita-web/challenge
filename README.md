@@ -7,6 +7,34 @@ El juego está desarrollado con tecnologías web modernas estándar (HTML5, CSS3
 
 ---
 
+## 🤖 Uso de Inteligencia Artificial (NASA AI Transparency & Disclosure)
+
+En cumplimiento con los lineamientos de transparencia y divulgación del **NASA International Space Apps Challenge**:
+
+- **Desarrollo de Código, Estructura y Diseño:**
+  > *"Para el desarrollo del código fuente, estructura y diseño de este sitio web se utilizaron herramientas de asistencia por IA (Gemini y Claude a través de Antigravity)."*
+  - Metadatos del sitio en `index.html`:
+    ```html
+    <meta name="ai-usage" content="Código y estructura web desarrollados con asistencia de Gemini y Claude (Antigravity).">
+    ```
+
+- **Imágenes e Ilustraciones (AstroCan):**
+  - Las ilustraciones de la mascota y copiloto lunar AstroCan en sus 7 estados emocionales fueron generadas mediante Inteligencia Artificial.
+  - Cada imagen cuenta con una etiqueta flotante visible en HTML/CSS (`.contenedor-ia` y `.marca-ia`) indicando *"Generado por IA"* / *"AI Generated"*, visible para los usuarios y los jurados.
+
+- **Audio y Síntesis de Voz Multilingüe:**
+  - La narración en voz alta de las misiones y dilemas utiliza síntesis vocal con Inteligencia Artificial (Web Speech API).
+  - En la interfaz web se muestra la leyenda descriptiva visible:
+    ```html
+    <p class="nota-ia"><small>Audio generado con Inteligencia Artificial (Síntesis de voz / Web Speech API).</small></p>
+    ```
+  - Los controles y reproductores incorporan los atributos de metadatos internos:
+    ```html
+    <audio data-ai-generated="true" aria-label="Audio narrado generado por Inteligencia Artificial"></audio>
+    ```
+
+---
+
 ## 🌐 Internacionalización (i18n) Bilingüe Completa y Síntesis de Voz Multilingüe
 
 **ORBITA5** cuenta con soporte bilingüe de primer nivel (**Español** e **Inglés**) para toda la experiencia del usuario, iniciando por defecto en **Inglés (EN)**:

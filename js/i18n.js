@@ -49,6 +49,11 @@ class I18nManager {
         theme_badge_pop: '¡Acción!',
         theme_badge_retro: 'Vintage',
         btn_start_mission: '🚀 ASUMIR EL MANDO',
+        ai_badge_img: 'Generado por IA',
+        ai_badge_img_short: 'IA',
+        ai_audio_note: 'Audio narrado generado con Inteligencia Artificial (Síntesis de voz / Web Speech API).',
+        modal_voice_note: '🔊 Audio y síntesis vocal generados con Inteligencia Artificial (Web Speech API).',
+        welcome_ai_note: '🤖 Uso de Inteligencia Artificial: Código y estructura desarrollados con asistencia de Gemini y Claude (Antigravity). Ilustraciones de AstroCan y narración vocal generadas con IA.',
 
         // Panel Lateral y HUD
         mascot_role: 'Copiloto de Misión',
@@ -245,6 +250,11 @@ class I18nManager {
         theme_badge_pop: 'Action!',
         theme_badge_retro: 'Vintage',
         btn_start_mission: '🚀 TAKE COMMAND',
+        ai_badge_img: 'AI Generated',
+        ai_badge_img_short: 'AI',
+        ai_audio_note: 'AI-generated narrated audio (Voice synthesis / Web Speech API).',
+        modal_voice_note: '🔊 Audio and voices generated with Artificial Intelligence (Web Speech API).',
+        welcome_ai_note: '🤖 AI Usage Disclosure: Code and web structure developed with Gemini and Claude assistance (Antigravity). AstroCan illustrations and voice narration generated with AI.',
 
         // Sidebar & HUD
         mascot_role: 'Mission Co-Pilot',

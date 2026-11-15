@@ -201,6 +201,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const modalThemeTitle = document.getElementById('modal-theme-title');
   const modalThemeDesc = document.getElementById('modal-theme-desc');
 
+  // Elementos de Divulgación de Inteligencia Artificial (NASA AI Disclosure)
+  const welcomeAiNote = document.getElementById('welcome-ai-note');
+  const dilemmaAudioNote = document.getElementById('dilemma-audio-note');
+  const modalVoiceNote = document.getElementById('modal-voice-note');
+  const aiBadges = document.querySelectorAll('.marca-ia');
+
   // Helper para sanitizar strings insertados en HTML
   const escapeHtml = (str) => {
     if (!str) return '';
@@ -352,6 +358,20 @@ document.addEventListener('DOMContentLoaded', () => {
     // 10. Si la pantalla de fin de juego está activa, re-renderizar resultados
     if (!screenGameOver.classList.contains('hidden')) {
       showGameOver(window.gameState);
+    }
+
+    // 11. Divulgación de Inteligencia Artificial (NASA AI Disclosure)
+    if (welcomeAiNote) welcomeAiNote.textContent = window.i18n.t('welcome_ai_note');
+    if (dilemmaAudioNote) dilemmaAudioNote.textContent = window.i18n.t('ai_audio_note');
+    if (modalVoiceNote) modalVoiceNote.textContent = window.i18n.t('modal_voice_note');
+    if (aiBadges && aiBadges.length > 0) {
+      aiBadges.forEach(badge => {
+        if (badge.classList.contains('marca-ia-sm')) {
+          badge.textContent = window.i18n.t('ai_badge_img_short');
+        } else {
+          badge.textContent = window.i18n.t('ai_badge_img');
+        }
+      });
     }
   }
 

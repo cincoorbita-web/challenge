@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="ai-usage" content="Código y estructura web desarrollados con asistencia de Gemini y Claude (Antigravity).">
   <title>ORBITA5 | Junior Astronaut Mission Trainer</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -33,7 +34,10 @@
 
         <!-- Tarjeta de bienvenida con AstroCan -->
         <div class="welcome-mascot-card">
-          <img src="assets/mascot/greeting.jpg" alt="AstroCan" class="welcome-mascot-img">
+          <div class="contenedor-ia">
+            <img src="assets/mascot/greeting.jpg" alt="AstroCan" class="welcome-mascot-img">
+            <span class="marca-ia" data-ai-label="true">AI Generated</span>
+          </div>
           <div id="welcome-mascot-bubble" class="welcome-mascot-bubble">
             <strong>Hello, Commander!</strong> I am <strong>AstroCan</strong>, your faithful co-pilot at the Lunar South Pole. What is your astronaut name and which mission level will we undertake today?
           </div>
@@ -114,6 +118,13 @@
           </div>
 
           <button id="btn-start-mission" class="btn-primary pulse-btn">🚀 TAKE COMMAND</button>
+
+          <!-- Declaración de Uso de Inteligencia Artificial (NASA AI Disclosure) -->
+          <div class="welcome-ai-disclosure">
+            <p class="nota-ia text-center">
+              <small id="welcome-ai-note">🤖 <strong>AI Usage Disclosure:</strong> Code and web structure developed with Gemini and Claude assistance (Antigravity). AstroCan illustrations and voice narration generated with AI.</small>
+            </p>
+          </div>
         </div>
       </div>
     </section>
@@ -127,9 +138,10 @@
         <!-- PANEL LATERAL PARA LAPTOP / PC (Desktop Station Panel) -->
         <aside class="station-sidebar">
           <div class="sidebar-mascot-box">
-            <div class="mascot-avatar-container">
+            <div class="mascot-avatar-container contenedor-ia">
               <img id="mascot-sidebar-img" src="assets/mascot/greeting.jpg" alt="AstroCan" class="mascot-sidebar-avatar">
               <div class="mascot-online-dot"></div>
+              <span class="marca-ia" data-ai-label="true">AI Generated</span>
             </div>
             <div class="mascot-info">
               <strong class="mascot-name">AstroCan</strong>
@@ -214,7 +226,10 @@
 
           <!-- Franja de Compañero para Móvil y Tablet (oculta en PC) -->
           <div class="mobile-mascot-strip">
-            <img id="mascot-mobile-img" src="assets/mascot/greeting.jpg" alt="AstroCan" class="mascot-mobile-avatar">
+            <div class="contenedor-ia">
+              <img id="mascot-mobile-img" src="assets/mascot/greeting.jpg" alt="AstroCan" class="mascot-mobile-avatar">
+              <span class="marca-ia marca-ia-sm" data-ai-label="true">AI</span>
+            </div>
             <div id="mascot-mobile-bubble" class="mobile-speech-bubble">
               ¡Listo para la misión lunar, Comandante!
             </div>
@@ -232,12 +247,16 @@
                 </div>
                 <!-- Controles de Audio y Voz -->
                 <div class="dilemma-audio-controls">
-                  <button id="btn-change-voice" class="pill-btn btn-voice" title="Cambiar tipo de voz para la narración">
+                  <button id="btn-change-voice" class="pill-btn btn-voice" title="Cambiar tipo de voz para la narración" data-ai-generated="true" aria-label="Cambiar voz de Inteligencia Artificial">
                     🎙️ <span id="current-voice-label">Voz: Auto</span>
                   </button>
-                  <button id="btn-narrate-dilemma" class="pill-btn btn-narrate" title="Reproducir en audio este dilema">
+                  <button id="btn-narrate-dilemma" class="pill-btn btn-narrate" title="Reproducir en audio este dilema" data-ai-generated="true" aria-label="Audio narrado generado por Inteligencia Artificial">
                     📢 Escuchar Misión
                   </button>
+                </div>
+                <div class="audio-ai-container">
+                  <audio id="player-narrator-audio" class="hidden-audio-player" data-ai-generated="true" aria-label="Audio narrado generado por Inteligencia Artificial"></audio>
+                  <p class="nota-ia"><small id="dilemma-audio-note">AI-generated narrated audio (Voice synthesis / Web Speech API).</small></p>
                 </div>
               </div>
 
@@ -270,7 +289,10 @@
 
         <!-- Mascota en fin de misión -->
         <div class="gameover-mascot-row">
-          <img id="gameover-mascot-img" class="gameover-mascot-avatar" src="assets/mascot/celebrating.jpg" alt="AstroCan">
+          <div class="contenedor-ia">
+            <img id="gameover-mascot-img" class="gameover-mascot-avatar" src="assets/mascot/celebrating.jpg" alt="AstroCan">
+            <span class="marca-ia" data-ai-label="true">AI Generated</span>
+          </div>
           <div id="gameover-mascot-bubble" class="gameover-mascot-bubble">
             ¡Misión completada, Comandante!
           </div>
@@ -345,6 +367,7 @@
               <span id="modal-voice-active-label" class="voice-banner-label">Voz activa:</span>
               <strong id="modal-current-voice-text" class="voice-banner-value">🌎 Cargando voz...</strong>
             </div>
+            <p class="nota-ia"><small id="modal-voice-note">🔊 Audio y síntesis vocal generados con Inteligencia Artificial (Web Speech API).</small></p>
           </div>
 
           <div id="voice-options-list" class="voice-options-list">
