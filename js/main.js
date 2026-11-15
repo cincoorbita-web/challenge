@@ -133,6 +133,73 @@ document.addEventListener('DOMContentLoaded', () => {
   const topThemeName = document.getElementById('top-theme-name');
   const welcomeThemeBtns = document.querySelectorAll('.theme-btn');
 
+  // Controles de Internacionalización (i18n: ES / EN)
+  const welcomeLangBtns = document.querySelectorAll('.welcome-lang-picker .lang-switch-btn');
+  const btnTopLang = document.getElementById('btn-top-lang');
+  const topLangLabel = document.getElementById('top-lang-label');
+  const btnSidebarLang = document.getElementById('btn-sidebar-lang');
+  const sidebarLangLabel = document.getElementById('sidebar-lang-label');
+
+  // Elementos de texto localizables en Bienvenida
+  const mainSubtitle = document.getElementById('main-subtitle');
+  const welcomeMascotBubble = document.getElementById('welcome-mascot-bubble');
+  const briefingTitle = document.getElementById('briefing-title');
+  const briefingP1 = document.getElementById('briefing-p1');
+  const briefingRule = document.getElementById('briefing-rule');
+  const labelPlayerName = document.getElementById('label-player-name');
+  const labelMissionLevel = document.getElementById('label-mission-level');
+  const diff1Title = document.getElementById('diff-1-title');
+  const diff1Days = document.getElementById('diff-1-days');
+  const diff1Desc = document.getElementById('diff-1-desc');
+  const diff2Title = document.getElementById('diff-2-title');
+  const diff2Days = document.getElementById('diff-2-days');
+  const diff2Desc = document.getElementById('diff-2-desc');
+  const diff3Title = document.getElementById('diff-3-title');
+  const diff3Days = document.getElementById('diff-3-days');
+  const diff3Desc = document.getElementById('diff-3-desc');
+  const themeSelectorLabel = document.getElementById('theme-selector-label');
+  const themeBtnBadge1 = document.getElementById('theme-btn-badge-1');
+  const themeBtnTitle1 = document.getElementById('theme-btn-title-1');
+  const themeBtnSub1 = document.getElementById('theme-btn-sub-1');
+  const themeBtnBadge2 = document.getElementById('theme-btn-badge-2');
+  const themeBtnTitle2 = document.getElementById('theme-btn-title-2');
+  const themeBtnSub2 = document.getElementById('theme-btn-sub-2');
+  const themeBtnBadge3 = document.getElementById('theme-btn-badge-3');
+  const themeBtnTitle3 = document.getElementById('theme-btn-title-3');
+  const themeBtnSub3 = document.getElementById('theme-btn-sub-3');
+
+  // Elementos de texto localizables en Panel Lateral y Cabecera
+  const mascotSidebarRole = document.getElementById('mascot-sidebar-role');
+  const sidebarTelemetryTitle = document.getElementById('sidebar-telemetry-title');
+  const sideLabelO2 = document.getElementById('side-label-o2');
+  const sideLabelEnergy = document.getElementById('side-label-energy');
+  const sideLabelHealth = document.getElementById('side-label-health');
+  const sideLabelIntegrity = document.getElementById('side-label-integrity');
+  const sideLabelScience = document.getElementById('side-label-science');
+  const sidebarThemePrefix = document.getElementById('sidebar-theme-prefix');
+  const sidebarVoiceLabel = document.getElementById('sidebar-voice-label');
+  const sidebarScienceLabel = document.getElementById('sidebar-science-label');
+  const sidebarSoundLabel = document.getElementById('sidebar-sound-label');
+  const sidebarAbortLabel = document.getElementById('sidebar-abort-label');
+  const topScienceLabel = document.getElementById('top-science-label');
+  const topAbortLabel = document.getElementById('top-abort-label');
+
+  // Elementos de texto localizables en Fin de Misión
+  const lblGameoverScore = document.getElementById('lbl-gameover-score');
+  const lblGameoverDays = document.getElementById('lbl-gameover-days');
+  const lblGameoverScience = document.getElementById('lbl-gameover-science');
+
+  // Elementos de texto localizables en Modales
+  const modalScienceTitle = document.getElementById('modal-science-title');
+  const modalAbortTitle = document.getElementById('modal-abort-title');
+  const modalAbortPrompt = document.getElementById('modal-abort-prompt');
+  const modalAbortDesc = document.getElementById('modal-abort-desc');
+  const modalVoiceTitle = document.getElementById('modal-voice-title');
+  const modalVoiceDesc = document.getElementById('modal-voice-desc');
+  const modalVoiceActiveLabel = document.getElementById('modal-voice-active-label');
+  const modalThemeTitle = document.getElementById('modal-theme-title');
+  const modalThemeDesc = document.getElementById('modal-theme-desc');
+
   // Helper para sanitizar strings insertados en HTML
   const escapeHtml = (str) => {
     if (!str) return '';
@@ -149,17 +216,188 @@ document.addEventListener('DOMContentLoaded', () => {
   let currentScaledOptions = [];
 
   // ========================================================================
+  // 0. Internacionalización (i18n): Español (es) / Inglés (en)
+  // ========================================================================
+  function updateLanguageUI() {
+    if (!window.i18n) return;
+    const lang = window.i18n.getLanguage();
+    const isEn = lang === 'en';
+
+    // 1. Selector de bienvenida (botones ES / EN)
+    if (welcomeLangBtns && welcomeLangBtns.length > 0) {
+      welcomeLangBtns.forEach(btn => {
+        const btnLang = btn.dataset.lang;
+        btn.classList.toggle('active', btnLang === lang);
+      });
+    }
+
+    // 2. Botón de cabecera superior y panel lateral
+    if (topLangLabel) {
+      topLangLabel.textContent = isEn ? 'ES' : 'EN';
+    }
+    if (btnTopLang) {
+      btnTopLang.title = isEn ? 'Cambiar a Español' : 'Switch to English';
+    }
+    if (sidebarLangLabel) {
+      sidebarLangLabel.textContent = isEn ? 'Language: English' : 'Idioma: Español';
+    }
+
+    // 3. Pantalla de bienvenida y briefing inicial
+    if (mainSubtitle) mainSubtitle.textContent = window.i18n.t('app_subtitle');
+    if (welcomeMascotBubble) {
+      welcomeMascotBubble.innerHTML = isEn
+        ? `<strong>Hello, Commander!</strong> I am <strong>AstroCan</strong>, your faithful co-pilot at the Lunar South Pole. What is your astronaut name and which mission level will we undertake today?`
+        : `<strong>¡Hola, Comandante!</strong> Soy <strong>AstroCan</strong>, tu fiel copiloto en el Polo Sur Lunar. ¿Cuál es tu nombre de astronauta y qué nivel de misión asumiremos hoy?`;
+    }
+    if (briefingTitle) briefingTitle.textContent = window.i18n.t('briefing_title');
+    if (briefingP1) briefingP1.textContent = window.i18n.t('briefing_p1');
+    if (briefingRule) {
+      briefingRule.innerHTML = isEn
+        ? `⚖️ <strong>Golden Rule:</strong> No choice is free! Every single decision requires a real trade-off.`
+        : `⚖️ <strong>Regla de Oro:</strong> ¡Ninguna opción es gratis! Cada decisión exige una compensación real (trade-off).`;
+    }
+    if (labelPlayerName) labelPlayerName.textContent = window.i18n.t('label_astronaut_name');
+    if (inputPlayerName) inputPlayerName.placeholder = window.i18n.t('placeholder_name');
+    if (nameValidationMsg) nameValidationMsg.textContent = window.i18n.t('validation_name_empty');
+    if (labelMissionLevel) labelMissionLevel.textContent = window.i18n.t('label_mission_level');
+
+    if (diff1Title) diff1Title.textContent = window.i18n.t('diff_1_title');
+    if (diff1Days) diff1Days.textContent = window.i18n.t('diff_1_days');
+    if (diff1Desc) diff1Desc.textContent = window.i18n.t('diff_1_desc');
+    if (diff2Title) diff2Title.textContent = window.i18n.t('diff_2_title');
+    if (diff2Days) diff2Days.textContent = window.i18n.t('diff_2_days');
+    if (diff2Desc) diff2Desc.textContent = window.i18n.t('diff_2_desc');
+    if (diff3Title) diff3Title.textContent = window.i18n.t('diff_3_title');
+    if (diff3Days) diff3Days.textContent = window.i18n.t('diff_3_days');
+    if (diff3Desc) diff3Desc.textContent = window.i18n.t('diff_3_desc');
+
+    if (themeSelectorLabel) themeSelectorLabel.textContent = window.i18n.t('label_ui_theme');
+    if (themeBtnBadge1) themeBtnBadge1.textContent = window.i18n.t('theme_badge_base');
+    if (themeBtnTitle1) themeBtnTitle1.textContent = window.i18n.t('theme_default_title');
+    if (themeBtnSub1) themeBtnSub1.textContent = window.i18n.t('theme_default_sub');
+    if (themeBtnBadge2) themeBtnBadge2.textContent = window.i18n.t('theme_badge_pop');
+    if (themeBtnTitle2) themeBtnTitle2.textContent = window.i18n.t('theme_pop_title');
+    if (themeBtnSub2) themeBtnSub2.textContent = window.i18n.t('theme_pop_sub');
+    if (themeBtnBadge3) themeBtnBadge3.textContent = window.i18n.t('theme_badge_retro');
+    if (themeBtnTitle3) themeBtnTitle3.textContent = window.i18n.t('theme_retro_title');
+    if (themeBtnSub3) themeBtnSub3.textContent = window.i18n.t('theme_retro_sub');
+
+    if (btnStartMission) btnStartMission.textContent = window.i18n.t('btn_start_mission');
+
+    // 4. Panel lateral y cabecera
+    if (mascotSidebarRole) mascotSidebarRole.textContent = window.i18n.t('mascot_role');
+    if (sidebarTelemetryTitle) sidebarTelemetryTitle.textContent = window.i18n.t('telemetry_title');
+    if (sideLabelO2) sideLabelO2.textContent = window.i18n.t('res_o2');
+    if (sideLabelEnergy) sideLabelEnergy.textContent = window.i18n.t('res_energy');
+    if (sideLabelHealth) sideLabelHealth.textContent = window.i18n.t('res_health');
+    if (sideLabelIntegrity) sideLabelIntegrity.textContent = window.i18n.t('res_integrity');
+    if (sideLabelScience) sideLabelScience.textContent = window.i18n.t('res_science');
+
+    if (sidebarThemePrefix) sidebarThemePrefix.textContent = window.i18n.t('btn_sidebar_theme');
+    if (sidebarVoiceLabel) sidebarVoiceLabel.textContent = isEn ? 'Change Voice' : 'Cambiar Voz';
+    if (sidebarScienceLabel) sidebarScienceLabel.textContent = window.i18n.t('btn_sidebar_science').replace('🔬 ', '');
+    if (sidebarAbortLabel) sidebarAbortLabel.textContent = window.i18n.t('btn_sidebar_abort').replace('🛑 ', '');
+
+    if (topScienceLabel) topScienceLabel.textContent = isEn ? 'NASA Archive' : 'Archivo NASA';
+    if (topAbortLabel) topAbortLabel.textContent = isEn ? 'Abort' : 'Abortar';
+
+    // 5. Modales
+    if (modalScienceTitle) modalScienceTitle.textContent = window.i18n.t('modal_science_title');
+    if (modalAbortTitle) modalAbortTitle.textContent = window.i18n.t('modal_abort_title');
+    if (modalAbortPrompt) modalAbortPrompt.innerHTML = `<strong>${window.i18n.t('modal_abort_prompt')}</strong>`;
+    if (modalAbortDesc) modalAbortDesc.textContent = window.i18n.t('modal_abort_desc');
+    if (btnConfirmAbort) btnConfirmAbort.textContent = window.i18n.t('modal_abort_confirm');
+    if (btnCancelAbort) btnCancelAbort.textContent = window.i18n.t('modal_abort_cancel');
+
+    if (modalVoiceTitle) modalVoiceTitle.textContent = window.i18n.t('modal_voice_title');
+    if (modalVoiceDesc) modalVoiceDesc.textContent = window.i18n.t('modal_voice_desc');
+    if (modalVoiceActiveLabel) modalVoiceActiveLabel.textContent = window.i18n.t('modal_voice_active');
+    if (btnCycleVoiceFast) btnCycleVoiceFast.textContent = window.i18n.t('modal_voice_cycle');
+    if (btnCloseVoice) btnCloseVoice.textContent = window.i18n.t('modal_voice_done');
+
+    if (modalThemeTitle) modalThemeTitle.textContent = window.i18n.t('modal_theme_title');
+    if (modalThemeDesc) modalThemeDesc.textContent = window.i18n.t('modal_theme_desc');
+    if (btnCycleThemeFast) btnCycleThemeFast.textContent = window.i18n.t('modal_theme_cycle');
+    if (btnCloseTheme) btnCloseTheme.textContent = window.i18n.t('modal_theme_done');
+
+    // 6. Fin de misión
+    if (lblGameoverScore) lblGameoverScore.textContent = window.i18n.t('stat_score');
+    if (lblGameoverDays) lblGameoverDays.textContent = window.i18n.t('stat_days');
+    if (lblGameoverScience) lblGameoverScience.textContent = window.i18n.t('stat_science');
+    if (btnShareCert) btnShareCert.textContent = window.i18n.t('btn_share_cert');
+    if (btnRestart) btnRestart.textContent = window.i18n.t('btn_restart');
+
+    // 7. Sincronizar narrador por voz
+    if (window.speechNarrator) {
+      window.speechNarrator.setLanguage(lang);
+      updateVoiceButtonLabel(window.speechNarrator.getCurrentVoiceDetails());
+      renderVoiceList();
+    }
+
+    // 8. Sincronizar botones de sonido
+    updateSoundButtonsUI(window.gameAudio.muted);
+
+    // 9. Si el juego está en curso, actualizar HUD y re-renderizar dilema actual
+    if (!screenGame.classList.contains('hidden') && window.gameState.currentDay > 0) {
+      updateHUD(window.gameState);
+      if (currentEvent && !dilemmaCard.classList.contains('hidden')) {
+        renderDilemma(currentEvent);
+      }
+    }
+
+    // 10. Si la pantalla de fin de juego está activa, re-renderizar resultados
+    if (!screenGameOver.classList.contains('hidden')) {
+      showGameOver(window.gameState);
+    }
+  }
+
+  // Eventos de selección de idioma en la pantalla de bienvenida
+  if (welcomeLangBtns && welcomeLangBtns.length > 0) {
+    welcomeLangBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        window.gameAudio.playClick();
+        const targetLang = btn.dataset.lang;
+        if (window.i18n) {
+          window.i18n.setLanguage(targetLang);
+          updateLanguageUI();
+        }
+      });
+    });
+  }
+
+  // Evento de conmutación de idioma en cabecera superior y panel lateral
+  const handleToggleLang = () => {
+    window.gameAudio.playClick();
+    if (window.i18n) {
+      window.i18n.toggleLanguage();
+      updateLanguageUI();
+    }
+  };
+  if (btnTopLang) btnTopLang.addEventListener('click', handleToggleLang);
+  if (btnSidebarLang) btnSidebarLang.addEventListener('click', handleToggleLang);
+
+  if (window.i18n) {
+    window.i18n.onLanguageChange(() => {
+      updateLanguageUI();
+    });
+  }
+
+  // ========================================================================
   // 1. Manejo de audio toggle (sincronizado entre cabecera y panel lateral)
   // ========================================================================
   const updateSoundButtonsUI = (isMuted) => {
-    const text = isMuted ? '🔇 Silencio' : '🔊 Sonido';
+    const isEn = window.i18n && window.i18n.getLanguage() === 'en';
+    const text = isMuted ? (isEn ? '🔇 Mute' : '🔇 Silencio') : (isEn ? '🔊 Sound' : '🔊 Sonido');
     if (btnToggleSound) {
-      btnToggleSound.textContent = text;
+      btnToggleSound.textContent = isMuted ? '🔇' : '🔊';
       btnToggleSound.classList.toggle('btn-muted', isMuted);
     }
     if (btnSidebarSound) {
       btnSidebarSound.textContent = text;
       btnSidebarSound.classList.toggle('btn-muted', isMuted);
+    }
+    if (sidebarSoundLabel) {
+      sidebarSoundLabel.textContent = isMuted ? (isEn ? 'Mute' : 'Silencio') : (isEn ? 'Sound' : 'Sonido');
     }
   };
   updateSoundButtonsUI(window.gameAudio.muted);
@@ -178,15 +416,19 @@ document.addEventListener('DOMContentLoaded', () => {
     btnNarrateDilemma.addEventListener('click', () => {
       window.gameAudio.playClick();
       if (currentEvent) {
-        window.speechNarrator.speakMission(currentEvent);
+        const localized = window.i18n ? window.i18n.localizeEvent(currentEvent) : currentEvent;
+        window.speechNarrator.speakMission(localized);
       }
     });
 
     window.speechNarrator.setOnStateChange((isSpeaking, targetKey) => {
+      const isEn = window.i18n && window.i18n.getLanguage() === 'en';
       // Actualizar botón de la misión
       const isSpeakingMission = isSpeaking && targetKey === 'mission';
       btnNarrateDilemma.classList.toggle('speaking', isSpeakingMission);
-      btnNarrateDilemma.innerHTML = isSpeakingMission ? '⏹️ Detener Voz' : '📢 Escuchar Misión';
+      btnNarrateDilemma.innerHTML = isSpeakingMission 
+        ? (isEn ? '⏹️ Stop Voice' : '⏹️ Detener Voz') 
+        : (isEn ? '📢 Listen to Mission' : '📢 Escuchar Misión');
 
       // Actualizar botones individuales de opciones
       const optionAudioBtns = document.querySelectorAll('.btn-listen-option');
@@ -194,7 +436,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const idx = btn.dataset.optIdx;
         const isSpeakingThis = isSpeaking && targetKey === `option-${idx}`;
         btn.classList.toggle('speaking', isSpeakingThis);
-        btn.innerHTML = isSpeakingThis ? '⏹️ Detener' : '🔊 Escuchar Opción';
+        btn.innerHTML = isSpeakingThis 
+          ? (isEn ? '⏹️ Stop' : '⏹️ Detener') 
+          : (isEn ? '🔊 Listen to Option' : '🔊 Escuchar Opción');
       });
     });
   }
@@ -214,7 +458,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function renderVoiceList() {
     if (!voiceOptionsList) return;
-    const voices = window.speechNarrator.getSpanishVoices();
+    const isEn = window.i18n && window.i18n.getLanguage() === 'en';
+    const voices = window.speechNarrator.getActiveVoices();
     const current = window.speechNarrator.getCurrentVoiceDetails();
 
     if (!voices || voices.length === 0) {
@@ -223,8 +468,8 @@ document.addEventListener('DOMContentLoaded', () => {
           <div class="voice-card-info">
             <span class="voice-card-flag">🌐</span>
             <div class="voice-card-texts">
-              <strong class="voice-card-name">Voz predeterminada del navegador</strong>
-              <span class="voice-card-region">Español Latinoamericano</span>
+              <strong class="voice-card-name">${isEn ? 'Default browser voice' : 'Voz predeterminada del navegador'}</strong>
+              <span class="voice-card-region">${isEn ? 'English (Auto)' : 'Español Latinoamericano'}</span>
             </div>
           </div>
         </div>
@@ -235,6 +480,12 @@ document.addEventListener('DOMContentLoaded', () => {
     voiceOptionsList.innerHTML = voices.map(v => {
       const details = window.speechNarrator.getVoiceDetails(v);
       const isSelected = current && current.name === v.name;
+      const previewTitle = isEn ? 'Listen to sample' : 'Escuchar muestra';
+      const previewText = isEn ? '▶️ Preview' : '▶️ Probar';
+      const selectText = isSelected 
+        ? (isEn ? '✓ Active' : '✓ Activa')
+        : (isEn ? 'Select' : 'Elegir');
+
       return `
         <div class="voice-card ${isSelected ? 'selected' : ''}" data-voice-name="${escapeHtml(v.name)}">
           <div class="voice-card-info">
@@ -245,11 +496,11 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
           </div>
           <div class="voice-card-actions">
-            <button type="button" class="btn-voice-preview" data-preview-voice="${escapeHtml(v.name)}" title="Escuchar muestra">
-              ▶️ Probar
+            <button type="button" class="btn-voice-preview" data-preview-voice="${escapeHtml(v.name)}" title="${previewTitle}">
+              ${previewText}
             </button>
             <button type="button" class="btn-voice-select ${isSelected ? 'active' : ''}" data-select-voice="${escapeHtml(v.name)}">
-              ${isSelected ? '✓ Activa' : 'Elegir'}
+              ${selectText}
             </button>
           </div>
         </div>
@@ -457,7 +708,7 @@ document.addEventListener('DOMContentLoaded', () => {
       window.gameAudio.playAlarm();
       window.astroMascot.setEmotion(
         'thinking',
-        '¡Comandante! Necesito registrar tu nombre en el manifiesto oficial de vuelo antes de asumir el mando.'
+        window.i18n ? window.i18n.t('mascot_need_name') : '¡Comandante! Necesito registrar tu nombre en el manifiesto oficial de vuelo antes de asumir el mando.'
       );
       return;
     }
@@ -487,7 +738,10 @@ document.addEventListener('DOMContentLoaded', () => {
     screenGame.classList.remove('hidden');
 
     // Estado inicial de AstroCan
-    window.astroMascot.setEmotion('greeting', `¡Comandante ${name}, base transferida a tu mando! Gestionemos con sabiduría los recursos.`);
+    const initialGreeting = window.i18n
+      ? window.i18n.t('mascot_start_mission', { name })
+      : `¡Comandante ${name}, base transferida a tu mando! Gestionemos con sabiduría los recursos.`;
+    window.astroMascot.setEmotion('greeting', initialGreeting);
 
     // Conectar observador de estado reactivo
     window.gameState.subscribe(updateHUD);
@@ -548,7 +802,13 @@ document.addEventListener('DOMContentLoaded', () => {
       screenGameOver.classList.add('hidden');
       screenWelcome.classList.remove('hidden');
 
-      window.astroMascot.setEmotion('greeting', 'Misión cancelada. Puedes ingresar un nuevo nombre o elegir otro nivel de entrenamiento.');
+      const isEn = window.i18n && window.i18n.getLanguage() === 'en';
+      window.astroMascot.setEmotion(
+        'greeting',
+        isEn
+          ? 'Mission aborted. You can enter a new astronaut name or pick another training level.'
+          : 'Misión cancelada. Puedes ingresar un nuevo nombre o elegir otro nivel de entrenamiento.'
+      );
     });
   }
 
@@ -563,8 +823,9 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function updateHUD(state) {
+    const isEn = window.i18n && window.i18n.getLanguage() === 'en';
     if (hudPlayerName) hudPlayerName.textContent = state.playerName;
-    if (hudDayText) hudDayText.textContent = `Día ${state.currentDay} / ${state.totalDays}`;
+    if (hudDayText) hudDayText.textContent = `${isEn ? 'Day' : 'Día'} ${state.currentDay} / ${state.totalDays}`;
 
     const env = state.getEnvironmentalStatus();
     if (hudEnvIcon) hudEnvIcon.textContent = env.icon || '☀️';
@@ -604,7 +865,7 @@ document.addEventListener('DOMContentLoaded', () => {
     updateSideVal(sideValEnergy, state.resources.energy);
     updateSideVal(sideValHealth, state.resources.health);
     updateSideVal(sideValIntegrity, state.resources.integrity);
-    if (sideValScience) sideValScience.textContent = `${state.resources.science} pts`;
+    if (sideValScience) sideValScience.textContent = `${state.resources.science} ${isEn ? 'pts' : 'pts'}`;
 
     // Verificar fin de juego
     if (state.isGameOver && state.gameResult !== 'ABORTED') {
@@ -619,22 +880,29 @@ document.addEventListener('DOMContentLoaded', () => {
   function getScaledOption(opt, state) {
     if (opt.isMinigame) return opt;
 
+    const isEn = window.i18n && window.i18n.getLanguage() === 'en';
     const scaledDelta = state.scaleDelta(opt.delta);
+
+    const sciLabel = isEn ? 'Science' : 'Ciencia';
+    const o2Label = 'O2';
+    const energyLabel = isEn ? 'Energy' : 'Energía';
+    const healthLabel = isEn ? 'Health' : 'Salud';
+    const integrityLabel = isEn ? 'Integrity' : 'Integridad';
 
     // Formatear texto dinámico de ganancia
     const gains = [];
-    if (scaledDelta.science > 0) gains.push(`+${scaledDelta.science} Ciencia`);
-    if (scaledDelta.oxygen > 0) gains.push(`+${scaledDelta.oxygen}% O2`);
-    if (scaledDelta.energy > 0) gains.push(`+${scaledDelta.energy}% Energía`);
-    if (scaledDelta.health > 0) gains.push(`+${scaledDelta.health}% Salud`);
-    if (scaledDelta.integrity > 0) gains.push(`+${scaledDelta.integrity}% Integridad`);
+    if (scaledDelta.science > 0) gains.push(`+${scaledDelta.science} ${sciLabel}`);
+    if (scaledDelta.oxygen > 0) gains.push(`+${scaledDelta.oxygen}% ${o2Label}`);
+    if (scaledDelta.energy > 0) gains.push(`+${scaledDelta.energy}% ${energyLabel}`);
+    if (scaledDelta.health > 0) gains.push(`+${scaledDelta.health}% ${healthLabel}`);
+    if (scaledDelta.integrity > 0) gains.push(`+${scaledDelta.integrity}% ${integrityLabel}`);
 
     // Formatear texto dinámico de costo
     const costs = [];
-    if (scaledDelta.oxygen < 0) costs.push(`${scaledDelta.oxygen}% O2`);
-    if (scaledDelta.energy < 0) costs.push(`${scaledDelta.energy}% Energía`);
-    if (scaledDelta.health < 0) costs.push(`${scaledDelta.health}% Salud`);
-    if (scaledDelta.integrity < 0) costs.push(`${scaledDelta.integrity}% Integridad`);
+    if (scaledDelta.oxygen < 0) costs.push(`${scaledDelta.oxygen}% ${o2Label}`);
+    if (scaledDelta.energy < 0) costs.push(`${scaledDelta.energy}% ${energyLabel}`);
+    if (scaledDelta.health < 0) costs.push(`${scaledDelta.health}% ${healthLabel}`);
+    if (scaledDelta.integrity < 0) costs.push(`${scaledDelta.integrity}% ${integrityLabel}`);
 
     const gainText = gains.length > 0 ? gains.join(', ') : opt.gainText;
     const costText = costs.length > 0 ? costs.join(', ') : opt.costText;
@@ -674,24 +942,37 @@ document.addEventListener('DOMContentLoaded', () => {
       window.gameAudio.playQuindar(true);
     }
 
-    dilemmaTag.textContent = currentEvent.tag;
-    dilemmaTitle.textContent = currentEvent.title;
-    dilemmaSender.textContent = `📡 Transmisión de: ${currentEvent.sender}`;
-    dilemmaDesc.textContent = currentEvent.description;
+    renderDilemma(currentEvent);
+  }
+
+  function renderDilemma(rawEvent) {
+    if (!rawEvent) return;
+    const isEn = window.i18n && window.i18n.getLanguage() === 'en';
+    const localized = window.i18n ? window.i18n.localizeEvent(rawEvent) : rawEvent;
+
+    dilemmaTag.textContent = localized.tag;
+    dilemmaTitle.textContent = localized.title;
+    dilemmaSender.textContent = isEn ? `📡 Transmission from: ${localized.sender}` : `📡 Transmisión de: ${localized.sender}`;
+    dilemmaDesc.textContent = localized.description;
+
+    if (btnNarrateDilemma) {
+      btnNarrateDilemma.innerHTML = isEn ? '📢 Listen to Mission' : '📢 Escuchar Misión';
+      btnNarrateDilemma.title = isEn ? 'Listen to this mission dilemma in audio' : 'Reproducir en audio este dilema';
+    }
 
     // Mostrar Fuente Oficial de la NASA con certificación de ciencia real
-    if (dilemmaSourceBox && currentEvent.dataSource) {
+    if (dilemmaSourceBox && localized.dataSource) {
       dilemmaSourceBox.innerHTML = `
         <div class="source-header">
-          <span class="source-verified-badge">🔬 CIENCIA REAL DE LA NASA</span>
-          <span class="source-live-tag">DATOS ABIERTOS</span>
+          <span class="source-verified-badge">${isEn ? '🔬 REAL NASA SCIENCE' : '🔬 CIENCIA REAL DE LA NASA'}</span>
+          <span class="source-live-tag">${isEn ? 'OPEN DATA' : 'DATOS ABIERTOS'}</span>
         </div>
         <div class="source-content">
-          <strong>🛰️ Conjunto de Datos / Estudio Oficial:</strong> 
-          <a href="${currentEvent.dataSource.url}" target="_blank" rel="noopener noreferrer" title="Consultar repositorio científico oficial de la NASA">
-            ${currentEvent.dataSource.name} ↗
+          <strong>🛰️ ${isEn ? 'Official Dataset / Study:' : 'Conjunto de Datos / Estudio Oficial:'}</strong> 
+          <a href="${localized.dataSource.url}" target="_blank" rel="noopener noreferrer" title="${isEn ? 'View official NASA science repository' : 'Consultar repositorio científico oficial de la NASA'}">
+            ${localized.dataSource.name} ↗
           </a>
-          <div class="source-detail-text">${currentEvent.dataSource.detail}</div>
+          <div class="source-detail-text">${localized.dataSource.detail}</div>
         </div>
       `;
       dilemmaSourceBox.classList.remove('hidden');
@@ -699,10 +980,10 @@ document.addEventListener('DOMContentLoaded', () => {
       dilemmaSourceBox.classList.add('hidden');
     }
 
-    dilemmaScienceBox.innerHTML = `<strong>💡 Contexto Científico NASA:</strong> ${currentEvent.scientificContext}`;
+    dilemmaScienceBox.innerHTML = `<strong>💡 ${isEn ? 'NASA Scientific Context:' : 'Contexto Científico NASA:'}</strong> ${localized.scientificContext}`;
 
     // Escalar opciones según nivel de dificultad
-    currentScaledOptions = currentEvent.options.map(opt => getScaledOption(opt, window.gameState));
+    currentScaledOptions = (localized.options || []).map(opt => getScaledOption(opt, window.gameState));
 
     // Renderizar opciones con compensaciones explícitas y matemáticas precisas
     dilemmaOptionsContainer.innerHTML = '';
@@ -711,23 +992,25 @@ document.addEventListener('DOMContentLoaded', () => {
       optCard.className = 'tradeoff-option-card';
       optCard.innerHTML = `
         <div class="option-header-row">
-          <span class="option-badge">Opción ${String.fromCharCode(65 + idx)}</span>
+          <span class="option-badge">${isEn ? 'Option' : 'Opción'} ${String.fromCharCode(65 + idx)}</span>
           <strong class="option-title">${opt.title}</strong>
-          <button type="button" class="btn-listen-option" data-opt-idx="${idx}" title="Escuchar esta opción en audio">
-            🔊 Escuchar Opción
+          <button type="button" class="btn-listen-option" data-opt-idx="${idx}" title="${isEn ? 'Listen to this option with audio narration' : 'Escuchar esta opción en audio'}">
+            🔊 ${isEn ? 'Listen to Option' : 'Escuchar Opción'}
           </button>
         </div>
         <p class="option-action">${opt.actionText}</p>
         <div class="tradeoff-indicators">
           <div class="gain-badge">
-            <span class="icon">✅ GANANCIA:</span> ${opt.gainText}
+            <span class="icon">✅ ${isEn ? 'GAIN:' : 'GANANCIA:'}</span> ${opt.gainText}
           </div>
           <div class="cost-badge">
-            <span class="icon">⚠️ COSTO / SACRIFICIO:</span> ${opt.costText}
+            <span class="icon">⚠️ ${isEn ? 'SACRIFICE / COST:' : 'COSTO / SACRIFICIO:'}</span> ${opt.costText}
           </div>
         </div>
         <button class="btn-choose-option">
-          ${opt.isMinigame ? '🚀 INICIAR ACCIÓN MANUAL' : '👉 EJECUTAR ESTA ORDEN'}
+          ${opt.isMinigame 
+            ? (isEn ? '🚀 START MANUAL ACTION' : '🚀 INICIAR ACCIÓN MANUAL') 
+            : (isEn ? '👉 EXECUTE THIS ORDER' : '👉 EJECUTAR ESTA ORDEN')}
         </button>
       `;
 
@@ -751,12 +1034,13 @@ document.addEventListener('DOMContentLoaded', () => {
   // UTILIDAD: Generar HTML de la tabla de cambios de recursos
   // ========================================================================
   function buildResourceChangeTable(before, after, label) {
+    const isEn = window.i18n && window.i18n.getLanguage() === 'en';
     const resources = [
-      { key: 'oxygen',    icon: '💨', name: 'Oxígeno (O2)' },
-      { key: 'energy',    icon: '⚡', name: 'Energía & Baterías' },
-      { key: 'health',    icon: '❤️', name: 'Salud Tripulación' },
-      { key: 'integrity', icon: '🛡️', name: 'Integridad Casco' },
-      { key: 'science',   icon: '🔬', name: 'Puntos de Ciencia' }
+      { key: 'oxygen',    icon: '💨', name: isEn ? 'Oxygen (O2)' : 'Oxígeno (O2)' },
+      { key: 'energy',    icon: '⚡', name: isEn ? 'Energy & Batteries' : 'Energía & Baterías' },
+      { key: 'health',    icon: '❤️', name: isEn ? 'Crew Health' : 'Salud Tripulación' },
+      { key: 'integrity', icon: '🛡️', name: isEn ? 'Hull Integrity' : 'Integridad Casco' },
+      { key: 'science',   icon: '🔬', name: isEn ? 'Science Points' : 'Puntos de Ciencia' }
     ];
 
     let rows = '';
@@ -764,12 +1048,13 @@ document.addEventListener('DOMContentLoaded', () => {
       const b = Math.round(before[r.key]);
       const a = Math.round(after[r.key]);
       const diff = a - b;
+      const noChangeText = isEn ? '→ No change' : '→ Sin cambio';
       if (diff === 0) {
         rows += `
           <tr class="change-row neutral">
             <td>${r.icon} ${r.name}</td>
             <td>${b}${r.key === 'science' ? '' : '%'}</td>
-            <td class="change-neutral">→ Sin cambio</td>
+            <td class="change-neutral">${noChangeText}</td>
             <td>${a}${r.key === 'science' ? '' : '%'}</td>
           </tr>`;
       } else {
@@ -790,10 +1075,10 @@ document.addEventListener('DOMContentLoaded', () => {
         <table class="resource-change-table">
           <thead>
             <tr>
-              <th>Recurso</th>
-              <th>Antes</th>
+              <th>${isEn ? 'Resource' : 'Recurso'}</th>
+              <th>${isEn ? 'Before' : 'Antes'}</th>
               <th>${label}</th>
-              <th>Ahora</th>
+              <th>${isEn ? 'Now' : 'Ahora'}</th>
             </tr>
           </thead>
           <tbody>${rows}</tbody>
@@ -851,12 +1136,13 @@ document.addEventListener('DOMContentLoaded', () => {
       spaceCanvas.setSolarStorm(false);
       dilemmaCard.classList.remove('solar-alert-active');
 
+      const isEn = window.i18n && window.i18n.getLanguage() === 'en';
       const scaledDelta = window.gameState.scaleDelta(rawDelta);
       const before = { ...window.gameState.resources };
       const record = window.gameState.applyResourceDelta(
         scaledDelta,
-        'Desvío de Energía Escudo Solar DONKI',
-        'Gestión en tiempo real de CME'
+        isEn ? 'DONKI Solar Shield Power Divert' : 'Desvío de Energía Escudo Solar DONKI',
+        isEn ? 'Real-time CME mitigation' : 'Gestión en tiempo real de CME'
       );
       const after = { ...window.gameState.resources };
 
@@ -875,12 +1161,13 @@ document.addEventListener('DOMContentLoaded', () => {
     roverGame.start(minigameContainer, (rawDelta, debrief) => {
       minigameContainer.classList.add('hidden');
 
+      const isEn = window.i18n && window.i18n.getLanguage() === 'en';
       const scaledDelta = window.gameState.scaleDelta(rawDelta);
       const before = { ...window.gameState.resources };
       const record = window.gameState.applyResourceDelta(
         scaledDelta,
-        'Expedición de Hielo Cráter Shackleton',
-        'Extracción de recursos in-situ (ISRU)'
+        isEn ? 'Shackleton Crater Ice Expedition' : 'Expedición de Hielo Cráter Shackleton',
+        isEn ? 'In-situ resource utilization (ISRU)' : 'Extracción de recursos in-situ (ISRU)'
       );
       const after = { ...window.gameState.resources };
 
@@ -898,11 +1185,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (gameContentScroll) gameContentScroll.scrollTop = 0;
 
+    const isEn = window.i18n && window.i18n.getLanguage() === 'en';
+    const orderLabel = isEn ? 'Your Order' : 'Tu Orden';
+    const receiptTitle = isEn ? '📊 Impact of your Order on Resources' : '📊 Impacto de tu Orden en los Recursos';
+
     if (window.gameState.isGameOver) {
       transmissionText.innerHTML = `
         <div class="log-quote">"${feedbackText}"</div>
-        <h4 class="receipt-title">📊 Impacto de tu Orden en los Recursos</h4>
-        ${buildResourceChangeTable(before, after, 'Tu Orden')}
+        <h4 class="receipt-title">${receiptTitle}</h4>
+        ${buildResourceChangeTable(before, after, orderLabel)}
       `;
       btnNextDay.classList.add('hidden');
       return;
@@ -910,14 +1201,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     transmissionText.innerHTML = `
       <div class="log-quote">"${feedbackText}"</div>
-      <h4 class="receipt-title">📊 Impacto de tu Orden en los Recursos</h4>
-      ${buildResourceChangeTable(before, after, 'Tu Orden')}
+      <h4 class="receipt-title">${receiptTitle}</h4>
+      ${buildResourceChangeTable(before, after, orderLabel)}
       <div class="log-reminder">
-        <em>Ahora se calculará el consumo de supervivencia del día. Tu base gasta recursos solo por mantener con vida a los astronautas.</em>
+        <em>${isEn ? 'Daily survival consumption will now be calculated. Your base consumes resources just by keeping the astronauts alive.' : 'Ahora se calculará el consumo de supervivencia del día. Tu base gasta recursos solo por mantener con vida a los astronautas.'}</em>
       </div>
     `;
 
-    btnNextDay.textContent = '📋 VER CONSUMO DEL DÍA';
+    btnNextDay.textContent = isEn ? '📋 VIEW DAILY CONSUMPTION' : '📋 VER CONSUMO DEL DÍA';
     btnNextDay.classList.remove('hidden');
     btnNextDay.onclick = () => {
       window.gameAudio.playClick();
@@ -943,63 +1234,65 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (state.isGameOver) return;
 
-    const diffLabel = state.difficulty === 1 ? 'Cadete'
-                    : state.difficulty === 2 ? 'Especialista'
-                    : 'Comandante';
+    const isEn = window.i18n && window.i18n.getLanguage() === 'en';
+    const diffLabel = state.difficulty === 1 ? (isEn ? 'Cadet' : 'Cadete')
+                    : state.difficulty === 2 ? (isEn ? 'Specialist' : 'Especialista')
+                    : (isEn ? 'Commander' : 'Comandante');
 
     transmissionText.innerHTML = `
       <h3 class="transmission-title" style="margin-bottom: 10px;">
-        📋 Reporte de Consumo Diario — Día ${state.currentDay} (Nivel ${diffLabel})
+        ${isEn ? `📋 Daily Consumption Report — Day ${state.currentDay} (${diffLabel} Level)` : `📋 Reporte de Consumo Diario — Día ${state.currentDay} (Nivel ${diffLabel})`}
       </h3>
 
       <div class="decay-explanation-card">
         <p class="decay-intro">
-          Cada día que pasa, tu base lunar gasta recursos <strong>automáticamente</strong> solo por mantener
-          con vida a los 4 astronautas. Estos costos son inevitables y representan las necesidades
-          reales de supervivencia en el espacio profundo:
+          ${isEn 
+            ? 'Every passing day, your lunar base <strong>automatically</strong> expends resources just to keep all 4 astronauts alive. These unavoidable costs reflect the real biological and engineering demands of deep space survival:'
+            : 'Cada día que pasa, tu base lunar gasta recursos <strong>automáticamente</strong> solo por mantener con vida a los 4 astronautas. Estos costos son inevitables y representan las necesidades reales de supervivencia en el espacio profundo:'}
         </p>
 
         <div class="decay-item-grid">
           <div class="decay-item">
             <div class="decay-item-header">
-              <span>💨 Oxígeno: <strong class="change-negative">-${plan.rates.oxygen}%</strong></span>
+              <span>💨 ${isEn ? 'Oxygen:' : 'Oxígeno:'} <strong class="change-negative">-${plan.rates.oxygen}%</strong></span>
             </div>
             <p class="decay-item-reason">${plan.reasons.oxygen}</p>
           </div>
 
           <div class="decay-item">
             <div class="decay-item-header">
-              <span>⚡ Energía: <strong class="change-negative">-${plan.rates.energy}%</strong></span>
+              <span>⚡ ${isEn ? 'Energy:' : 'Energía:'} <strong class="change-negative">-${plan.rates.energy}%</strong></span>
             </div>
             <p class="decay-item-reason">${plan.reasons.energy}</p>
           </div>
 
           <div class="decay-item">
             <div class="decay-item-header">
-              <span>❤️ Salud: <strong class="change-negative">-${plan.rates.health}%</strong></span>
+              <span>❤️ ${isEn ? 'Health:' : 'Salud:'} <strong class="change-negative">-${plan.rates.health}%</strong></span>
             </div>
             <p class="decay-item-reason">${plan.reasons.health}</p>
           </div>
 
           <div class="decay-item">
             <div class="decay-item-header">
-              <span>🛡️ Integridad: <strong class="change-negative">-${plan.rates.integrity}%</strong></span>
+              <span>🛡️ ${isEn ? 'Integrity:' : 'Integridad:'} <strong class="change-negative">-${plan.rates.integrity}%</strong></span>
             </div>
             <p class="decay-item-reason">${plan.reasons.integrity}</p>
           </div>
         </div>
       </div>
 
-      <h4 class="receipt-title" style="margin-top: 16px;">📊 Balance Final del Día</h4>
-      ${buildResourceChangeTable(beforeDecay, afterDecay, 'Consumo Diario')}
+      <h4 class="receipt-title" style="margin-top: 16px;">📊 ${isEn ? 'Final Balance of the Day' : 'Balance Final del Día'}</h4>
+      ${buildResourceChangeTable(beforeDecay, afterDecay, isEn ? 'Daily Consumption' : 'Consumo Diario')}
 
       <div class="log-reminder" style="margin-top: 12px;">
-        <em>⚖️ Recuerda: en el espacio profundo ninguna decisión es neutra. Las misiones más
-        largas y difíciles dosifican los recursos con mayor rigor. ¡Planifica con sabiduría, Comandante!</em>
+        <em>${isEn
+          ? '⚖️ Remember: in deep space no decision is neutral. Longer and harder missions require even stricter resource budgeting. Plan wisely, Commander!'
+          : '⚖️ Recuerda: en el espacio profundo ninguna decisión es neutra. Las misiones más largas y difíciles dosifican los recursos con mayor rigor. ¡Planifica con sabiduría, Comandante!'}</em>
       </div>
     `;
 
-    btnNextDay.textContent = '☀️ AVANZAR AL SIGUIENTE DÍA LUNAR';
+    btnNextDay.textContent = isEn ? '☀️ ADVANCE TO NEXT LUNAR DAY' : '☀️ AVANZAR AL SIGUIENTE DÍA LUNAR';
     btnNextDay.onclick = () => {
       window.gameAudio.playClick();
       state.advanceDay();
@@ -1018,21 +1311,28 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const scoreData = state.calculateFinalScore();
     const isVictory = state.gameResult === 'VICTORY';
+    const isEn = window.i18n && window.i18n.getLanguage() === 'en';
 
     // Reacción de fin de juego para AstroCan
     window.astroMascot.reactToGameOver(isVictory);
 
     if (isVictory) {
       window.gameAudio.playVictory();
-      gameoverTitle.innerHTML = `🏆 ¡MISIÓN ORBITA5 CUMPLIDA!`;
-      gameoverSubtitle.innerHTML = `Felicitaciones, <strong>Comandante ${state.playerName}</strong>. Has logrado mantener con vida al puesto avanzado lunar y completar con éxito la misión de ${state.totalDays} días.`;
+      gameoverTitle.innerHTML = isEn ? `🏆 ORBITA5 MISSION ACCOMPLISHED!` : `🏆 ¡MISIÓN ORBITA5 CUMPLIDA!`;
+      gameoverSubtitle.innerHTML = isEn
+        ? `Congratulations, <strong>Commander ${state.playerName}</strong>. You successfully sustained the lunar outpost and completed the ${state.totalDays}-day mission.`
+        : `Felicitaciones, <strong>Comandante ${state.playerName}</strong>. Has logrado mantener con vida al puesto avanzado lunar y completar con éxito la misión de ${state.totalDays} días.`;
       gameoverRank.innerHTML = `🏆 ${scoreData.rank}`;
       gameoverScore.textContent = scoreData.score;
-      gameoverDays.textContent = `${scoreData.daysSurvived} / ${scoreData.totalDays} Días`;
+      gameoverDays.textContent = `${scoreData.daysSurvived} / ${scoreData.totalDays} ${isEn ? 'Days' : 'Días'}`;
       gameoverScience.textContent = `${scoreData.scienceCollected} Pts`;
 
       gameoverLessonBox.className = 'lesson-card lesson-success';
-      gameoverLessonText.innerHTML = `
+      gameoverLessonText.innerHTML = isEn ? `
+        <h4>🎓 Aerospace Leadership Certificate</h4>
+        <p>You demonstrated a mastery of space exploration's most important principle: <strong>real trade-offs</strong>. You knew when to sacrifice science to secure the astronauts' oxygen, and how to ration electrical power amidst DONKI solar weather warnings and OSDR biological experiments.</p>
+        <p>You are a true role model for future human missions to Mars!</p>
+      ` : `
         <h4>🎓 Certificado de Liderazgo Aeroespacial</h4>
         <p>Demostraste comprender el principio más importante de la exploración espacial: <strong>las compensaciones reales (trade-offs)</strong>. Supiste cuándo sacrificar investigación para asegurar el oxígeno de los astronautas, y cómo dosificar la energía eléctrica ante las alertas de clima solar DONKI y los estudios biológicos OSDR.</p>
         <p>¡Eres un verdadero ejemplo de astronauta para las futuras misiones humanas a Marte!</p>
@@ -1040,29 +1340,33 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
       window.gameAudio.playDefeat();
       const fail = state.failureReason || {
-        system: 'SOPORTE VITAL',
-        title: 'Misión Evacuada',
-        explanation: 'Uno de los recursos vitales cayó a cero.',
-        scienceLesson: 'En el espacio, no hay segundas oportunidades sin previsión.'
+        system: isEn ? 'LIFE SUPPORT' : 'SOPORTE VITAL',
+        title: isEn ? 'Mission Evacuated' : 'Misión Evacuada',
+        explanation: isEn ? 'One of the vital resources dropped to zero.' : 'Uno de los recursos vitales cayó a cero.',
+        scienceLesson: isEn ? 'In deep space, there are no second chances without foresight.' : 'En el espacio, no hay segundas oportunidades sin previsión.'
       };
 
-      gameoverTitle.innerHTML = `⚠️ PROTOCOLO DE EMERGENCIA ACTIVADO`;
-      gameoverSubtitle.innerHTML = `Atención, <strong>Astronauta ${state.playerName}</strong>: La base lunar sufrió una emergencia crítica no sostenible. Se activó la cápsula de escape Orion para el retorno de emergencia a la Tierra.`;
-      gameoverRank.innerHTML = `Causa de Aborto: ${fail.system}`;
+      gameoverTitle.innerHTML = isEn ? `⚠️ EMERGENCY PROTOCOL ACTIVATED` : `⚠️ PROTOCOLO DE EMERGENCIA ACTIVADO`;
+      gameoverSubtitle.innerHTML = isEn
+        ? `Attention, <strong>Astronaut ${state.playerName}</strong>: The lunar outpost suffered an unsustainable critical emergency. The Orion escape capsule was activated for emergency return to Earth.`
+        : `Atención, <strong>Astronauta ${state.playerName}</strong>: La base lunar sufrió una emergencia crítica no sostenible. Se activó la cápsula de escape Orion para el retorno de emergencia a la Tierra.`;
+      gameoverRank.innerHTML = isEn ? `Abort Cause: ${fail.system}` : `Causa de Aborto: ${fail.system}`;
       gameoverScore.textContent = scoreData.score;
-      gameoverDays.textContent = `${scoreData.daysSurvived} / ${scoreData.totalDays} Días`;
+      gameoverDays.textContent = `${scoreData.daysSurvived} / ${scoreData.totalDays} ${isEn ? 'Days' : 'Días'}`;
       gameoverScience.textContent = `${scoreData.scienceCollected} Pts`;
 
       gameoverLessonBox.className = 'lesson-card lesson-failure';
       gameoverLessonText.innerHTML = `
-        <h4>🛑 Lo que ocurrió: ${fail.title}</h4>
+        <h4>🛑 ${isEn ? 'What happened:' : 'Lo que ocurrió:'} ${fail.title}</h4>
         <p>${fail.explanation}</p>
         <div class="science-truth-pill">
-          <strong>🔬 La lección científica real de la NASA:</strong>
+          <strong>🔬 ${isEn ? 'The real NASA scientific lesson:' : 'La lección científica real de la NASA:'}</strong>
           <p>${fail.scienceLesson}</p>
         </div>
         <p style="margin-top: 10px; font-weight: 600;">
-          ¡No te rindas! Todos los ingenieros espaciales aprenden de las simulaciones antes de volar. ¡Revisa tu estrategia de recursos e inténtalo de nuevo!
+          ${isEn 
+            ? 'Do not give up! All space engineers learn from simulations before flight. Review your resource strategy and try again!' 
+            : '¡No te rindas! Todos los ingenieros espaciales aprenden de las simulaciones antes de volar. ¡Revisa tu estrategia de recursos e inténtalo de nuevo!'}
         </p>
       `;
     }
@@ -1076,21 +1380,22 @@ document.addEventListener('DOMContentLoaded', () => {
     btnShareCert.addEventListener('click', async () => {
       if (isSharingCert) return;
       isSharingCert = true;
-      const originalText = btnShareCert.innerHTML;
-      btnShareCert.innerHTML = '⏳ GENERANDO CERTIFICADO...';
+      const isEn = window.i18n && window.i18n.getLanguage() === 'en';
+      const originalText = isEn ? '📤 SHARE CERTIFICATE' : '📤 COMPARTIR CERTIFICADO';
+      btnShareCert.innerHTML = isEn ? '⏳ GENERATING CERTIFICATE...' : '⏳ GENERANDO CERTIFICADO...';
 
       try {
         const outcome = await window.certificateGenerator.shareOrDownload(window.gameState);
         if (outcome === 'shared') {
-          btnShareCert.innerHTML = '✅ ¡COMPARTIDO CON ÉXITO!';
+          btnShareCert.innerHTML = isEn ? '✅ SHARED SUCCESSFULLY!' : '✅ ¡COMPARTIDO CON ÉXITO!';
         } else if (outcome === 'downloaded') {
-          btnShareCert.innerHTML = '📥 ¡CERTIFICADO DESCARGADO!';
+          btnShareCert.innerHTML = isEn ? '📥 CERTIFICATE DOWNLOADED!' : '📥 ¡CERTIFICADO DESCARGADO!';
         } else {
-          btnShareCert.innerHTML = '📤 COMPARTIR CERTIFICADO';
+          btnShareCert.innerHTML = isEn ? '📤 SHARE CERTIFICATE' : '📤 COMPARTIR CERTIFICADO';
         }
       } catch (err) {
         console.error('Error al exportar certificado:', err);
-        btnShareCert.innerHTML = '⚠️ ERROR AL EXPORTAR';
+        btnShareCert.innerHTML = isEn ? '⚠️ EXPORT ERROR' : '⚠️ ERROR AL EXPORTAR';
       } finally {
         setTimeout(() => {
           btnShareCert.innerHTML = originalText;
@@ -1132,34 +1437,35 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function renderScienceArchive() {
+    const isEn = window.i18n && window.i18n.getLanguage() === 'en';
     const studies = window.osdrRepository.getAllStudies();
     const donkiEvents = window.donkiService.historicalEvents;
 
     scienceContent.innerHTML = `
       <div class="science-tabs">
-        <h3>🧬 Repositorio de Biología Espacial OSDR (NASA Open Science Data Repository)</h3>
-        <p class="section-intro">Estudios auténticos de biología espacial y medicina de astronautas consultables en <a href="https://osdr.nasa.gov" target="_blank" rel="noopener noreferrer">osdr.nasa.gov</a>:</p>
+        <h3>🧬 ${isEn ? 'NASA OSDR Space Biology Repository (Open Science Data Repository)' : 'Repositorio de Biología Espacial OSDR (NASA Open Science Data Repository)'}</h3>
+        <p class="section-intro">${isEn ? 'Authentic space biology and astronaut medicine studies searchable at' : 'Estudios auténticos de biología espacial y medicina de astronautas consultables en'} <a href="https://osdr.nasa.gov" target="_blank" rel="noopener noreferrer">osdr.nasa.gov</a>:</p>
         <div class="science-cards-grid">
           ${studies.map(s => `
             <div class="science-archive-item">
               <div class="archive-header-row">
                 <span class="archive-badge">${s.id} • ${s.badge}</span>
-                <a href="${s.studyUrl}" target="_blank" rel="noopener noreferrer" class="archive-source-link">Ver en NASA OSDR ↗</a>
+                <a href="${s.studyUrl}" target="_blank" rel="noopener noreferrer" class="archive-source-link">${isEn ? 'View on NASA OSDR ↗' : 'Ver en NASA OSDR ↗'}</a>
               </div>
               <h4>${s.title}</h4>
-              <p><strong>Organismo / Muestra:</strong> ${s.organism}</p>
-              <p><strong>Instalación NASA:</strong> ${s.nasaFacility}</p>
+              <p><strong>${isEn ? 'Organism / Sample:' : 'Organismo / Muestra:'}</strong> ${s.organism}</p>
+              <p><strong>${isEn ? 'NASA Facility:' : 'Instalación NASA:'}</strong> ${s.nasaFacility}</p>
               <p class="archive-kid-expl">${s.kidExplanation}</p>
               <div class="archive-tradeoff">
-                <strong>Compensación en ORBITA5:</strong><br>
+                <strong>${isEn ? 'Trade-off in ORBITA5:' : 'Compensación en ORBITA5:'}</strong><br>
                 ${s.tradeoffImpact.choiceYes}
               </div>
             </div>
           `).join('')}
         </div>
 
-        <h3 style="margin-top: 24px;">☀️ Base de Clima Espacial DONKI (Space Weather Database)</h3>
-        <p class="section-intro">Eventos solares auténticos monitoreados por la flota de heliofísica de la NASA consultables en <a href="https://api.nasa.gov/DONKI" target="_blank" rel="noopener noreferrer">api.nasa.gov/DONKI</a>:</p>
+        <h3 style="margin-top: 24px;">☀️ ${isEn ? 'NASA DONKI Space Weather Database' : 'Base de Clima Espacial DONKI (Space Weather Database)'}</h3>
+        <p class="section-intro">${isEn ? 'Authentic solar events tracked by NASA heliophysics fleet searchable at' : 'Eventos solares auténticos monitoreados por la flota de heliofísica de la NASA consultables en'} <a href="https://api.nasa.gov/DONKI" target="_blank" rel="noopener noreferrer">api.nasa.gov/DONKI</a>:</p>
         <div class="science-cards-grid">
           ${donkiEvents.map(e => `
             <div class="science-archive-item">
@@ -1167,11 +1473,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 <span class="archive-badge" style="background: rgba(255, 71, 87, 0.2); border-color: #ff4757;">
                   ${e.id} • ${e.severity}
                 </span>
-                <span class="archive-craft-tag">${e.spacecraft || 'Flota NASA'}</span>
+                <span class="archive-craft-tag">${e.spacecraft || (isEn ? 'NASA Fleet' : 'Flota NASA')}</span>
               </div>
               <h4>${e.title}</h4>
-              <p><strong>Fecha en Catálogo:</strong> ${e.catalogDate} | <strong>Velocidad:</strong> ${e.speed} km/s</p>
-              <p><strong>Dosis Estimada:</strong> ${e.radiationDoseMsv} mSv</p>
+              <p><strong>${isEn ? 'Catalog Date:' : 'Fecha en Catálogo:'}</strong> ${e.catalogDate} | <strong>${isEn ? 'Speed:' : 'Velocidad:'}</strong> ${e.speed} km/s</p>
+              <p><strong>${isEn ? 'Estimated Dose:' : 'Dosis Estimada:'}</strong> ${e.radiationDoseMsv} mSv</p>
               <p class="archive-kid-expl">${e.scienceFact}</p>
             </div>
           `).join('')}
@@ -1179,4 +1485,9 @@ document.addEventListener('DOMContentLoaded', () => {
       </div>
     `;
   }
+
+  // ========================================================================
+  // Inicialización de la Interfaz con el Idioma Activo
+  // ========================================================================
+  updateLanguageUI();
 });

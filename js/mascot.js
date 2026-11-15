@@ -2,54 +2,56 @@
  * ORBITA5: Mascot Companion Controller ("AstroCan")
  * Gestiona los 7 estados emocionales del cachorro astronauta según
  * las decisiones del usuario, eventos solares, estado de recursos y fin de misión.
+ * Con soporte bilingüe (Español / Inglés).
  */
 
 class AstroMascot {
   constructor() {
     this.name = 'AstroCan';
     this.currentEmotion = 'greeting';
+    this.lastMessage = null;
 
     this.emotions = {
       greeting: {
         img: 'assets/mascot/greeting.jpg',
         title: '¡Hola, Comandante!',
-        defaultMsg: '¡Soy AstroCan! Tu copiloto en el Puesto Avanzado Lunar. ¡Listo para la misión!',
+        defaultMsgKey: 'mascot_greeting',
         borderClass: 'mascot-border-normal'
       },
       thinking: {
         img: 'assets/mascot/thinking.jpg',
         title: 'Analizando opciones...',
-        defaultMsg: 'Mmm... en el espacio profundo ninguna decisión es gratis. ¿Qué deberíamos priorizar?',
+        defaultMsgKey: 'mascot_thinking',
         borderClass: 'mascot-border-thinking'
       },
       scared: {
         img: 'assets/mascot/scared.jpg',
         title: '¡Alerta en la Base!',
-        defaultMsg: '¡Cuidado, Comandante! ¡La radiación solar o una falla crítica amenaza el hábitat!',
+        defaultMsgKey: 'mascot_scared',
         borderClass: 'mascot-border-danger'
       },
       worried: {
         img: 'assets/mascot/worried.jpg',
         title: 'Situación delicada...',
-        defaultMsg: 'Uff... ese sacrificio nos costó bastante. Habrá que vigilar de cerca las reservas.',
+        defaultMsgKey: 'mascot_worried',
         borderClass: 'mascot-border-warning'
       },
       relaxed: {
         img: 'assets/mascot/relaxed.jpg',
         title: 'Todo bajo control',
-        defaultMsg: '¡Excelente maniobra! Los sistemas están estables y podemos continuar con seguridad.',
+        defaultMsgKey: 'mascot_relaxed',
         borderClass: 'mascot-border-success'
       },
       celebrating: {
         img: 'assets/mascot/celebrating.jpg',
         title: '¡Genial, Comandante!',
-        defaultMsg: '¡Síiii! ¡Un avance científico histórico y la tripulación está a salvo!',
+        defaultMsgKey: 'mascot_celebrating',
         borderClass: 'mascot-border-celebrating'
       },
       crying: {
         img: 'assets/mascot/crying.jpg',
         title: '¡Emergencia Crítica!',
-        defaultMsg: '¡Oh no! Las reservas cayeron a cero... ¡activando cápsula de retorno de emergencia!',
+        defaultMsgKey: 'mascot_crying',
         borderClass: 'mascot-border-danger'
       }
     };
@@ -69,10 +71,23 @@ class AstroMascot {
       .filter(Boolean);
   }
 
+  isEn() {
+    return typeof window !== 'undefined' && window.i18n && window.i18n.getLanguage() === 'en';
+  }
+
   setEmotion(emotionKey, customMessage = null) {
     const data = this.emotions[emotionKey] || this.emotions.greeting;
     this.currentEmotion = emotionKey;
-    const msg = customMessage || data.defaultMsg;
+
+    let msg = customMessage;
+    if (!msg) {
+      if (typeof window !== 'undefined' && window.i18n) {
+        msg = window.i18n.t(data.defaultMsgKey);
+      } else {
+        msg = '¡Hola, Comandante! Listo para la misión lunar.';
+      }
+    }
+    this.lastMessage = msg;
 
     // Actualizar avatares
     this.avatarElements.forEach(img => {
@@ -94,19 +109,42 @@ class AstroMascot {
 
   // Reacción inicial al presentar un nuevo evento
   reactToEvent(event) {
+    const isEn = this.isEn();
     if (event.isSolarEvent) {
-      this.setEmotion('scared', '¡Alerta de tormenta solar DONKI! ¡Protones de alta energía acercándose al cráter!');
+      this.setEmotion(
+        'scared',
+        isEn
+          ? 'DONKI solar storm alert! High-energy solar protons heading towards the crater!'
+          : '¡Alerta de tormenta solar DONKI! ¡Protones de alta energía acercándose al cráter!'
+      );
     } else if (event.category === 'OSDR_BIO_RESEARCH') {
-      this.setEmotion('thinking', 'Un estudio biológico de la NASA... ¿sacrificamos oxígeno o energía para la investigación?');
+      this.setEmotion(
+        'thinking',
+        isEn
+          ? 'A NASA biological study... should we sacrifice oxygen or energy for science?'
+          : 'Un estudio biológico de la NASA... ¿sacrificamos oxígeno o energía para la investigación?'
+      );
     } else if (event.category === 'LUNAR_GEOLOGY') {
-      this.setEmotion('thinking', '¡El hielo del cráter Shackleton es oro puro para el puesto lunar! Pensemos en los riesgos.');
+      this.setEmotion(
+        'thinking',
+        isEn
+          ? 'Shackleton crater ice is pure gold for our outpost! Let\'s weigh the risks.'
+          : '¡El hielo del cráter Shackleton es oro puro para el puesto lunar! Pensemos en los riesgos.'
+      );
     } else {
-      this.setEmotion('thinking', 'Nueva transmisión de la Tierra. Revisa bien las ganancias y costos antes de ordenar.');
+      this.setEmotion(
+        'thinking',
+        isEn
+          ? 'New transmission from Earth. Check the trade-offs and benefits before ordering.'
+          : 'Nueva transmisión de la Tierra. Revisa bien las ganancias y costos antes de ordenar.'
+      );
     }
   }
 
   // Reacción a una orden ejecutada y balance de recursos
   reactToDelta(actualChanges, currentResources) {
+    const isEn = this.isEn();
+
     // Si algún recurso vital está en nivel de alarma crítica (<= 20%)
     const isCritical = currentResources.oxygen <= 20 ||
                        currentResources.energy <= 20 ||
@@ -114,48 +152,100 @@ class AstroMascot {
                        currentResources.integrity <= 20;
 
     if (isCritical) {
-      this.setEmotion('scared', '¡Peligro! Uno de nuestros sistemas vitales cayó a nivel de emergencia. ¡Necesitamos recuperarlo!');
+      this.setEmotion(
+        'scared',
+        isEn
+          ? 'Danger! One of our life-support systems dropped to emergency levels. We need to recover it!'
+          : '¡Peligro! Uno de nuestros sistemas vitales cayó a nivel de emergencia. ¡Necesitamos recuperarlo!'
+      );
       return;
     }
 
     // Gran avance en ciencia o recolección
     if (actualChanges.science >= 20 || (actualChanges.oxygen > 10 && actualChanges.energy >= 0)) {
-      this.setEmotion('celebrating', '¡Gran acierto, Comandante! ¡Sumamos valiosos descubrimientos para la misión ORBITA5!');
+      this.setEmotion(
+        'celebrating',
+        isEn
+          ? 'Great breakthrough, Commander! Vital discoveries added to the ORBITA5 mission!'
+          : '¡Gran acierto, Comandante! ¡Sumamos valiosos descubrimientos para la misión ORBITA5!'
+      );
       return;
     }
 
     // Costo severo en energía o salud
     if (actualChanges.energy <= -15 || actualChanges.health <= -15 || actualChanges.oxygen <= -15) {
-      this.setEmotion('worried', 'Uff... ese sacrificio nos dejó tocados, pero fue necesario para la supervivencia.');
+      this.setEmotion(
+        'worried',
+        isEn
+          ? 'Oof... that sacrifice took a heavy toll, but it was necessary for survival.'
+          : 'Uff... ese sacrificio nos dejó tocados, pero fue necesario para la supervivencia.'
+      );
       return;
     }
 
     // Si los recursos están en niveles confortables (> 60%)
     if (currentResources.oxygen >= 60 && currentResources.energy >= 50 && currentResources.health >= 60) {
-      this.setEmotion('relaxed', '¡Nuestras reservas están estables! Buen balance de mando, Comandante.');
+      this.setEmotion(
+        'relaxed',
+        isEn
+          ? 'Our supplies are stable! Good leadership balance, Commander.'
+          : '¡Nuestras reservas están estables! Buen balance de mando, Comandante.'
+      );
       return;
     }
 
-    this.setEmotion('relaxed', 'Orden registrada con éxito en el computador central.');
+    this.setEmotion(
+      'relaxed',
+      isEn
+        ? 'Order recorded successfully in the main computer.'
+        : 'Orden registrada con éxito en el computador central.'
+    );
   }
 
   // Reacción al consumo diario de supervivencia
   reactToDailyDecay(plan, resources) {
+    const isEn = this.isEn();
     if (resources.energy <= 25) {
-      this.setEmotion('scared', '¡Nuestras baterías están temblando! En la noche lunar necesitaremos calor sí o sí.');
+      this.setEmotion(
+        'scared',
+        isEn
+          ? 'Our batteries are trembling! In the lunar night, we will need heat no matter what.'
+          : '¡Nuestras baterías están temblando! En la noche lunar necesitaremos calor sí o sí.'
+      );
     } else if (resources.oxygen <= 25) {
-      this.setEmotion('worried', 'El consumo de O2 fue alto hoy. La tripulación necesita respirar con cuidado.');
+      this.setEmotion(
+        'worried',
+        isEn
+          ? 'Oxygen consumption was high today. The crew needs to breathe carefully.'
+          : 'El consumo de O2 fue alto hoy. La tripulación necesita respirar con cuidado.'
+      );
     } else {
-      this.setEmotion('relaxed', 'Día superado. La base consumió lo esperado para mantener con vida a los astronautas.');
+      this.setEmotion(
+        'relaxed',
+        isEn
+          ? 'Day survived. The base consumed what was expected to keep the astronauts alive.'
+          : 'Día superado. La base consumió lo esperado para mantener con vida a los astronautas.'
+      );
     }
   }
 
   // Reacción a fin de misión
   reactToGameOver(isVictory) {
+    const isEn = this.isEn();
     if (isVictory) {
-      this.setEmotion('celebrating', '¡VIVAAA! ¡Misión cumplida en el Polo Sur Lunar! ¡Eres el mejor Comandante de la galaxia!');
+      this.setEmotion(
+        'celebrating',
+        isEn
+          ? 'HOORAY! Mission accomplished at the Lunar South Pole! Best Commander in the galaxy!'
+          : '¡VIVAAA! ¡Misión cumplida en el Polo Sur Lunar! ¡Eres el mejor Comandante de la galaxia!'
+      );
     } else {
-      this.setEmotion('crying', '¡Oh no! Tuvimos que evacuar la base... ¡Pero aprendimos mucho y la próxima lo lograremos!');
+      this.setEmotion(
+        'crying',
+        isEn
+          ? 'Oh no! We had to evacuate the base... But we learned a lot and next time we will make it!'
+          : '¡Oh no! Tuvimos que evacuar la base... ¡Pero aprendimos mucho y la próxima lo lograremos!'
+      );
     }
   }
 }

@@ -96,6 +96,19 @@
   letter-spacing: 1px;
 }
 
+[data-theme="comic-pop"] .welcome-lang-picker {
+  border: 2.5px solid #000 !important;
+  box-shadow: 3px 3px 0 #000 !important;
+  background: #111425 !important;
+}
+
+[data-theme="comic-pop"] .lang-switch-btn.active {
+  background: #ffe600 !important;
+  color: #000 !important;
+  border: 1.5px solid #000 !important;
+  box-shadow: 2px 2px 0 #000 !important;
+}
+
 /* Tarjetas con estilo de viñeta de historieta: Bordes negros de tinta y sombras duras */
 [data-theme="comic-pop"] .welcome-briefing,
 [data-theme="comic-pop"] .welcome-form,
@@ -367,6 +380,17 @@
   letter-spacing: 1.5px;
   font-weight: 700;
   box-shadow: 2px 2px 0 #111 !important;
+}
+
+[data-theme="comic-retro"] .welcome-lang-picker {
+  border: 2px solid #b3804d !important;
+  background: #1a162b !important;
+}
+
+[data-theme="comic-retro"] .lang-switch-btn.active {
+  background: #f4a261 !important;
+  color: #1a162b !important;
+  border: 1.5px solid #1a162b !important;
 }
 
 /* Viñetas clásicas con doble borde de imprenta vintage */

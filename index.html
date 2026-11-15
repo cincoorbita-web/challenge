@@ -21,71 +21,77 @@
     <!-- ====== 1. PANTALLA DE BIENVENIDA ====== -->
     <section id="screen-welcome" class="screen welcome-screen">
       <div class="welcome-inner">
-        <div class="nasa-logo-badge">🚀 NASA SPACE APPS CHALLENGE 2026</div>
+        <div class="welcome-top-controls">
+          <div class="nasa-logo-badge">🚀 NASA SPACE APPS CHALLENGE 2026</div>
+          <div class="welcome-lang-picker">
+            <button type="button" class="lang-switch-btn active" data-lang="es" title="Cambiar a Español">🇪🇸 ES</button>
+            <button type="button" class="lang-switch-btn" data-lang="en" title="Switch to English">🇺🇸 EN</button>
+          </div>
+        </div>
         <h1 class="main-title">ORBITA5</h1>
-        <p class="main-subtitle">Simulador de supervivencia lunar para jóvenes astronautas (7–12 años)</p>
+        <p id="main-subtitle" class="main-subtitle">Simulador de supervivencia lunar para jóvenes astronautas (7–12 años)</p>
 
         <!-- Tarjeta de bienvenida con AstroCan -->
         <div class="welcome-mascot-card">
           <img src="assets/mascot/greeting.jpg" alt="AstroCan" class="welcome-mascot-img">
-          <div class="welcome-mascot-bubble">
+          <div id="welcome-mascot-bubble" class="welcome-mascot-bubble">
             <strong>¡Hola, Comandante!</strong> Soy <strong>AstroCan</strong>, tu fiel copiloto en el Polo Sur Lunar. ¿Cuál es tu nombre de astronauta y qué nivel de misión asumiremos hoy?
           </div>
         </div>
 
         <div class="welcome-briefing">
-          <h3>📍 Tu Misión: Base Lunar en el Polo Sur (Cráter Shackleton)</h3>
-          <p>Gestionarás el primer puesto avanzado humano en la Luna. Aquí no hay aire, no hay agua líquida y la temperatura va de +105°C a -200°C.</p>
-          <p class="rule-highlight">⚖️ <strong>Regla de Oro:</strong> ¡Ninguna opción es gratis! Cada decisión exige una compensación real (trade-off).</p>
+          <h3 id="briefing-title">📍 Tu Misión: Base Lunar en el Polo Sur (Cráter Shackleton)</h3>
+          <p id="briefing-p1">Gestionarás el primer puesto avanzado humano en la Luna. Aquí no hay aire, no hay agua líquida y la temperatura va de +105°C a -200°C.</p>
+          <p id="briefing-rule" class="rule-highlight">⚖️ <strong>Regla de Oro:</strong> ¡Ninguna opción es gratis! Cada decisión exige una compensación real (trade-off).</p>
         </div>
 
         <div class="welcome-form">
           <div class="form-row">
-            <label for="input-player-name">👤 Tu nombre de astronauta:</label>
+            <label id="label-player-name" for="input-player-name">👤 Tu nombre de astronauta:</label>
             <input type="text" id="input-player-name" class="text-input" placeholder="Ej: Comandante Sofía" maxlength="20" autocomplete="off" required>
             <div id="name-validation-msg" class="validation-error-msg hidden">⚠️ Ingresa tu nombre de astronauta para registrar tu credencial antes de asumir el mando.</div>
           </div>
 
-          <label class="form-label-sm">🎯 Nivel de Misión:</label>
+          <label id="label-mission-level" class="form-label-sm">🎯 Nivel de Misión:</label>
           <div class="difficulty-selector">
             <button type="button" class="diff-btn active" data-diff="1">
-              <span class="diff-title">🥉 Cadete</span>
-              <span class="diff-days">7 Días</span>
-              <span class="diff-desc">Sol constante, impacto estándar.</span>
+              <span id="diff-1-title" class="diff-title">🥉 Cadete</span>
+              <span id="diff-1-days" class="diff-days">7 Días</span>
+              <span id="diff-1-desc" class="diff-desc">Sol constante, impacto estándar.</span>
             </button>
             <button type="button" class="diff-btn" data-diff="2">
-              <span class="diff-title">🥈 Especialista</span>
-              <span class="diff-days">14 Días</span>
-              <span class="diff-desc">Atardecer polar, impacto moderado.</span>
+              <span id="diff-2-title" class="diff-title">🥈 Especialista</span>
+              <span id="diff-2-days" class="diff-days">14 Días</span>
+              <span id="diff-2-desc" class="diff-desc">Atardecer polar, impacto moderado.</span>
             </button>
             <button type="button" class="diff-btn" data-diff="3">
-              <span class="diff-title">🥇 Comandante</span>
-              <span class="diff-days">28 Días</span>
-              <span class="diff-desc">14 días de noche a -173°C, maratón.</span>
+              <span id="diff-3-title" class="diff-title">🥇 Comandante</span>
+              <span id="diff-3-days" class="diff-days">28 Días</span>
+              <span id="diff-3-desc" class="diff-desc">14 días de noche a -173°C, maratón.</span>
             </button>
           </div>
 
           <!-- Selector de Estilo de Interfaz (UI) en Pantalla de Bienvenida -->
           <div class="theme-selector-welcome">
-            <label class="theme-selector-label">🎨 Estilo Visual de la Interfaz (UI):</label>
+            <label id="theme-selector-label" class="theme-selector-label">🎨 Estilo Visual de la Interfaz (UI):</label>
             <div class="theme-buttons-row">
               <button type="button" class="theme-btn active" data-theme-val="default">
-                <span class="theme-btn-badge">Base</span>
+                <span id="theme-btn-badge-1" class="theme-btn-badge">Base</span>
                 <span class="theme-btn-icon">🚀</span>
-                <span class="theme-btn-title">Sci-Fi Clásico</span>
-                <span class="theme-btn-subtitle">Futurista y Limpio</span>
+                <span id="theme-btn-title-1" class="theme-btn-title">Sci-Fi Clásico</span>
+                <span id="theme-btn-sub-1" class="theme-btn-subtitle">Futurista y Limpio</span>
               </button>
               <button type="button" class="theme-btn" data-theme-val="comic-pop">
-                <span class="theme-btn-badge badge-pop">¡Acción!</span>
+                <span id="theme-btn-badge-2" class="theme-btn-badge badge-pop">¡Acción!</span>
                 <span class="theme-btn-icon">💥</span>
-                <span class="theme-btn-title">Cómic Pop-Art</span>
-                <span class="theme-btn-subtitle">Tinta y Halftone</span>
+                <span id="theme-btn-title-2" class="theme-btn-title">Cómic Pop-Art</span>
+                <span id="theme-btn-sub-2" class="theme-btn-subtitle">Tinta y Halftone</span>
               </button>
               <button type="button" class="theme-btn" data-theme-val="comic-retro">
-                <span class="theme-btn-badge badge-retro">Vintage</span>
+                <span id="theme-btn-badge-3" class="theme-btn-badge badge-retro">Vintage</span>
                 <span class="theme-btn-icon">📜</span>
-                <span class="theme-btn-title">Novela Gráfica</span>
-                <span class="theme-btn-subtitle">Pulp Clásico 70s</span>
+                <span id="theme-btn-title-3" class="theme-btn-title">Novela Gráfica</span>
+                <span id="theme-btn-sub-3" class="theme-btn-subtitle">Pulp Clásico 70s</span>
               </button>
             </div>
           </div>
@@ -110,7 +116,7 @@
             </div>
             <div class="mascot-info">
               <strong class="mascot-name">AstroCan</strong>
-              <span class="mascot-role">Copiloto de Misión</span>
+              <span id="mascot-sidebar-role" class="mascot-role">Copiloto de Misión</span>
             </div>
             <div id="mascot-sidebar-bubble" class="sidebar-speech-bubble">
               ¡Sistemas de la base en línea! Esperando tus órdenes, Comandante.
@@ -119,37 +125,38 @@
 
           <!-- Diagnóstico de recursos lateral en PC -->
           <div class="sidebar-telemetry">
-            <h4 class="telemetry-title">📡 Telemetría de la Base</h4>
+            <h4 id="sidebar-telemetry-title" class="telemetry-title">📡 Telemetría de la Base</h4>
             <div class="sidebar-res-list">
               <div class="side-res-row">
-                <span class="side-res-label">💨 Oxígeno:</span>
+                <span id="side-label-o2" class="side-res-label">💨 Oxígeno:</span>
                 <strong id="side-val-o2">100%</strong>
               </div>
               <div class="side-res-row">
-                <span class="side-res-label">⚡ Baterías:</span>
+                <span id="side-label-energy" class="side-res-label">⚡ Baterías:</span>
                 <strong id="side-val-energy">100%</strong>
               </div>
               <div class="side-res-row">
-                <span class="side-res-label">❤️ Salud:</span>
+                <span id="side-label-health" class="side-res-label">❤️ Salud:</span>
                 <strong id="side-val-health">100%</strong>
               </div>
               <div class="side-res-row">
-                <span class="side-res-label">🛡️ Casco:</span>
+                <span id="side-label-integrity" class="side-res-label">🛡️ Casco:</span>
                 <strong id="side-val-integrity">100%</strong>
               </div>
               <div class="side-res-row side-science-row">
-                <span class="side-res-label">🔬 Ciencia:</span>
+                <span id="side-label-science" class="side-res-label">🔬 Ciencia:</span>
                 <strong id="side-val-science">0 pts</strong>
               </div>
             </div>
           </div>
 
           <div class="sidebar-actions">
-            <button id="btn-sidebar-theme" class="pill-btn sidebar-btn">🎨 Estilo UI: <span id="sidebar-theme-name">Sci-Fi</span></button>
-            <button id="btn-sidebar-voice" class="pill-btn sidebar-btn">🎙️ Cambiar Voz</button>
-            <button id="btn-sidebar-science" class="pill-btn sidebar-btn">🔬 Archivo Científico NASA</button>
-            <button id="btn-sidebar-sound" class="pill-btn sidebar-btn">🔊 Sonido</button>
-            <button id="btn-sidebar-abort" class="pill-btn btn-danger-pill sidebar-btn">🛑 Abortar Misión</button>
+            <button id="btn-sidebar-lang" class="pill-btn sidebar-btn">🌐 <span id="sidebar-lang-label">Idioma: Español</span></button>
+            <button id="btn-sidebar-theme" class="pill-btn sidebar-btn">🎨 <span id="sidebar-theme-prefix">Estilo UI:</span> <span id="sidebar-theme-name">Sci-Fi</span></button>
+            <button id="btn-sidebar-voice" class="pill-btn sidebar-btn">🎙️ <span id="sidebar-voice-label">Cambiar Voz</span></button>
+            <button id="btn-sidebar-science" class="pill-btn sidebar-btn">🔬 <span id="sidebar-science-label">Archivo Científico NASA</span></button>
+            <button id="btn-sidebar-sound" class="pill-btn sidebar-btn">🔊 <span id="sidebar-sound-label">Sonido</span></button>
+            <button id="btn-sidebar-abort" class="pill-btn btn-danger-pill sidebar-btn">🛑 <span id="sidebar-abort-label">Abortar Misión</span></button>
           </div>
         </aside>
 
@@ -163,11 +170,12 @@
               <span class="day-badge" id="hud-day-text">Día 1/7</span>
             </div>
             <div class="bar-right">
+              <button id="btn-top-lang" class="pill-btn btn-lang" title="Switch language / Cambiar idioma">🌐 <span id="top-lang-label">EN</span></button>
               <button id="btn-top-theme" class="pill-btn" title="Cambiar estilo visual de interfaz (UI)">🎨 <span id="top-theme-name">UI</span></button>
               <button id="btn-top-voice" class="pill-btn" title="Cambiar tipo de voz de narración">🎙️</button>
-              <button id="btn-open-science" class="pill-btn">🔬 Archivo NASA</button>
+              <button id="btn-open-science" class="pill-btn">🔬 <span id="top-science-label">Archivo NASA</span></button>
               <button id="btn-toggle-sound" class="pill-btn">🔊</button>
-              <button id="btn-abort-mission" class="pill-btn btn-danger-pill" title="Volver a la sala de mando">🛑 Abortar</button>
+              <button id="btn-abort-mission" class="pill-btn btn-danger-pill" title="Volver a la sala de mando">🛑 <span id="top-abort-label">Abortar</span></button>
             </div>
           </header>
 
@@ -256,9 +264,9 @@
         <div id="gameover-rank" class="rank-badge">🥇 Comandante</div>
 
         <div class="metrics-row">
-          <div class="metric-pill"><span>PUNTUACIÓN</span><strong id="gameover-score">0</strong></div>
-          <div class="metric-pill"><span>DÍAS</span><strong id="gameover-days">0/7</strong></div>
-          <div class="metric-pill"><span>CIENCIA</span><strong id="gameover-science">0</strong></div>
+          <div class="metric-pill"><span id="lbl-gameover-score">PUNTUACIÓN</span><strong id="gameover-score">0</strong></div>
+          <div class="metric-pill"><span id="lbl-gameover-days">DÍAS</span><strong id="gameover-days">0/7</strong></div>
+          <div class="metric-pill"><span id="lbl-gameover-science">CIENCIA</span><strong id="gameover-science">0</strong></div>
         </div>
 
         <div id="gameover-lesson-box" class="lesson-card lesson-success">
@@ -278,7 +286,7 @@
     <div id="modal-science" class="modal-overlay hidden" role="dialog" aria-modal="true">
       <div class="modal-card">
         <header class="modal-head">
-          <h3>🔬 Archivo Científico NASA</h3>
+          <h3 id="modal-science-title">🔬 Archivo Científico NASA</h3>
           <button id="btn-close-science" class="modal-close" aria-label="Cerrar">&times;</button>
         </header>
         <div class="modal-body" id="science-content"></div>
@@ -289,13 +297,13 @@
     <div id="modal-abort" class="modal-overlay hidden" role="dialog" aria-modal="true">
       <div class="modal-card modal-abort-card">
         <header class="modal-head modal-head-danger">
-          <h3>🛑 Abortar Misión ORBITA5</h3>
+          <h3 id="modal-abort-title">🛑 Abortar Misión ORBITA5</h3>
           <button id="btn-close-abort-x" class="modal-close" aria-label="Cerrar">&times;</button>
         </header>
         <div class="modal-body modal-abort-body">
           <div class="abort-icon">⚠️</div>
-          <p class="abort-prompt"><strong>¿Seguro que deseas abortar la misión lunar?</strong></p>
-          <p class="abort-desc">Se cancelará la simulación actual y regresarás a la sala de mando inicial para cambiar tu nombre de astronauta o elegir otro nivel de dificultad.</p>
+          <p id="modal-abort-prompt" class="abort-prompt"><strong>¿Seguro que deseas abortar la misión lunar?</strong></p>
+          <p id="modal-abort-desc" class="abort-desc">Se cancelará la simulación actual y regresarás a la sala de mando inicial para cambiar tu nombre de astronauta o elegir otro nivel de dificultad.</p>
           <div class="abort-actions">
             <button id="btn-confirm-abort" class="btn-primary btn-danger-action">🚀 Sí, Abortar y Salir</button>
             <button id="btn-cancel-abort" class="btn-secondary">Continuar Misión</button>
@@ -308,16 +316,16 @@
     <div id="modal-voice" class="modal-overlay hidden" role="dialog" aria-modal="true">
       <div class="modal-card modal-voice-card">
         <header class="modal-head">
-          <h3>🎙️ Voces de Control de Misión</h3>
+          <h3 id="modal-voice-title">🎙️ Voces de Control de Misión</h3>
           <button id="btn-close-voice-x" class="modal-close" aria-label="Cerrar">&times;</button>
         </header>
         <div class="modal-body modal-voice-body">
           <div class="voice-modal-intro">
-            <p class="voice-modal-desc">
+            <p id="modal-voice-desc" class="voice-modal-desc">
               Selecciona la voz de síntesis que prefieras para escuchar las alertas y decisiones en tu base lunar:
             </p>
             <div class="voice-current-banner">
-              <span class="voice-banner-label">Voz activa:</span>
+              <span id="modal-voice-active-label" class="voice-banner-label">Voz activa:</span>
               <strong id="modal-current-voice-text" class="voice-banner-value">🌎 Cargando voz...</strong>
             </div>
           </div>
@@ -338,12 +346,12 @@
     <div id="modal-theme" class="modal-overlay hidden" role="dialog" aria-modal="true">
       <div class="modal-card modal-theme-card">
         <header class="modal-head">
-          <h3>🎨 Estilo Visual de la Interfaz (UI)</h3>
+          <h3 id="modal-theme-title">🎨 Estilo Visual de la Interfaz (UI)</h3>
           <button id="btn-close-theme-x" class="modal-close" aria-label="Cerrar">&times;</button>
         </header>
         <div class="modal-body">
           <div class="theme-modal-intro">
-            <p class="theme-modal-desc">
+            <p id="modal-theme-desc" class="theme-modal-desc">
               Selecciona cómo deseas experimentar <strong>ORBITA5</strong>. Puedes alternar libremente entre la interfaz base de ciencia ficción y las propuestas con estilo cómic:
             </p>
           </div>
@@ -363,6 +371,7 @@
   </main>
 
   <script src="js/theme-manager.js"></script>
+  <script src="js/i18n.js"></script>
   <script src="js/audio.js"></script>
   <script src="js/speech.js"></script>
   <script src="js/mascot.js"></script>

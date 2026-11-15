@@ -57,19 +57,22 @@ class RoverMinigame {
   }
 
   renderUI() {
+    const isEn = typeof window !== 'undefined' && window.i18n && window.i18n.getLanguage() === 'en';
     this.container.innerHTML = `
       <div class="minigame-card modal-glass">
         <div class="minigame-header">
           <div class="alarm-badge" style="background: rgba(0, 180, 255, 0.2); border-color: #00d2d3;">
-            🧊 EXPEDICIÓN POLAR: CRÁTER SHACKLETON (-230°C)
+            ${isEn ? '🧊 POLAR EXPEDITION: SHACKLETON CRATER (-230°C)' : '🧊 EXPEDICIÓN POLAR: CRÁTER SHACKLETON (-230°C)'}
           </div>
           <div class="rover-stats-pill">
-            Hielo: <strong id="rover-ice-count" style="color: #48dbfb;">0</strong> cristales
+            ${isEn ? 'Ice:' : 'Hielo:'} <strong id="rover-ice-count" style="color: #48dbfb;">0</strong> ${isEn ? 'crystals' : 'cristales'}
           </div>
         </div>
 
         <p class="minigame-instruction">
-          Conduce el Rover con las <strong>Flechas / WASD</strong> o los botones de pantalla. Recolecta <strong>hielo de agua</strong> en la oscuridad del cráter y presiona <strong>"RETORNAR A LA ESCLUSA"</strong> antes de que se agote la batería del rover.
+          ${isEn 
+            ? 'Drive the Rover with <strong>Arrow keys / WASD</strong> or touch buttons. Collect <strong>water ice</strong> in the dark crater and press <strong>"RETURN TO AIRLOCK"</strong> before your battery runs out.'
+            : 'Conduce el Rover con las <strong>Flechas / WASD</strong> o los botones de pantalla. Recolecta <strong>hielo de agua</strong> en la oscuridad del cráter y presiona <strong>"RETORNAR A LA ESCLUSA"</strong> antes de que se agote la batería del rover.'}
         </p>
 
         <div class="rover-game-layout">
@@ -77,13 +80,13 @@ class RoverMinigame {
             <canvas id="rover-canvas" width="460" height="340"></canvas>
             <div class="rover-meters-bar">
               <div class="meter-box">
-                <span>🔋 Batería: <strong id="rover-battery-text">100%</strong></span>
+                <span>🔋 ${isEn ? 'Battery:' : 'Batería:'} <strong id="rover-battery-text">100%</strong></span>
                 <div class="meter-bar-track">
                   <div id="rover-bat-fill" class="meter-bar-fill" style="width: 100%; background: #2ed573;"></div>
                 </div>
               </div>
               <div class="meter-box">
-                <span>🛡️ Chasis: <strong id="rover-hull-text">100%</strong></span>
+                <span>🛡️ ${isEn ? 'Chassis:' : 'Chasis:'} <strong id="rover-hull-text">100%</strong></span>
                 <div class="meter-bar-track">
                   <div id="rover-hull-fill" class="meter-bar-fill" style="width: 100%; background: #00d2d3;"></div>
                 </div>
@@ -94,10 +97,10 @@ class RoverMinigame {
           <div class="rover-side-actions">
             <!-- Botón de retorno estratégico -->
             <button id="btn-return-airlock" class="btn-primary-action pulse-btn" style="background: linear-gradient(135deg, #0984e3, #00cec9);">
-              🚀 REGRESAR A LA ESCLUSA CON EL HIELO
+              🚀 ${isEn ? 'RETURN TO AIRLOCK WITH ICE' : 'REGRESAR A LA ESCLUSA CON EL HIELO'}
             </button>
             <small style="display:block; text-align:center; color: #a4b0be; margin-top: 6px;">
-              ¡No arriesgues la batería al 0%!
+              ${isEn ? "Don't let battery hit 0%!" : '¡No arriesgues la batería al 0%!'}
             </small>
 
             <!-- Controles táctiles en pantalla para móviles/tablets -->
@@ -390,6 +393,8 @@ class RoverMinigame {
     let delta = {};
     let debriefText = '';
 
+    const isEn = typeof window !== 'undefined' && window.i18n && window.i18n.getLanguage() === 'en';
+
     if (safelyReturned) {
       const ice = this.rover.iceCollected;
       const o2Gained = ice * 6; // Cada cristal aporta O2 al descongelarse y electrolizarse
@@ -404,7 +409,9 @@ class RoverMinigame {
         integrity: -3
       };
 
-      debriefText = `¡Expedición exitosa al Cráter Shackleton! Retornaste a tiempo a la esclusa con ${ice} cristales de hielo puro. La electrólisis generó +${o2Gained}% de Oxígeno y agua bebible, consumiendo solo ${energyCost}% de energía en la recarga del rover.`;
+      debriefText = isEn
+        ? `Successful expedition to Shackleton Crater! You returned safely to the airlock with ${ice} pure ice crystals. Electrolysis produced +${o2Gained}% Oxygen and drinkable water, using only ${energyCost}% energy to recharge the rover.`
+        : `¡Expedición exitosa al Cráter Shackleton! Retornaste a tiempo a la esclusa con ${ice} cristales de hielo puro. La electrólisis generó +${o2Gained}% de Oxígeno y agua bebible, consumiendo solo ${energyCost}% de energía en la recarga del rover.`;
       if (window.gameAudio) window.gameAudio.playVictory();
     } else {
       // El rover se quedó varado o colapsó
@@ -416,7 +423,9 @@ class RoverMinigame {
         science: 5
       };
 
-      debriefText = `¡Emergencia en el Cráter Shackleton! La batería del rover se agotó por el frío de -230°C o el chasis colapsó. La tripulación tuvo que remolcarlo de emergencia. Se perdió el hielo recolectado y se dañó la suspensión (-18% Integridad). ¡Una dura lección sobre la autonomía en el espacio profundo!`;
+      debriefText = isEn
+        ? `Emergency in Shackleton Crater! The rover battery froze at -230°C or the chassis collapsed. The crew had to tow it back. All harvested ice was lost and suspension was damaged (-18% Integrity). A harsh lesson about autonomy in deep space!`
+        : `¡Emergencia en el Cráter Shackleton! La batería del rover se agotó por el frío de -230°C o el chasis colapsó. La tripulación tuvo que remolcarlo de emergencia. Se perdió el hielo recolectado y se dañó la suspensión (-18% Integridad). ¡Una dura lección sobre la autonomía en el espacio profundo!`;
       if (window.gameAudio) window.gameAudio.playDefeat();
     }
 

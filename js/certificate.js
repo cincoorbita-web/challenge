@@ -2,6 +2,7 @@
  * ORBITA5: Certificate Generator & Share
  * Genera un certificado visual en Canvas y lo comparte vía Web Share API
  * (WhatsApp, Telegram, etc.) o lo descarga como imagen PNG.
+ * Soporta internacionalización completa (Español / Inglés).
  */
 
 class CertificateGenerator {
@@ -9,6 +10,9 @@ class CertificateGenerator {
   async generate(state) {
     const scoreData = state.calculateFinalScore();
     const isVictory = state.gameResult === 'VICTORY';
+    const isEn = typeof window !== 'undefined' && window.i18n && window.i18n.getLanguage() === 'en';
+    const t = (k, p) => (typeof window !== 'undefined' && window.i18n) ? window.i18n.t(k, p) : k;
+
     const W = 1080;
     const H = 1350;
 
@@ -48,20 +52,20 @@ class CertificateGenerator {
     ctx.textAlign = 'center';
 
     // Título principal
+    const titleText = isVictory ? t('cert_mission_victory') : t('cert_mission_defeat');
     ctx.fillStyle = '#ffffff';
     ctx.font = 'bold 54px system-ui, sans-serif';
-    ctx.fillText(isVictory ? 'MISIÓN CUMPLIDA' : 'MISIÓN EVACUADA', W / 2, 175);
+    ctx.fillText(titleText, W / 2, 175);
 
     // Subtítulo
     ctx.font = 'bold 28px Fredoka, system-ui, sans-serif';
     ctx.fillStyle = '#00d2d3';
-    ctx.fillText('ORBITA5: COMANDANTE LUNAR', W / 2, 230);
+    ctx.fillText(t('cert_sub'), W / 2, 230);
 
     // ——— TROFEO (victoria) O ICONO DE ALERTA (derrota) ———
     const medalY = 345;
     const medalSize = 85;
     ctx.font = `${medalSize}px system-ui, sans-serif`;
-    // En victoria mostramos un trofeo dorado en lugar de una medalla
     const trophyIcon = isVictory ? '🏆' : scoreData.medal;
     ctx.fillText(trophyIcon, W / 2, medalY);
 
@@ -93,9 +97,9 @@ class CertificateGenerator {
 
     // ——— MÉTRICAS EN TARJETAS ———
     const metrics = [
-      { label: 'PUNTUACIÓN FINAL', value: `${scoreData.score}`, icon: '⭐' },
-      { label: 'DÍAS SOBREVIVIDOS', value: `${scoreData.daysSurvived} / ${scoreData.totalDays}`, icon: '📅' },
-      { label: 'CIENCIA PRODUCIDA', value: `${scoreData.scienceCollected} pts`, icon: '🔬' }
+      { label: t('cert_stat_score'), value: `${scoreData.score}`, icon: '⭐' },
+      { label: t('cert_stat_days'), value: `${scoreData.daysSurvived} / ${scoreData.totalDays}`, icon: '📅' },
+      { label: t('cert_stat_science'), value: `${scoreData.scienceCollected} pts`, icon: '🔬' }
     ];
     const cardW = 280;
     const cardH = 140;
@@ -132,10 +136,13 @@ class CertificateGenerator {
     });
 
     // ——— NIVEL DE DIFICULTAD ———
-    const diffNames = { 1: 'Cadete (7 días)', 2: 'Especialista (14 días)', 3: 'Comandante (28 días)' };
+    const diffNames = isEn
+      ? { 1: 'Cadet (7 days)', 2: 'Specialist (14 days)', 3: 'Commander (28 days)' }
+      : { 1: 'Cadete (7 días)', 2: 'Especialista (14 días)', 3: 'Comandante (28 días)' };
+    const levelPrefix = isEn ? 'Mission Level:' : 'Nivel de Misión:';
     ctx.fillStyle = '#a4b0be';
     ctx.font = '20px system-ui, sans-serif';
-    ctx.fillText(`Nivel de Misión: ${diffNames[state.difficulty] || 'Cadete'}`, W / 2, 750);
+    ctx.fillText(`${levelPrefix} ${diffNames[state.difficulty] || diffNames[1]}`, W / 2, 750);
 
     // ——— RECURSOS FINALES ———
     const barY = 790;
@@ -143,10 +150,10 @@ class CertificateGenerator {
     const barH = 30;
     const barStartX = (W - barW) / 2;
     const resData = [
-      { label: '💨 Oxígeno', val: state.resources.oxygen, color: '#00cec9' },
-      { label: '⚡ Energía', val: state.resources.energy, color: '#feca57' },
-      { label: '❤️ Salud', val: state.resources.health, color: '#ff6b81' },
-      { label: '🛡️ Integridad', val: state.resources.integrity, color: '#54a0ff' }
+      { label: isEn ? '💨 Oxygen' : '💨 Oxígeno', val: state.resources.oxygen, color: '#00cec9' },
+      { label: isEn ? '⚡ Energy' : '⚡ Baterías', val: state.resources.energy, color: '#feca57' },
+      { label: isEn ? '❤️ Health' : '❤️ Salud', val: state.resources.health, color: '#ff6b81' },
+      { label: isEn ? '🛡️ Hull' : '🛡️ Integridad', val: state.resources.integrity, color: '#54a0ff' }
     ];
 
     resData.forEach((r, i) => {
@@ -190,22 +197,19 @@ class CertificateGenerator {
 
     ctx.fillStyle = isVictory ? '#55efc4' : '#ff7675';
     ctx.font = '18px system-ui, sans-serif';
-    const msg = isVictory
-      ? 'Demostraste comprender las compensaciones reales (trade-offs) de la'
-      : 'Aprendiste que en el espacio profundo cada recurso es vital.';
-    const msg2 = isVictory
-      ? 'supervivencia en el espacio profundo. ¡Futuro astronauta de Marte!'
-      : '¡Inténtalo de nuevo y mejora tu estrategia de recursos!';
+    const msg = isVictory ? t('cert_victory_msg1') : t('cert_defeat_msg1');
+    const msg2 = isVictory ? t('cert_victory_msg2') : t('cert_defeat_msg2');
     ctx.fillText(msg, W / 2, msgY + 5);
     ctx.fillText(msg2, W / 2, msgY + 32);
 
-    // ——— FECHA Y URL ———
+    // ——— FECHA Y MARCA ———
     const footY = H - 80;
     ctx.fillStyle = '#636e72';
     ctx.font = '16px system-ui, sans-serif';
-    const dateStr = new Date().toLocaleDateString('es-419', { year: 'numeric', month: 'long', day: 'numeric' });
-    ctx.fillText(`Certificado generado el ${dateStr}`, W / 2, footY);
-    ctx.fillText('Junior Astronaut Mission Trainer — NASA Space Apps Challenge', W / 2, footY + 25);
+    const dateLocale = isEn ? 'en-US' : 'es-419';
+    const dateStr = new Date().toLocaleDateString(dateLocale, { year: 'numeric', month: 'long', day: 'numeric' });
+    ctx.fillText(`${t('cert_generated_on')} ${dateStr}`, W / 2, footY);
+    ctx.fillText(t('cert_footer_brand'), W / 2, footY + 25);
 
     return canvas;
   }
@@ -226,6 +230,8 @@ class CertificateGenerator {
 
   async shareOrDownload(state) {
     const canvas = await this.generate(state);
+    const isVictory = state.gameResult === 'VICTORY';
+    const t = (k, p) => (typeof window !== 'undefined' && window.i18n) ? window.i18n.t(k, p) : k;
 
     try {
       const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
@@ -233,8 +239,12 @@ class CertificateGenerator {
 
       if (navigator.canShare && navigator.canShare({ files: [file] })) {
         await navigator.share({
-          title: `${state.gameResult === 'VICTORY' ? '🏆 ¡Misión Cumplida!' : '⚠️ Misión Evacuada'} — ORBITA5`,
-          text: `${state.playerName} ${state.gameResult === 'VICTORY' ? 'completó' : 'intentó'} una misión lunar de ${state.totalDays} días con ${state.resources.science} puntos de ciencia en ORBITA5. ¿Podrás superarlo? 🚀`,
+          title: isVictory ? t('cert_share_title_win') : t('cert_share_title_loss'),
+          text: t('cert_share_text', {
+            name: state.playerName,
+            days: state.totalDays,
+            science: state.resources.science
+          }),
           files: [file]
         });
         return 'shared';

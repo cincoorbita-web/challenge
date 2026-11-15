@@ -7,6 +7,30 @@ El juego está desarrollado con tecnologías web modernas estándar (HTML5, CSS3
 
 ---
 
+## 🌐 Internacionalización (i18n) Bilingüe Completa y Síntesis de Voz Multilingüe
+
+**ORBITA5** cuenta con soporte bilingüe de primer nivel (**Español** e **Inglés**) para toda la experiencia del usuario:
+- **Conmutador de Idioma Accesible:**
+  - En la pantalla de bienvenida mediante selector interactivo (`🇪🇸 ES` / `🇺🇸 EN`).
+  - En la barra superior (móvil y tablet) con el botón `🌐 EN / ES`.
+  - En el panel lateral de estación (PC/Laptop) con el botón `🌐 Idioma: Español / English`.
+  - Persistencia automática de la preferencia del usuario en `localStorage` (`orbita5_lang`).
+- **Traducción Integral del Contenido:**
+  - Interfaz de usuario completa (menús, botones, modales, alertas y telemetría).
+  - Todos los dilemas espaciales, datos de ciencia real y fuentes oficiales de la NASA.
+  - Diálogos y reacciones emocionales de AstroCan en ambos idiomas.
+  - Informes diarios de consumo de supervivencia y balances de compensación (trade-offs).
+  - Ambos minijuegos interactivos (Desvío de Energía / Escudo Solar y Rover en Cráter Shackleton).
+  - Certificado oficial en alta resolución (1080 × 1350 px) generado dinámicamente en el idioma seleccionado.
+- **Narración y Síntesis de Voz Multilingüe (Web Speech API):**
+  - Al alternar el idioma, el narrador por voz cambia automáticamente su catálogo de voces activas (`setLanguage('es')` / `setLanguage('en')`).
+  - En modo **Español**, prioriza voces en Español Latinoamericano (`es-419`, `es-MX`, `es-AR`, `es-CO`, etc.).
+  - En modo **Inglés**, prioriza voces en Inglés de EE.UU., Reino Unido, Canadá y Australia (`en-US`, `en-GB`, `en-CA`, `en-AU`).
+  - Modal selector de voz adaptativo con nombres limpios, banderas y preescucha en el idioma seleccionado (`▶️ Probar` / `▶️ Preview`).
+  - Lectura separada para misiones (`📢 Escuchar Misión` / `📢 Listen Mission`) y opciones (`🔊 Escuchar Opción` / `🔊 Listen Option`).
+
+---
+
 ## 🎨 3 Estilos de Interfaz Visual (UI) con Propuestas Cómic
 
 Esta rama (`feature/comic-ui-themes`) introduce un sistema de temas visuales intercambiables en caliente para permitir testear, comparar la experiencia de usuario y recibir feedback:
@@ -159,6 +183,12 @@ Cada evento incluye la fuente oficial con enlace directo para que los jugadores 
 
 ## 🏷️ Versión y Registro de Cambios (Changelog)
 
+### `v1.2.0` - ORBITA5: Internacionalización (i18n) Bilingüe & Voz Multilingüe
+- **Internacionalización Completa (Español / Inglés):** Soporte bilingüe integral en toda la aplicación con persistencia en `localStorage` (`orbita5_lang`).
+- **Conmutador de Idioma en Pantalla:** Selector interactivo en la pantalla de bienvenida (`🇪🇸 ES` / `🇺🇸 EN`), botón rápido en cabecera superior y botón con etiqueta en el panel lateral de estación.
+- **Narración por Voz Bilingüe y Adaptativa:** El motor `SpeechNarratorService` alterna automáticamente entre voces en español latinoamericano (`es-419`, `es-MX`, etc.) y voces en inglés (`en-US`, `en-GB`, etc.), permitiendo escuchar la misión y cada opción en el idioma seleccionado.
+- **Traducción Exhaustiva de Ciencia y Minijuegos:** Traducción al inglés de todos los dilemas basados en datos reales de la NASA, estudios OSDR, eventos DONKI, diálogos y reacciones de AstroCan, minijuegos del Escudo y del Rover, y diploma oficial generado en Canvas.
+
 ### `v1.1.0` - ORBITA5: Alternativas Visuales Cómic & Certificado Limpio
 - **3 Estilos de Interfaz Visual (UI):** Soporte en caliente para alternar entre *Sci-Fi Clásico* (Base), *Cómic Pop-Art* (superhéroe moderno con líneas de tinta gruesa, halftone y sombras duras) y *Novela Gráfica* (pulp vintage de los años 60s-70s con tonos cálidos y viñetas dobles).
 - **Selector de UI Interactivo:** Integrado en la pantalla de bienvenida, barra superior, panel lateral y modal de previsualización con persistencia en `localStorage`.
@@ -195,10 +225,13 @@ challenge/
 ├── css/
 │   ├── styles.css          # Estilos ORBITA5, tipografía Fredoka, semáforo, 3 layouts
 │   ├── space-scene.css     # Animaciones del fondo estelar y alertas de radiación
-│   └── minigames.css       # Estilos para escudo solar y arcade del rover
+│   ├── minigames.css       # Estilos para escudo solar y arcade del rover
+│   └── themes.css          # Temas visuales (Sci-Fi, Cómic Pop-Art, Novela Gráfica)
 ├── js/
+│   ├── theme-manager.js    # Gestor de estilos visuales y temas UI
+│   ├── i18n.js             # Gestor de internacionalización bilingüe (ES / EN)
 │   ├── audio.js            # Motor procedural de sonido Web Audio API
-│   ├── speech.js           # Narrador en voz alta (misión y opciones separadas)
+│   ├── speech.js           # Narrador en voz alta multilingüe (misión y opciones)
 │   ├── mascot.js           # Controlador emocional de AstroCan
 │   ├── space-canvas.js     # Lienzo de estrellas, satélites, la Tierra y base lunar grande
 │   ├── data-donki.js       # Servicio de clima espacial de la NASA (DONKI)

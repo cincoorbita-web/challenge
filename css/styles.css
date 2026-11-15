@@ -97,6 +97,53 @@ body {
   text-align: center;
 }
 
+.welcome-top-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.welcome-lang-picker {
+  display: inline-flex;
+  background: rgba(14, 21, 40, 0.7);
+  border: 1px solid var(--panel-border);
+  border-radius: 20px;
+  padding: 2px;
+  gap: 2px;
+  margin-left: auto;
+}
+
+.lang-switch-btn {
+  font-family: var(--font);
+  background: transparent;
+  border: none;
+  color: var(--txt3);
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 16px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.lang-switch-btn:hover {
+  color: #fff;
+}
+
+.lang-switch-btn.active {
+  background: var(--cyan);
+  color: #030612;
+  box-shadow: 0 0 10px var(--glow);
+}
+
+.btn-lang {
+  font-weight: 800;
+  letter-spacing: 0.5px;
+}
+
 .nasa-logo-badge {
   display: inline-block;
   background: rgba(9, 132, 227, 0.2);
@@ -107,7 +154,7 @@ body {
   font-weight: 700;
   letter-spacing: 1.2px;
   color: var(--cyan);
-  margin-bottom: 8px;
+  margin-bottom: 0;
   box-shadow: 0 0 12px var(--glow);
 }
 

@@ -91,68 +91,69 @@ class GameState {
   getEnvironmentalStatus() {
     const day = this.currentDay;
     const diff = this.difficulty;
+    const isEn = typeof window !== 'undefined' && window.i18n && window.i18n.getLanguage() === 'en';
 
     // ---- NIVEL 3: COMANDANTE (28 DÍAS) ----
     if (diff === 3) {
       if (day <= 3) {
         return {
-          phase: 'Amanecer Polar Lunar',
+          phase: isEn ? 'Lunar Polar Dawn' : 'Amanecer Polar Lunar',
           sunlight: '85%',
-          temp: '+45°C en crestas iluminadas',
+          temp: isEn ? '+45°C on illuminated ridges' : '+45°C en crestas iluminadas',
           icon: '🌅'
         };
       } else if (day <= 7) {
         return {
-          phase: 'Mediodía Solar (Pico de Luz Eterna)',
+          phase: isEn ? 'Solar Noon (Eternal Peak Light)' : 'Mediodía Solar (Pico de Luz Eterna)',
           sunlight: '100%',
-          temp: '+105°C bajo radiación directa',
+          temp: isEn ? '+105°C direct radiation' : '+105°C bajo radiación directa',
           icon: '☀️'
         };
       } else if (day <= 11) {
         return {
-          phase: 'Tarde Solar Alta',
+          phase: isEn ? 'High Solar Afternoon' : 'Tarde Solar Alta',
           sunlight: '90%',
-          temp: '+80°C en la cresta',
+          temp: isEn ? '+80°C on ridge' : '+80°C en la cresta',
           icon: '🌤️'
         };
       } else if (day === 12 || day === 13) {
         return {
-          phase: 'Atardecer Polar (Sol rasante)',
+          phase: isEn ? 'Polar Twilight (Low angle sun)' : 'Atardecer Polar (Sol rasante)',
           sunlight: '45%',
-          temp: '-15°C en sombra parcial',
+          temp: isEn ? '-15°C partial shadow' : '-15°C en sombra parcial',
           icon: '🌇'
         };
       } else if (day === 14) {
         return {
-          phase: 'Crepúsculo Lunar (Última luz)',
+          phase: isEn ? 'Lunar Dusk (Last light)' : 'Crepúsculo Lunar (Última luz)',
           sunlight: '12%',
           temp: '-65°C',
           icon: '🌆'
         };
       } else if (day === 15) {
         return {
-          phase: '¡PUESTA DE SOL TOTAL!',
+          phase: isEn ? 'TOTAL SUNSET!' : '¡PUESTA DE SOL TOTAL!',
           sunlight: '0%',
-          temp: '-110°C y bajando...',
+          temp: isEn ? '-110°C and dropping...' : '-110°C y bajando...',
           icon: '🌑'
         };
       } else if (day <= 21) {
         return {
-          phase: 'Noche Lunar Profunda',
+          phase: isEn ? 'Deep Lunar Night' : 'Noche Lunar Profunda',
           sunlight: '0%',
           temp: '-173°C',
           icon: '🌑'
         };
       } else if (day <= 26) {
         return {
-          phase: 'Noche Lunar Extrema (Punto más frío)',
+          phase: isEn ? 'Extreme Lunar Night (Coldest Point)' : 'Noche Lunar Extrema (Punto más frío)',
           sunlight: '0%',
-          temp: '-200°C en los cráteres',
+          temp: isEn ? '-200°C in craters' : '-200°C en los cráteres',
           icon: '❄️'
         };
       } else {
         return {
-          phase: 'Pre-Amanecer (Resplandor en el horizonte)',
+          phase: isEn ? 'Pre-Dawn (Horizon Glow)' : 'Pre-Amanecer (Resplandor en el horizonte)',
           sunlight: '5%',
           temp: '-140°C',
           icon: '🌒'
@@ -164,35 +165,35 @@ class GameState {
     if (diff === 2) {
       if (day <= 3) {
         return {
-          phase: 'Día Solar Continuo (Pico de Luz)',
+          phase: isEn ? 'Continuous Solar Day (Peak Light)' : 'Día Solar Continuo (Pico de Luz)',
           sunlight: '100%',
-          temp: '+100°C bajo radiación directa',
+          temp: isEn ? '+100°C direct radiation' : '+100°C bajo radiación directa',
           icon: '☀️'
         };
       } else if (day <= 6) {
         return {
-          phase: 'Mediodía Polar Sostenido',
+          phase: isEn ? 'Sustained Polar Noon' : 'Mediodía Polar Sostenido',
           sunlight: '95%',
-          temp: '+85°C en la cresta',
+          temp: isEn ? '+85°C on ridge' : '+85°C en la cresta',
           icon: '☀️'
         };
       } else if (day <= 9) {
         return {
-          phase: 'Tarde Solar (Ángulo descendente)',
+          phase: isEn ? 'Solar Afternoon (Declining angle)' : 'Tarde Solar (Ángulo descendente)',
           sunlight: '75%',
           temp: '+40°C',
           icon: '🌤️'
         };
       } else if (day <= 12) {
         return {
-          phase: 'Atardecer Polar (Sol rasante)',
+          phase: isEn ? 'Polar Twilight (Low angle sun)' : 'Atardecer Polar (Sol rasante)',
           sunlight: '40%',
-          temp: '-25°C en sombra parcial',
+          temp: isEn ? '-25°C partial shadow' : '-25°C en sombra parcial',
           icon: '🌇'
         };
       } else {
         return {
-          phase: 'Crepúsculo Extenso (Penumbra)',
+          phase: isEn ? 'Extended Twilight (Penumbra)' : 'Crepúsculo Extenso (Penumbra)',
           sunlight: '20%',
           temp: '-55°C',
           icon: '🌆'
@@ -203,28 +204,28 @@ class GameState {
     // ---- NIVEL 1: CADETE (7 DÍAS) ----
     if (day <= 2) {
       return {
-        phase: 'Día Solar Continuo (Luz Eterna)',
+        phase: isEn ? 'Continuous Solar Day (Eternal Light)' : 'Día Solar Continuo (Luz Eterna)',
         sunlight: '100%',
-        temp: '+95°C bajo radiación directa',
+        temp: isEn ? '+95°C direct radiation' : '+95°C bajo radiación directa',
         icon: '☀️'
       };
     } else if (day <= 4) {
       return {
-        phase: 'Mediodía Solar Polar',
+        phase: isEn ? 'Polar Solar Noon' : 'Mediodía Solar Polar',
         sunlight: '95%',
-        temp: '+85°C en la cresta Shackleton',
+        temp: isEn ? '+85°C on Shackleton ridge' : '+85°C en la cresta Shackleton',
         icon: '☀️'
       };
     } else if (day <= 6) {
       return {
-        phase: 'Tarde Solar Estable',
+        phase: isEn ? 'Stable Solar Afternoon' : 'Tarde Solar Estable',
         sunlight: '88%',
         temp: '+60°C',
         icon: '🌤️'
       };
     } else {
       return {
-        phase: 'Sol Alto de Salida (Último día)',
+        phase: isEn ? 'High Departing Sun (Final Day)' : 'Sol Alto de Salida (Último día)',
         sunlight: '92%',
         temp: '+75°C',
         icon: '🌤️'
@@ -272,11 +273,21 @@ class GameState {
   // pero perfectamente viables y justos.
   // ========================================================================
   getDailyDecayPlan() {
+    const isEn = typeof window !== 'undefined' && window.i18n && window.i18n.getLanguage() === 'en';
+
     let o2Decay = 3, energyDecay = 3, healthDecay = 2, integrityDecay = 2;
-    let o2Reason = 'Respiración continua de los 4 astronautas (~3.4 kg O2/día) y micro-fugas en esclusas.';
-    let energyReason = 'Soporte vital básico, recicladores ECLSS, bombas térmicas y calefacción.';
-    let healthReason = 'Desgaste biológico en 1/6 g: desmineralización ósea (OSDR-120) y fatiga muscular.';
-    let integrityReason = 'Micro-abrasión por polvo de regolito electrostático en sellos de esclusas.';
+    let o2Reason = isEn 
+      ? 'Continuous breathing of 4 astronauts (~3.4 kg O2/day) and micro-leaks in airlocks.'
+      : 'Respiración continua de los 4 astronautas (~3.4 kg O2/día) y micro-fugas en esclusas.';
+    let energyReason = isEn
+      ? 'Basic life support, ECLSS recyclers, thermal pumps and module heating.'
+      : 'Soporte vital básico, recicladores ECLSS, bombas térmicas y calefacción.';
+    let healthReason = isEn
+      ? 'Biological wear in 1/6 g: bone demineralization (OSDR-120) and muscular fatigue.'
+      : 'Desgaste biológico en 1/6 g: desmineralización ósea (OSDR-120) y fatiga muscular.';
+    let integrityReason = isEn
+      ? 'Micro-abrasion by electrostatic lunar regolith dust on airlock seals.'
+      : 'Micro-abrasión por polvo de regolito electrostático en sellos de esclusas.';
 
     if (this.difficulty === 2) {
       // Especialista (14 días): consumo balanceado (~28% O2 en 14 días)
@@ -285,12 +296,18 @@ class GameState {
       integrityDecay = 1;
       if (this.currentDay >= 10) {
         energyDecay = 3;
-        energyReason = 'Atardecer polar: menor generación fotovoltaica; mayor uso de baterías para calefactores.';
+        energyReason = isEn
+          ? 'Polar twilight: reduced photovoltaic power; higher battery draw for thermal heaters.'
+          : 'Atardecer polar: menor generación fotovoltaica; mayor uso de baterías para calefactores.';
       } else {
         energyDecay = 2;
-        energyReason = 'Operación estándar de soporte vital e iluminación polar de laboratorios.';
+        energyReason = isEn
+          ? 'Standard life support operation and polar lighting for science modules.'
+          : 'Operación estándar de soporte vital e iluminación polar de laboratorios.';
       }
-      o2Reason = 'Consumo metabólico de O2 con caminatas extravehiculares periódicas.';
+      o2Reason = isEn
+        ? 'Metabolic oxygen consumption with scheduled extravehicular activities.'
+        : 'Consumo metabólico de O2 con caminatas extravehiculares periódicas.';
     } else if (this.difficulty === 3) {
       // Comandante (28 días): maratón de supervivencia
       if (this.currentDay >= 15) {
@@ -298,16 +315,26 @@ class GameState {
         energyDecay = 3.5;
         healthDecay = 2;
         integrityDecay = 1;
-        energyReason = '¡NOCHE LUNAR (-173°C a -200°C)! Paneles a 0W. Los calefactores térmicos consumen baterías.';
-        healthReason = 'Estrés por frío extremo, confinamiento y desfase circadiano total (OSDR-244).';
-        o2Reason = 'Respiración en modo de supervivencia dentro del módulo presurizado central.';
+        energyReason = isEn
+          ? 'LUNAR NIGHT (-173°C to -200°C)! Solar panels at 0W. Thermal heaters heavily drain battery banks.'
+          : '¡NOCHE LUNAR (-173°C a -200°C)! Paneles a 0W. Los calefactores térmicos consumen baterías.';
+        healthReason = isEn
+          ? 'Severe extreme cold stress, habitat confinement, and circadian disruption (OSDR-244).'
+          : 'Estrés por frío extremo, confinamiento y desfase circadiano total (OSDR-244).';
+        o2Reason = isEn
+          ? 'Survival respiration mode inside the core pressurized module.'
+          : 'Respiración en modo de supervivencia dentro del módulo presurizado central.';
       } else {
         o2Decay = 1;
         energyDecay = 1;
         healthDecay = 1;
         integrityDecay = 1;
-        energyReason = 'Generación solar continua en el pico de luz; recarga preventiva de baterías para la noche.';
-        o2Reason = 'Sistemas de reciclaje Sabatier funcionando con alta eficiencia solar.';
+        energyReason = isEn
+          ? 'Continuous solar generation at the peak of light; preventive battery recharge before nightfall.'
+          : 'Generación solar continua en el pico de luz; recarga preventiva de baterías para la noche.';
+        o2Reason = isEn
+          ? 'Sabatier recycling systems operating at maximum solar efficiency.'
+          : 'Sistemas de reciclaje Sabatier funcionando con alta eficiencia solar.';
       }
     }
 
@@ -350,7 +377,22 @@ class GameState {
 
   checkGameConditions() {
     if (this.isGameOver) return;
-    const checks = [
+    const isEn = typeof window !== 'undefined' && window.i18n && window.i18n.getLanguage() === 'en';
+
+    const checks = isEn ? [
+      { key: 'oxygen', system: 'LIFE SUPPORT (OXYGEN)', title: 'Asphyxiation from O2 Depletion',
+        explanation: 'Oxygen reserves dropped to zero. The Orion capsule was automatically activated for emergency evacuation.',
+        scienceLesson: 'In space, O2 leaks through every airlock cycle and is spent in experiments and fuel cells. Without lunar water electrolysis, every liter is irreplaceable!' },
+      { key: 'energy', system: 'ELECTRICAL GRID & THERMAL HEATING', title: 'Thermal Blackout and Freezing',
+        explanation: 'Batteries were completely drained. Without power, thermal heaters died and the habitat froze.',
+        scienceLesson: 'The Moon has no atmosphere to retain heat. During the lunar night, temperatures plummet to -173°C. Heating the base consumes over 60% of reserve power.' },
+      { key: 'health', system: 'CREW HEALTH & MEDICINE', title: 'Medical Crisis: Radiation and Exhaustion',
+        explanation: 'The astronauts suffered a critical dose of cosmic radiation or severe fatigue and can no longer operate the habitat.',
+        scienceLesson: 'Cosmic radiation and solar protons damage cells and compromise the human immune system. Without regolith shielding or adequate rest, human stay is unviable.' },
+      { key: 'integrity', system: 'HABITAT STRUCTURE & HULL', title: 'Hull Breach from Regolith and Micrometeoroids',
+        explanation: 'Seals wore out from abrasive lunar dust or a micrometeoroid breached the dome. The base lost pressurization.',
+        scienceLesson: 'Lunar dust consists of razor-sharp volcanic glass shards that cut space fabrics and jam bearings unless repelled electrostatically.' }
+    ] : [
       { key: 'oxygen', system: 'SOPORTE VITAL (OXÍGENO)', title: 'Asfixia por Agotamiento de O2',
         explanation: 'Las reservas de oxígeno cayeron a cero. Se activó la cápsula Orion para evacuación de emergencia.',
         scienceLesson: 'En el espacio, el O2 se fuga en cada esclusa y se gasta en experimentos y celdas de combustible. Sin electrólisis de agua lunar, ¡cada litro es irreemplazable!' },
@@ -381,14 +423,23 @@ class GameState {
     const avgResources = (this.resources.oxygen + this.resources.energy + this.resources.health + this.resources.integrity) / 4;
     const mult = this.difficulty === 1 ? 1.0 : this.difficulty === 2 ? 1.5 : 2.2;
     const finalScore = Math.round((this.resources.science * 2 + avgResources * 5 + survivalDays * 30) * mult);
+    const isEn = typeof window !== 'undefined' && window.i18n && window.i18n.getLanguage() === 'en';
 
     let rank, medal;
     if (this.gameResult === 'VICTORY') {
-      if (finalScore > 1200) { rank = 'Comandante Supremo Lunar'; medal = '🥇'; }
-      else if (finalScore > 750) { rank = 'Oficial Científico ORBITA5'; medal = '🥈'; }
-      else { rank = 'Pionero de la Frontera Espacial'; medal = '🥉'; }
+      if (finalScore > 1200) {
+        rank = isEn ? 'Supreme Lunar Commander' : 'Comandante Supremo Lunar';
+        medal = '🥇';
+      } else if (finalScore > 750) {
+        rank = isEn ? 'ORBITA5 Science Officer' : 'Oficial Científico ORBITA5';
+        medal = '🥈';
+      } else {
+        rank = isEn ? 'Space Frontier Pioneer' : 'Pionero de la Frontera Espacial';
+        medal = '🥉';
+      }
     } else {
-      rank = 'Aspirante en Entrenamiento'; medal = '⚠️';
+      rank = isEn ? 'Trainee Aspirant' : 'Aspirante en Entrenamiento';
+      medal = '⚠️';
     }
     return { score: finalScore, rank, medal, daysSurvived: survivalDays, totalDays: this.totalDays, scienceCollected: this.resources.science, remainingAvgHealth: Math.round(avgResources) };
   }

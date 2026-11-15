@@ -52,25 +52,27 @@ class ShieldMinigame {
   }
 
   renderUI() {
+    const isEn = typeof window !== 'undefined' && window.i18n && window.i18n.getLanguage() === 'en';
     this.container.innerHTML = `
       <div class="minigame-card modal-glass">
         <div class="minigame-header">
           <div class="alarm-badge">
-            <span class="alarm-pulsing-dot"></span> ALERTA SOLAR EN VIVO: PROTOCOLO DONKI
+            <span class="alarm-pulsing-dot"></span> ${isEn ? 'LIVE SOLAR ALERT: DONKI PROTOCOL' : 'ALERTA SOLAR EN VIVO: PROTOCOLO DONKI'}
           </div>
           <div class="countdown-clock" id="shield-clock">⏱️ 12s</div>
         </div>
 
         <p class="minigame-instruction">
-          ¡Una ráfaga de protones solares impactará el hábitat! Mueve los deslizadores para <strong>desviar energía</strong> hacia las bobinas del <strong>Escudo Magnético</strong> antes de que acabe el tiempo. 
-          <br><span class="highlight-warn">Recuerda: Cuanta más energía desvíes, más fría quedará la base y menos ciencia producirás.</span>
+          ${isEn 
+            ? 'A burst of solar protons is about to hit the habitat! Move the sliders to <strong>divert power</strong> toward the <strong>Magnetic Shield</strong> coils before time runs out.<br><span class="highlight-warn">Remember: The more power you divert, the colder the base gets and the less science you produce.</span>'
+            : '¡Una ráfaga de protones solares impactará el hábitat! Mueve los deslizadores para <strong>desviar energía</strong> hacia las bobinas del <strong>Escudo Magnético</strong> antes de que acabe el tiempo.<br><span class="highlight-warn">Recuerda: Cuanta más energía desvíes, más fría quedará la base y menos ciencia producirás.</span>'}
         </p>
 
         <div class="shield-interactive-grid">
           <div class="shield-view-col">
             <canvas id="shield-canvas" width="340" height="260"></canvas>
             <div class="shield-meter-wrapper">
-              <span class="shield-meter-label">Potencia del Escudo: <strong id="shield-val-text">50%</strong></span>
+              <span class="shield-meter-label">${isEn ? 'Shield Power:' : 'Potencia del Escudo:'} <strong id="shield-val-text">50%</strong></span>
               <div class="meter-bar-track">
                 <div id="shield-bar-fill" class="meter-bar-fill" style="width: 50%;"></div>
               </div>
@@ -81,35 +83,35 @@ class ShieldMinigame {
             <!-- Slider 1: Laboratorio -->
             <div class="slider-group">
               <div class="slider-label-row">
-                <span>🔬 Laboratorio de Ciencia:</span>
+                <span>🔬 ${isEn ? 'Science Laboratory:' : 'Laboratorio de Ciencia:'}</span>
                 <span id="lab-val" class="slider-num">35%</span>
               </div>
               <input type="range" id="slider-lab" min="0" max="100" value="35" class="range-slider">
-              <small class="slider-hint">Bajar a 0% desvía energía al escudo, pero apaga las computadoras científicas.</small>
+              <small class="slider-hint">${isEn ? 'Lowering to 0% diverts power to shield, but powers down science computers.' : 'Bajar a 0% desvía energía al escudo, pero apaga las computadoras científicas.'}</small>
             </div>
 
             <!-- Slider 2: Calefacción -->
             <div class="slider-group">
               <div class="slider-label-row">
-                <span>🔥 Calefacción de Módulos:</span>
+                <span>🔥 ${isEn ? 'Module Heating:' : 'Calefacción de Módulos:'}</span>
                 <span id="heat-val" class="slider-num">40%</span>
               </div>
               <input type="range" id="slider-heat" min="0" max="100" value="40" class="range-slider">
-              <small class="slider-hint">Bajar a 0% apaga radiadores; la base se enfriará a 5°C esta noche.</small>
+              <small class="slider-hint">${isEn ? 'Lowering to 0% turns off radiators; base will cool to 5°C tonight.' : 'Bajar a 0% apaga radiadores; la base se enfriará a 5°C esta noche.'}</small>
             </div>
 
             <!-- Slider 3: Invernadero -->
             <div class="slider-group">
               <div class="slider-label-row">
-                <span>🌱 Invernadero Botánico:</span>
+                <span>🌱 ${isEn ? 'Botanical Greenhouse:' : 'Invernadero Botánico:'}</span>
                 <span id="green-val" class="slider-num">25%</span>
               </div>
               <input type="range" id="slider-green" min="0" max="100" value="25" class="range-slider">
-              <small class="slider-hint">Bajar a 0% apaga las luces LED ultravioleta de las plantas.</small>
+              <small class="slider-hint">${isEn ? 'Lowering to 0% turns off UV LED grow lights.' : 'Bajar a 0% apaga las luces LED ultravioleta de las plantas.'}</small>
             </div>
 
             <button id="btn-lock-shield" class="btn-primary-action pulse-btn">
-              ⚡ FIJAR ESCUDO Y SOPORTAR IMPACTO
+              ⚡ ${isEn ? 'LOCK SHIELD & WITHSTAND IMPACT' : 'FIJAR ESCUDO Y SOPORTAR IMPACTO'}
             </button>
           </div>
         </div>
@@ -270,7 +272,7 @@ class ShieldMinigame {
     let delta = {};
     let debriefText = '';
 
-    // Cálculo real de compensaciones según la decisión del niño:
+    const isEn = typeof window !== 'undefined' && window.i18n && window.i18n.getLanguage() === 'en';
     const energySacrificed = Math.round(shield * 0.35); // Energía gastada en el escudo
     const scienceLost = Math.round((100 - this.allocation.lab) * 0.15); // Ciencia perdida por apagar el lab
 
@@ -282,7 +284,9 @@ class ShieldMinigame {
         science: -scienceLost,
         integrity: 0
       };
-      debriefText = `¡Excelente desvío de energía (${shield}%)! Bloqueaste el 100% de la eyección de masa coronal DONKI. La tripulación está a salvo sin daño biológico, aunque tus reservas de energía bajaron un ${energySacrificed}%.`;
+      debriefText = isEn
+        ? `Outstanding energy diversion (${shield}%)! You blocked 100% of the DONKI coronal mass ejection. The crew is safe with zero biological damage, though battery reserves dropped by ${energySacrificed}%.`
+        : `¡Excelente desvío de energía (${shield}%)! Bloqueaste el 100% de la eyección de masa coronal DONKI. La tripulación está a salvo sin daño biológico, aunque tus reservas de energía bajaron un ${energySacrificed}%.`;
     } else if (shield >= 45) {
       // Escudo moderado
       delta = {
@@ -291,7 +295,9 @@ class ShieldMinigame {
         science: Math.max(5, 20 - scienceLost),
         integrity: -5
       };
-      debriefText = `Escudo calibrado al ${shield}%. Lograste desviar la mayoría de los protones, pero una filtración causó una dosis de radiación leve (-12% Salud) en los astronautas.`;
+      debriefText = isEn
+        ? `Shield calibrated at ${shield}%. You deflected most solar protons, but a leak resulted in a mild radiation dose (-12% Health) to the astronauts.`
+        : `Escudo calibrado al ${shield}%. Lograste desviar la mayoría de los protones, pero una filtración causó una dosis de radiación leve (-12% Salud) en los astronautas.`;
     } else {
       // Escudo insuficiente
       delta = {
@@ -300,7 +306,9 @@ class ShieldMinigame {
         science: 15,
         integrity: -10
       };
-      debriefText = `¡Escudo insuficiente (${shield}%)! La tormenta solar DONKI atravesó el hábitat. Ahorraste energía eléctrica, pero la tripulación absorbió radiación de alta energía (-28% Salud) y experimenta náuseas espaciales.`;
+      debriefText = isEn
+        ? `Insufficient shield (${shield}%)! The DONKI solar storm ripped through the habitat. You conserved electrical power, but the crew absorbed high-energy radiation (-28% Health) and is suffering from space radiation sickness.`
+        : `¡Escudo insuficiente (${shield}%)! La tormenta solar DONKI atravesó el hábitat. Ahorraste energía eléctrica, pero la tripulación absorbió radiación de alta energía (-28% Salud) y experimenta náuseas espaciales.`;
     }
 
     if (this.onCompleteCallback) {
